@@ -1,0 +1,22 @@
+img{
+    min-height: 90px;
+    width: 100%;
+}
+.banner{
+    background: url(https://bacsigiadinhhanoi.vn/wp-content/uploads/2021/09/cham-soc-suc-khoe-tai-nha.jpg);
+    height: 90vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    align-items: center;
+}
+.banner-text{
+    position: absolute;
+    color: #0b8fac;
+    padding-left: 80px;
+    padding-top: 80px;
+    line-height:1.5;
+    font-weight: 250px;
+    font-size: 50px;
+}
