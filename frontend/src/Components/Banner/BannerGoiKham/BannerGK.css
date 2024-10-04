@@ -1,0 +1,16 @@
+img{
+    min-height: 90px;
+    width: 100%;
+}
+.banner-gk {
+    /* margin-top: 80px;  */
+    /* height: calc(90vh - 80px); Điều chỉnh chiều cao của banner nếu cần */
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+

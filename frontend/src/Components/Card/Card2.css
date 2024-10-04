@@ -1,0 +1,86 @@
+.card-grid {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các card xuống hàng */
+    justify-content: space-between; /* Căn giữa các card */
+    gap: 1rem; /* Khoảng cách giữa các card */
+    margin: 4rem; /* Thêm khoảng cách giữa card-grid và các thành phần khác */
+}
+
+.card-container {
+    width: 352px; /* Chiều rộng card theo yêu cầu */
+    height: 493px; /* Chiều cao card theo yêu cầu */
+    border-radius: 1rem;
+    box-shadow: 0px 10px 8px #999;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 0.5rem; /* Khoảng cách giữa các card */
+    position: relative; /* Để position absolute hoạt động cho nút */
+    overflow: hidden; /* Ẩn phần dư thừa của nút "Learn More" */
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease, opacity 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+/* Hiệu ứng hover */
+.card-container:hover {
+    transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
+    box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.2); /* Thay đổi bóng khi hover */
+    opacity: 0.7; /* Làm mờ nền khi hover */
+}
+
+.card-img {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0; /* Bo góc cho phần trên của hình ảnh */
+}
+
+.card-title {
+    margin: 0.5rem 5%;
+    font-size: 1.2rem; /* Kích thước chữ tiêu đề */
+}
+
+.card-description {
+    margin: 0.5rem 5%;
+    font-size: 1rem; /* Kích thước chữ mô tả */
+}
+
+/* Nút Learn More */
+.card-btn {
+    text-align: center;
+    width: 80%; /* Đặt chiều rộng của nút */
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    background-color: transparent; /* Nền trong suốt */
+    border: 2px solid white; /* Viền trắng */
+    color: white; /* Chữ trắng */
+    text-decoration: none;
+    position: absolute; /* Đặt vị trí nút */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Căn giữa hoàn hảo */
+    opacity: 0; /* Ẩn nút ban đầu */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+
+/* Hiển thị nút khi hover */
+.card-container:hover .card-btn {
+    opacity: 1; /* Hiển thị nút khi hover */
+    transform: translate(-50%, -50%) scale(1.1); /* Phóng to nút khi hover */
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .card-container {
+        width: calc(45% - 1rem); /* Trên màn hình nhỏ hơn, mỗi card chiếm 45% chiều rộng */
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        width: calc(50% - 1rem); /* Trên thiết bị nhỏ hơn, mỗi card chiếm 50% chiều rộng */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container {
+        width: 100%; /* Trên thiết bị rất nhỏ, mỗi card chiếm 100% chiều rộng */
+    }
+}
