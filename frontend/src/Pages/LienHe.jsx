@@ -66,44 +66,4 @@ function LienHe() {
     </div>
   );
 }
-
-
-
-
-
-
-//   const hospitalMapUrl =
-//     "https://maps.google.com/maps?width=720&amp;height=400&amp;hl=en&amp;q=Bệnh%20viện%20Quốc%20tế%20Hạnh%20Phúc&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed";
-//   const clinicMapUrl =
-//     "https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=22B%20C%C3%A2y%20C%C3%A1m+(Ph%C3%B2ng%20Kh%C3%A1m%20H%E1%BA%A1nh%20Ph%C3%BAc)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed";
-//   return (
-//     <div>
-//       <BannerLH/>
-//       <div className='container-content'>
-//         <div className='item'>
-//             <h1 className='article-item'>Liên hệ</h1>
-//         </div>
-//         <div className='intro'>
-//             <p>
-//             Bệnh viện Quốc tế Hạnh Phúc và hệ thống phòng khám của 
-//             <br/>chúng tôi mang đến trải nghiệm chăm sóc sức khỏe đẳng cấp, 
-//             <br/>với tiêu chuẩn cao nhất cho người Việt.
-//             </p>
-//         </div>
-//       <div className='map-section'>
-//           <div className='gmap-frame'>
-//             <iframe title="Map" width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=720&amp;height=400&amp;hl=en&amp;q=43A%20%C4%90%E1%BB%99c%20L%E1%BA%ADp+(STA%20Hospital)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">map</a></iframe>
-//           </div>
-//       </div>
-//     </div>
-      
-//     <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
-//     src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=22B%20C%C3%A2y%20C%C3%A1m+(Ph%C3%B2ng%20Kh%C3%A1m%20H%E1%BA%A1nh%20Ph%C3%BAc)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps vehicle tracker</a></iframe></div>
-
-     
-     
-//     </div>
-//   )
-// }
-
 export default LienHe
