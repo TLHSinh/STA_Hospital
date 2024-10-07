@@ -3,6 +3,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import './Navbar.css';
 import { Link } from "react-router-dom";
 import PopupLichHen from '../Dialog/PopupLichHen';
+import { FaRegCircleUser } from "react-icons/fa6";
+
 
 function Navbar() {
     const navRef = useRef();
@@ -50,6 +52,11 @@ function Navbar() {
                 >
                 <FaBars />
             </button> 
+
+            <Link to="/login-register" className="user">
+                <FaRegCircleUser color='#0b8fac' size='2rem' />
+            </Link>
+
         </header>
     );
 }

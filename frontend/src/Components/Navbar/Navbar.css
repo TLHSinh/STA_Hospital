@@ -101,3 +101,21 @@
 	}
 }
 
+.user {
+    display: flex;                 /* Sử dụng flex để căn giữa logo */
+    align-items: center;          /* Căn giữa logo theo chiều dọc */
+    margin-right: auto;           /* Đẩy logo sang bên trái */
+}
+
+.user img {
+    width: 50px;                  /* Chiều rộng của logo */
+    height: auto;                 /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    object-fit: contain;          /* Giữ nguyên tỷ lệ hình ảnh */
+}
+
+@media (max-width: 768px) {     /* Thay đổi kích thước logo trên màn hình nhỏ hơn */
+    .user img {
+        width: 40px;              /* Chiều rộng logo trên màn hình nhỏ */
+    }
+}
+

@@ -1,15 +1,17 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom'; // Import Outlet để render các route con
+import { Outlet, useLocation } from 'react-router-dom'; // Import useLocation
 import Navbar from './Components/Navbar/Navbar'; // Import Navbar
 import Footer from './Components/Footer/Footer'; // Import Footer
 
-
 const App = () => {
+  const location = useLocation(); // Lấy đường dẫn hiện tại
+  const hideNavAndFooter = location.pathname === '/login-register'; // Kiểm tra nếu là trang login-register
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar />
+      {!hideNavAndFooter && <Navbar />} {/* Không hiển thị Navbar nếu ở trang login-register */}
       <Outlet /> {/* Đây là nơi các trang con sẽ được render */}
-      <Footer /> {/* Footer sẽ xuất hiện trên tất cả các trang */}
+      {!hideNavAndFooter && <Footer />} {/* Không hiển thị Footer nếu ở trang login-register */}
     </div>
   );
 };
