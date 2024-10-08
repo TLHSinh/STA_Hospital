@@ -17,6 +17,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Card1.css'
+
 function Card1TrangChu() {
   var settings = {
     dots: true,
