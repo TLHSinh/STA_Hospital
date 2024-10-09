@@ -1,6 +1,8 @@
 import React from 'react'
 import '../Pages/VeChungToi.css';
 import Card2BacSi from '../Components/Card/Card2BacSi'; 
+import Card6 from '../Components/Card/Card6'; 
+import Card7 from '../Components/Card/Card7'; 
 import BannerVCT from '../Components/Banner/BannerVeChungToi/BannerVCT';
 
 function VeChungToi() {
@@ -16,30 +18,36 @@ function VeChungToi() {
           khỏe (ACHSI), đáp ứng nhu cầu ngày càng tăng về dịch vụ y tế cao cấp tại Việt Nam.
           </p>
         </div>
+        
         <div className='item'>
-          <h1 className='article-item'>Tầm Nhìn & Sứ Mệnh</h1>
-          <div class="background-box">
-                  <p>
-                      Tại STA, chúng tôi hướng tới mục tiêu trở thành đơn vị tiên phong 
-                      trong lĩnh vực chăm sóc sức khoẻ đa chuyên khoa cao cấp và trải nghiệm toàn diện.
-                  </p>
-                  <p>
-                      Sứ mệnh của chúng tôi là định hình văn hóa chăm sóc sức khỏe đa chuyên khoa cao cấp tại Việt Nam
-                      thông qua mạng lưới bệnh viện và phòng khám đạt tiêu chuẩn quốc tế.
-                  </p>
-          </div>
+        <Card6
+          title="Tầm nhìn & Sứ mệnh"
+          description={
+            <>
+              Tại Hạnh Phúc, chúng tôi hướng tới mục tiêu trở thành đơn vị tiên phong trong lĩnh vực chăm sóc sức khoẻ đa chuyên khoa cao cấp và trải nghiệm toàn diện. <br />
+              Sứ mệnh của chúng tôi là định hình văn hóa chăm sóc sức khỏe đa chuyên khoa cao cấp tại Việt Nam thông qua mạng lưới bệnh viện và phòng khám đạt tiêu chuẩn quốc tế.
+            </>
+          }
+        />
         </div>
 
         <div className='item'>
           <h1 className='article-item'>Giá Trị Cốt Lõi</h1>
-          <div class="background-box">
+          {/* <div class="background-box">
                   <p>
                   Với mục tiêu nâng cao sức khỏe và hạnh phúc cho tất cả người dân Việt Nam, chúng tôi tận tâm chăm sóc bằng triết lý CARE, 
                   trong đó: C là Cam kết (Commitment), A là Trách nhiệm (Accountability), R là Tôn trọng (Respect), và E là Đồng cảm (Empathy).
                   </p>
-          </div>
+          </div> */}
+          
         </div>
 
+        <div className='item'>
+          <h1 className='article-item'>Những Thành Tựu</h1>
+          <Card7 />
+          
+        </div>
+        
         <div className='item'>
           <h1 className='article-item'>Đội ngũ bác sĩ nhiều năm kinh nghiệm</h1>
           <div className='card-grid'>

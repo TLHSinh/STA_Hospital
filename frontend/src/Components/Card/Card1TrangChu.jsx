@@ -1,17 +1,3 @@
-// import React from 'react'
-
-// const Card1_trangchu = () => {
-//   return (
-//     <div className='card'>
-//         <im
-//     </div>
-//   )
-// }
-
-// export default Card1_trangchu
-
-
-
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

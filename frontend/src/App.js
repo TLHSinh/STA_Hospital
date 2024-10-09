@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'; // Import useLocation
 import Navbar from './Components/Navbar/Navbar'; // Import Navbar
 import Footer from './Components/Footer/Footer'; // Import Footer
 
+
 const App = () => {
   const location = useLocation(); // Lấy đường dẫn hiện tại
   const hideNavAndFooter = location.pathname === '/login-register'; // Kiểm tra nếu là trang login-register

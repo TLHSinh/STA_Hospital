@@ -32,7 +32,7 @@
     background-color: #116e83;
 }
 
-.right-box{
+.right-box {
     padding: 40px 30px 40px 40px;
 }
 
@@ -59,14 +59,15 @@
     color: #fff;
     position: relative;
     left: -100%;
-    height: 100%;
     width: 200%;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
+    border-radius: 0 40px 40px 0; /* Bo tròn cho trạng thái ban đầu */
 }
 
 .content.active .switch {
     transform: translateX(50%);
+    border-radius: 40px 0 0 40px; /* Bo tròn khi di chuyển về phía phải */
 }
 
 .switch-panel {
@@ -97,23 +98,23 @@
     transform: translateX(0);
 }
 
-.content.active .switch-right{
+.content.active .switch-right {
     transform: translate(200%);
 }
 
 .btn-home {
     position: fixed; /* Đặt nút ở vị trí cố định */
-    top: 20px;      /* Khoảng cách từ đỉnh của màn hình */
-    left: 20px;     /* Khoảng cách từ cạnh trái của màn hình */
+    top: 20px; /* Khoảng cách từ đỉnh của màn hình */
+    left: 20px; /* Khoảng cách từ cạnh trái của màn hình */
     background: none; /* Không có màu nền cho nút */
-    border: none;     /* Loại bỏ viền nút */
-    padding: 0;       /* Loại bỏ khoảng đệm để chỉ hiển thị icon */
-    cursor: pointer;  /* Hiển thị con trỏ khi di chuột qua */
-    z-index: 1000;    /* Đặt z-index cao để nút nằm trên các thành phần khác */
+    border: none; /* Loại bỏ viền nút */
+    padding: 0; /* Loại bỏ khoảng đệm để chỉ hiển thị icon */
+    cursor: pointer; /* Hiển thị con trỏ khi di chuột qua */
+    z-index: 1000; /* Đặt z-index cao để nút nằm trên các thành phần khác */
 }
 
 .icon-back {
-    width: 90px;  /* Đặt kích thước icon */
+    width: 90px; /* Đặt kích thước icon */
     height: 90px; /* Kích thước có thể được điều chỉnh */
     background-color: transparent; /* Đảm bảo hình ảnh không có nền */
 }
@@ -121,13 +122,3 @@
 .btn-home:hover .icon-back {
     opacity: 0.8; /* Hiệu ứng hover khi di chuột qua nút */
 }
-
-
-
-
-
-
-
-
-
-
