@@ -8,7 +8,7 @@ import ChuyenKhoa from './Pages/ChuyenKhoa';
 import GoiKham from './Pages/GoiKham';
 import BacSi from './Pages/BacSi';
 import LienHe from './Pages/LienHe';
-import DatLichHen from './Pages/DatLichHen';
+//import DatLichHen from './Pages/DatLichHen';
 import Card1 from './Pages/DetailBacSi/card1'; // Import trang Card1
 import Card2 from './Pages/DetailBacSi/card2'; // Import trang Card1
 import Card3 from './Pages/DetailBacSi/card3'; // Import trang Card1
@@ -52,10 +52,10 @@ const router = createBrowserRouter([
         path: "lienhe",
         element: <LienHe />,
       },
-      {
+/*       {
         path: "datlichhen",
         element: <DatLichHen />,
-      },
+      }, */
       {
         path: "bacsi/bs-tran-kim-duong", // Thêm route cho Card1
         element: <Card1 />,
