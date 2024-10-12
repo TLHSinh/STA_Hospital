@@ -22,6 +22,10 @@ function LienHe() {
         src="https://maps.google.com/maps?width=720&amp;height=400&amp;hl=en&amp;q=43A%20%C4%90%E1%BB%99c%20L%E1%BA%ADp+(STA%20Hospital)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
       />
     ),
+
+
+
+
     clinic: (
       <iframe
         title="Phòng khám Quốc tế Hạnh Phúc"
@@ -31,7 +35,7 @@ function LienHe() {
         scrolling="no"
         marginHeight="0"
         marginWidth="0"
-        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=22B%20C%C3%A2y%20C%C3%A1m+(Ph%C3%B2ng%20Kh%C3%A1m%20H%E1%BA%A1nh%20Ph%C3%BAc)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=161%20v%C3%B5%20nguy%C3%AAn%20gi%C3%A1p+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
       />
     ),
   };
@@ -53,7 +57,7 @@ function LienHe() {
                 {/* Card 1 */}
                 <Card5LienHe
                   imageSrc="/cardlienhe.png"
-                  title="Bệnh viện STA"
+                  title="Bệnh Viện STA TÂN PHÚ"
                   address="43A Độc Lập, Phường Tân Thành, Quận Tân Phú, TP.HCM"
                   phone="1900 6765"
                   hours="Thứ Hai đến Thứ Bảy: 7:30 - 16:30"
@@ -63,8 +67,8 @@ function LienHe() {
                 {/* Card 2 */}
                 <Card5LienHe
                   imageSrc="/Images/vechungtoi_banner.jpg"
-                  title="Phòng Khám STA"
-                  address="22B Cây Cám, Phường Bình Hưng Hòa B, Quận Bình Tân, TP. Hồ Chí Minh"
+                  title="Bệnh Viện STA SALA"
+                  address="222 Lê Duẩn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh"
                   phone="1900 7175"
                   hours="Thứ Hai đến Chủ Nhật: 7:00 - 17:00"
                   emergency="Cấp cứu 24/24"
@@ -76,10 +80,10 @@ function LienHe() {
       <h1 className='article-item'>Vị trí</h1>
         <div className="btnmap">
           <button onClick={() => setSelectedMap("hospital")}>
-            Bệnh viện STA
+            Bệnh Viện STA TÂN PHÚ
           </button>
           <button onClick={() => setSelectedMap("clinic")}>
-            Phòng khám STA
+            Bệnh Viện STA SALA
           </button>
         </div>
 

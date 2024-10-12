@@ -6,18 +6,18 @@ const Card7 = () => {
   const cardData = [
     {
       image: "/cardlienhe.png", // Uncomment and set the correct path
-      title: 'Dubai',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      title: '2022',
+      description: 'Bệnh viện Quốc tế Hạnh Phúc chính thức hoạt động – trở thành bệnh viện đầu tiên theo tiêu chuẩn Singapore tại Việt Nam',
     },
     {
       image: "/cardlienhe.png", // Uncomment and set the correct path
-      title: 'Paris',
-      description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      title: '2023',
+      description: ' Bệnh viện Quốc tế Hạnh Phúc nhận giải thưởng tại hạng mục Cải thiện tài chính xuất sắc nhất thuộc Giải thưởng Quản lý Bệnh viện châu Á',
     },
     {
       image: "/cardlienhe.png", // Uncomment and set the correct path
-      title: 'Tokyo',
-      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+      title: '2024',
+      description: 'Bệnh viện Quốc tế Hạnh Phúc đã ra mắt dịch vụ điều trị cao cấp, là điểm đến y tế và chăm sóc sức khỏe hàng đầu Việt Nam',
     },
   ];
 

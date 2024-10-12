@@ -1,6 +1,6 @@
 .card7-group {
     display: flex;
-    gap: 50px;
+    gap: 25px;
     justify-content: space-between;
 }
 
@@ -27,13 +27,14 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 75%;
+    height: 100%;
     transition: 0.5s;
     opacity: 0;
     transition: 0.3s;
 }
 
 .card7 .card7-info {
+    color: white;
     position: absolute;
     bottom: -50%;
     padding: 15px;
@@ -42,8 +43,10 @@
 }
 
 .card7 .card7-info p {
-    font-size: 14px;
+    font-size: 20px;
     margin-top: 3px;
+    font-weight: bold; /* Thêm bold */
+    color: white; /* Thêm màu trắng */
 }
 
 .card7 .card7-info button {
@@ -56,10 +59,14 @@
 }
 
 .card7:hover,
-.card7:hover img {
+.card7:hover img,
+.card7:hover layer {
     transform: scale(1.1);
 }
 
+.card7:hover > .card7-layer {
+    opacity: 1;
+}
 .card7:hover > .card7-info {
     bottom: 0;
     opacity: 1;
@@ -68,3 +75,4 @@
 .card7-group:hover > .card7:not(:hover) {
     filter: blur(5px);
 }
+
