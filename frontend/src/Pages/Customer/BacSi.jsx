@@ -1,11 +1,14 @@
 import React from 'react';
-import Card2BacSi from '../Components/Card/Card2BacSi'; 
-import BannerBS from '../Components/Banner/BannerBacSi/BannerBS';
+// import BannerBS from '../Banner/BannerBacSi/BannerBS';
+
+import BannerBS from '../../Components/Customer/Banner/BannerBacSi/BannerBS';
+import Card2BacSi from '../../Components/Customer/Card/Card2BacSi';
+
 
 function BacSi() {
   return (
     <div>
-      <BannerBS />
+      <BannerBS/>
       <div className='container-content'>
         <div className='intro'>
           <p>
@@ -19,7 +22,7 @@ function BacSi() {
         <div className='item'>
           <h1 className='article-item'>Đội ngũ bác sĩ nhiều năm kinh nghiệm</h1>
           <div className='card-grid'>
-            <Card2BacSi 
+            <Card2BacSi
               imgSrc="/Images/STA_BACSI/bacsi_tran-kim-duong.png"
               imgAlt="Card Image 1"
               title="BS. Trần Kim Dương"
@@ -67,6 +70,7 @@ function BacSi() {
               buttonText="Learn More"
               link="bs-nguyen-mai-huy"
             />
+            
           </div>
         </div>
       </div>

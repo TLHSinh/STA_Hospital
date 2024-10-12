@@ -1,12 +1,14 @@
 import React from 'react'
-import '../Pages/ChuyenKhoa.css';
-import BannerCK from '../Components/Banner/BannerChuyenKhoa/BannerCK';
-import Card1TrangChu from '../Components/Card/Card1TrangChu';
+// import '../Pages/Customer/ChuyenKhoa.css';
+import BannerCK from '../../Components/Customer/Banner/BannerChuyenKhoa/BannerCK';
+import Card1TrangChu from '../../Components/Customer/Card/Card1TrangChu';
+// import BannerCK from '../Components/Customer/Banner/BannerChuyenKhoa/BannerCK';
+// import Card1TrangChu from '../Components/Customer/Card/Card1TrangChu';
 
 function ChuyenKhoa() {
   return (
     <div>
-      <BannerCK />
+      <BannerCK/>
       <div className='container-content'>
         <div className='intro'>
           <p>
@@ -22,7 +24,7 @@ function ChuyenKhoa() {
 
         <div className='item'>
           <h1 className='article-item'>Chuyên Khoa Của Chúng Tôi</h1>
-          <Card1TrangChu />
+          <Card1TrangChu/>
         </div>
       </div>
     </div>

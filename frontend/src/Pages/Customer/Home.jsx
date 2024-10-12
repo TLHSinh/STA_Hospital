@@ -1,20 +1,15 @@
 import React from 'react';
-import BannerTrangChu from '../Components/Banner/BannerHome/BannerTrangChu'; // Import component BannerTrangChu
-import Card1TrangChu from '../Components/Card/Card1TrangChu'; // Import Card1TrangChu nếu cần
-import '../Pages/Home.css';
-import Card2BacSi from '../Components/Card/Card2BacSi'; 
+import BannerTrangChu from '../../Components/Customer/Banner/BannerHome/BannerTrangChu';
+ import Card1TrangChu from '../../Components/Customer/Card/Card1TrangChu'; // Import Card1TrangChu nếu cần
+import '../../Pages/Customer/Home.css';
+import Card2BacSi from '../../Components/Customer/Card/Card2BacSi'; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> PhuTai_FE
 const Home = () => {
   return (
     <div>
-      <BannerTrangChu />
+      <BannerTrangChu/>
       <div className='container-content'>
         <div className='intro'>
           <p>

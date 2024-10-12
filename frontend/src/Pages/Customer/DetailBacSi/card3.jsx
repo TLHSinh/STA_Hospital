@@ -1,5 +1,5 @@
 import React from 'react';
-import BannerBS from '../../Components/Banner/BannerBacSi/BannerBS';
+import BannerBS from '../../../Components/Customer/Banner/BannerBacSi/BannerBS'
 
 function BS1() {
     return (

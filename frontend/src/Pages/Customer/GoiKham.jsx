@@ -1,13 +1,15 @@
 import React from 'react'
-import BannerGk from '../Components/Banner/BannerGoiKham/BannerGK'
-import '../Pages/GoiKham.css';
-import Card3GoiKham from '../Components/Card/Card3GoiKham';
-import Card4GoiKham from '../Components/Card/Card4GoiKham';
+// import '../Pages/GoiKham.css';
+// import Card3GoiKham from '../Components/Card/Card3GoiKham';
+// import Card4GoiKham from '../Components/Card/Card4GoiKham';
+import BannerGK from '../../Components/Customer/Banner/BannerGoiKham/BannerGK';
+import Card3GoiKham from '../../Components/Customer/Card/Card3GoiKham';
+import Card4GoiKham from '../../Components/Customer/Card/Card4GoiKham';
 
 function GoiKham() {
   return (
     <div>
-      <BannerGk/>
+      <BannerGK/>
       <div className='container-content'>
       <div className='item'>
           <h1 className='article-item'>Gói khám thai & Gói sinh</h1>
@@ -30,7 +32,6 @@ function GoiKham() {
           </p>
       </div>
       <Card4GoiKham/>
-        
       </div>
     </div>
     

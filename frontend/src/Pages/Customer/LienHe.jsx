@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import BannerLH from '../Components/Banner/BannerLienHe/BannerLH'
-import '../Pages/LienHe.css';
-<<<<<<< HEAD
-=======
+import BannerLH from '../../Components/Customer/Banner/BannerLienHe/BannerLH'
+import '../../Pages/Customer/LienHe.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Card5LienHe from '../Components/Card/Card5LienHe';
+import Card5LienHe from '../../Components/Customer/Card/Card5LienHe';
 
 
 
 
->>>>>>> PhuTai_FE
 function LienHe() {
   const [selectedMap, setSelectedMap] = useState("hospital");
   const maps = {
@@ -43,36 +40,6 @@ function LienHe() {
        <div>
           <BannerLH/>
       <div className='container-content'>
-<<<<<<< HEAD
-        <div className='item'>
-            <h1 className='article-item'>Liên hệ</h1>
-        </div>
-        <div className='intro'>
-            <p>
-            Bệnh viện Quốc tế Hạnh Phúc và hệ thống phòng khám của 
-            <br/>chúng tôi mang đến trải nghiệm chăm sóc sức khỏe đẳng cấp, 
-            <br/>với tiêu chuẩn cao nhất cho người Việt.
-            </p>
-        </div>
-  
-     <div className="map">
-     <h1 className='article-item'>Vị trí</h1>
-      <div className="btnmap">
-        <button onClick={() => setSelectedMap("hospital")}>
-          Bệnh viện Quốc tế STA
-        </button>
-        <button onClick={() => setSelectedMap("clinic")}>
-          Phòng khám Quốc tế STA
-        </button>
-      </div>
-
-      <div className="map-section">
-        <div className="gmap-frame">
-          {maps[selectedMap]}
-        </div>
-      </div>
-     </div>
-=======
           <div className='intro'>
                   <p>
                   Bệnh viện STA và hệ thống phòng khám của 
@@ -122,7 +89,6 @@ function LienHe() {
           </div>
         </div>
       </div>
->>>>>>> PhuTai_FE
   </div>
     </div>
   );

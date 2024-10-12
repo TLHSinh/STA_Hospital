@@ -1,13 +1,14 @@
 import React from 'react'
-import '../Pages/VeChungToi.css';
-import Card2BacSi from '../Components/Card/Card2BacSi'; 
-import Card6 from '../Components/Card/Card6'; 
-import Card7 from '../Components/Card/Card7'; 
-import BannerVCT from '../Components/Banner/BannerVeChungToi/BannerVCT';
+import '../../Pages/Customer/VeChungToi.css';
+import Card2BacSi from '../../Components/Customer/Card/Card2BacSi'; 
+import Card6 from '../../Components/Customer/Card/Card6'; 
+import Card7 from '../../Components/Customer/Card/Card7'; 
+import BannerVCT from '../../Components/Customer/Banner/BannerVeChungToi/BannerVCT';
 
 function VeChungToi() {
   return (
     <div>
+      
       <BannerVCT />
       <div className='container-content'>
         <div className='intro'>

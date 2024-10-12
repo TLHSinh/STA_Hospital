@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import '../Pages/LoginRegister.css';
+import '../../Pages/Customer/LoginRegister.css';
 import { FaAngleLeft } from "react-icons/fa6";
 
 

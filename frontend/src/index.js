@@ -2,20 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Home from './Pages/Home'; 
-import VeChungToi from './Pages/VeChungToi';
-import ChuyenKhoa from './Pages/ChuyenKhoa';
-import GoiKham from './Pages/GoiKham';
-import BacSi from './Pages/BacSi';
-import LienHe from './Pages/LienHe';
-import DatLichHen from './Pages/DatLichHen';
-import Card1 from './Pages/DetailBacSi/card1'; // Import trang Card1
-import Card2 from './Pages/DetailBacSi/card2'; // Import trang Card1
-import Card3 from './Pages/DetailBacSi/card3'; // Import trang Card1
-import Card4 from './Pages/DetailBacSi/card4'; // Import trang Card1
-import Card5 from './Pages/DetailBacSi/card5'; // Import trang Card1
-import Card6 from './Pages/DetailBacSi/card6'; // Import trang Card1
-import LoginRegister from './Pages/LoginRegister';
+import Home from './Pages/Customer/Home'; 
+import VeChungToi from './Pages/Customer/VeChungToi';
+import ChuyenKhoa from './Pages/Customer/ChuyenKhoa';
+import GoiKham from './Pages/Customer/GoiKham';
+import BacSi from './Pages/Customer/BacSi';
+import LienHe from './Pages/Customer/LienHe';
+import DatLichHen from './Pages/Customer/DatLichHen';
+import Card1 from './Pages/Customer/DetailBacSi/card1'; // Import trang Card1
+import Card2 from './Pages/Customer/DetailBacSi/card2'; // Import trang Card1
+import Card3 from './Pages/Customer/DetailBacSi/card3'; // Import trang Card1
+import Card4 from './Pages/Customer/DetailBacSi/card4'; // Import trang Card1
+import Card5 from './Pages/Customer/DetailBacSi/card5'; // Import trang Card1
+import Card6 from './Pages/Customer/DetailBacSi/card6'; // Import trang Card1
+import LoginRegister from './Pages/Customer/LoginRegister';
+
 
 
 import {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "vechungtoi",
-        element: <VeChungToi />, 
+        element: <VeChungToi/> 
       },
       {
         path: "chuyenkhoa",
