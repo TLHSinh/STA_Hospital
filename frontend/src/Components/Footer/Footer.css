@@ -1,0 +1,73 @@
+.main-footer {
+  color: rgb(253, 253, 253);
+  background-color: #08758d;
+  padding: 40px 20px;
+  position: relative; /* Xem xét thay đổi nếu cần */
+  bottom: 0;
+  width: 100%;
+  min-height: 200px;
+  z-index: 10;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col {
+  flex: 1;
+  padding: 0 10px;
+  text-align: center;
+}
+
+li {
+  line-height: 2.5;
+  font-size: 1.2rem;
+}
+
+.main-footer a {
+  text-decoration: none !important;
+  color: #ffffff;
+  font-size: 1.2rem;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.main-footer a:hover {
+  color: #ffdd00;
+  transform: translateX(5px);
+}
+
+.footer-logo {
+  max-height: 120px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.container-footer {
+  background-color: #08758d;
+}
+
+.footer-info p {
+  margin: 5px 0;
+}
+
+.footer-info hr {
+  border: 1px solid #fff;
+  margin: 10px 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.col.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

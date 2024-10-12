@@ -15,4 +15,18 @@ button{
 }
 .map {
     padding-top: 80px;
+<<<<<<< HEAD
 }
+=======
+}
+
+.card-container1 {
+    display: flex;
+    flex-direction: column; /* Đặt các card theo chiều dọc */
+    gap: 50px; /* Khoảng cách giữa các card */
+    align-items: center; /* Canh giữa card theo chiều ngang */
+}
+  
+
+  
+>>>>>>> PhuTai_FE

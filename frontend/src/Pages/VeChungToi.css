@@ -1,0 +1,65 @@
+.container-content{
+    padding: 5rem;
+  }
+.intro {
+    text-align: center;
+    justify-content: center;
+    font-size: 25px;
+    line-height: 44px;
+    color: #0b8fac;
+    font-weight: 500;
+}
+.article-item{
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 50px;
+    color: #0b8fac;
+  
+  }
+.item{
+    padding: 50px 0px 30px 0px;
+}
+
+/* BannerVeChungToi.css */
+.background-box {
+  background: linear-gradient(135deg, #e0f7fa, #80deea); /* Tạo hiệu ứng nền gradient từ xanh nhạt đến xanh đậm */
+  border-radius: 25px; /* Bo góc mềm mại hơn */
+  padding: 40px 60px; /* Tăng khoảng cách bên trong để tạo không gian rộng rãi */
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15), 0 6px 8px rgba(0, 0, 0, 0.05); /* Tạo hiệu ứng đổ bóng lớn và sâu */
+  margin: 40px auto; /* Tăng khoảng cách bên ngoài và căn giữa */
+  max-width: 1460px; /* Giới hạn chiều rộng tối đa lớn hơn */
+  
+  /* Căn giữa nội dung */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: auto; /* Để chiều cao tự động */
+  
+  /* Thay đổi màu chữ và làm chữ đậm */
+  color: #433c3c; /* Màu chữ xanh đậm */
+  font-weight: 600; /* Làm chữ đậm hơn một chút */
+  font-family: 'Poppins', sans-serif; /* Thêm font chữ hiện đại */
+  font-size: 1.5rem; /* Tăng kích thước chữ để nổi bật hơn */
+  
+  /* Thêm hiệu ứng chuyển động */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi hover */
+.background-box:hover {
+  transform: translateY(-15px); /* Di chuyển hộp lên cao hơn khi hover */
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.25); /* Đổ bóng đậm hơn khi hover */
+}
+
+
+
+
+
+
+
+
+
+
+

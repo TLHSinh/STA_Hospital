@@ -6,6 +6,11 @@ import Card2BacSi from '../Components/Card/Card2BacSi';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> PhuTai_FE
 const Home = () => {
   return (
     <div>

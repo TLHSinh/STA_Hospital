@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Outlet, useLocation } from 'react-router-dom'; // Import useLocation
+import Navbar from './Components/Navbar/Navbar'; // Import Navbar
+import Footer from './Components/Footer/Footer'; // Import Footer
 
-function App() {
+
+const App = () => {
+  const location = useLocation(); // Lấy đường dẫn hiện tại
+  const hideNavAndFooter = location.pathname === '/login-register'; // Kiểm tra nếu là trang login-register
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {!hideNavAndFooter && <Navbar />} {/* Không hiển thị Navbar nếu ở trang login-register */}
+      <Outlet /> {/* Đây là nơi các trang con sẽ được render */}
+      {!hideNavAndFooter && <Footer />} {/* Không hiển thị Footer nếu ở trang login-register */}
     </div>
   );
-}
+};
 
 export default App;
