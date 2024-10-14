@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom'; // Import useLocation
-import Navbar from './Components/Navbar/Navbar'; // Import Navbar
-import Footer from './Components/Footer/Footer'; // Import Footer
+import Navbar from './Components/Customer/Navbar/Navbar'; // Import Navbar
+import Footer from './Components/Customer/Footer/Footer'; // Import Footer
 
 
 const App = () => {

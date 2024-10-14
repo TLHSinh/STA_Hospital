@@ -1,0 +1,80 @@
+.card7-group {
+    display: flex;
+    gap: 40px;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
+    width: 100%; /* Đảm bảo chiều rộng của .card7-group là 100% */
+}
+
+.card7 {
+    width: 400px;
+    height: 500px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.card7 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.card7 .card7-layer {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.card7 .card7-info {
+    color: white;
+    position: absolute;
+    bottom: -50%;
+    padding: 15px;
+    opacity: 0;
+    transition: 0.5s bottom, 1.75s opacity;
+}
+
+.card7 .card7-info p {
+    font-size: 20px;
+    margin-top: 3px;
+    font-weight: bold; /* Thêm bold */
+    color: white; /* Thêm màu trắng */
+}
+
+.card7 .card7-info button {
+    background-color: #f44336;
+    border: none;
+    padding: 8px 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.card7:hover,
+.card7:hover img,
+.card7:hover layer {
+    transform: scale(1.1);
+}
+
+.card7:hover > .card7-layer {
+    opacity: 1;
+}
+.card7:hover > .card7-info {
+    bottom: 0;
+    opacity: 1;
+}
+
+.card7-group:hover > .card7:not(:hover) {
+    filter: blur(5px);
+}
+
