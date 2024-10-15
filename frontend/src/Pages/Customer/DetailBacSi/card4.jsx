@@ -1,7 +1,10 @@
-import React from 'react';
 import BannerBS from '../../../Components/Customer/Banner/BannerBacSi/BannerBS';
 import SidePanel from '../SidePanel'; 
 import { Link } from 'react-router-dom';
+
+import PopupLichHen from '../../../Components/Customer/Dialog/PopupLichHen'; // Đường dẫn từ Components
+import React, { useState } from 'react';
+
 
 function BS4() {
   const schedule = [
@@ -9,6 +12,15 @@ function BS4() {
     { day: 'Thứ 4', time: '7:00 AM - 11:00 AM' },
     { day: 'Thứ 6', time: '7:00 AM - 11:00 AM' },
   ];
+  const [openPopup, setOpenPopup] = useState(false); // State để kiểm soát popup
+
+  const handleOpenPopup = () => {
+    setOpenPopup(true); // Mở popup
+  };
+
+  const handleClosePopup = () => {
+    setOpenPopup(false); // Đóng popup
+  };
     return (
         <div>
             <BannerBS />
@@ -68,8 +80,9 @@ function BS4() {
                               <SidePanel
                                 price="500.000 VNĐ"
                                 schedule={schedule}
-                                buttonLabel="Đặt lịch"
+                                buttonLabel={<a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a>} // Gán nút bấm vào buttonLabel
                               />
+                              <PopupLichHen open={openPopup} handleClose={handleClosePopup} /> {/* Hiển thị popup */}
                             </div>
                         </div>
                     </div>

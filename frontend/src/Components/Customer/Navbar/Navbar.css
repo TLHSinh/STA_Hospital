@@ -9,7 +9,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
 }
 .navbar{
 	width: 100%;
@@ -19,7 +18,7 @@
     font-size: 18px;
     color: #0b8fac;
     font-weight: 500;
-    margin-left: 40px;
+    margin-left: 50px;
 	text-decoration: none;
 }
 .navbar a::before{
@@ -41,9 +40,6 @@
     /* object-fit: cover; Giữ nguyên tỷ lệ hình ảnh */
     margin-left: 0px; /* Tạo khoảng cách giữa logo và padding của header */
 }
-
-
-
 
 .header .nav-btn {
 	padding: 5px;
