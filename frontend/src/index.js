@@ -16,7 +16,7 @@ import Card3 from './Pages/Customer/DetailBacSi/card3'; // Import trang Card1
 import Card4 from './Pages/Customer/DetailBacSi/card4'; // Import trang Card1
 import Card5 from './Pages/Customer/DetailBacSi/card5'; // Import trang Card1
 import Card6 from './Pages/Customer/DetailBacSi/card6'; // Import trang Card1
-import LoginRegister from './Pages/Customer/LoginRegister';
+import Login from './Pages/Customer/Login';
 
 
 
@@ -84,8 +84,8 @@ const router = createBrowserRouter([
         element: <Card6 />,
       },
       {
-        path: "login-register",
-        element: <LoginRegister />,
+        path: "login",
+        element: <Login />,
       },
      
       // Bạn có thể thêm các route khác ở đây

@@ -53,7 +53,7 @@ function Navbar() {
                 <FaBars />
             </button> 
 
-            <Link to="/login-register" className="user">
+            <Link to="/login" className="user">
                 <FaRegCircleUser color='#0b8fac' size='2rem' />
             </Link>
 
