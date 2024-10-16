@@ -17,6 +17,7 @@ import Card4 from './Pages/Customer/DetailBacSi/card4'; // Import trang Card1
 import Card5 from './Pages/Customer/DetailBacSi/card5'; // Import trang Card1
 import Card6 from './Pages/Customer/DetailBacSi/card6'; // Import trang Card1
 import Login from './Pages/Customer/Login';
+import SignUp from './Pages/Customer/SignUp';
 
 
 
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "register",
+        element: <SignUp />,
       },
      
       // Bạn có thể thêm các route khác ở đây

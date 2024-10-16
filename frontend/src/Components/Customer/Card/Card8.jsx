@@ -30,7 +30,7 @@ const Card8 = () => {
       </div>
       <div className="card8-text">
         <p>
-          Vì mục tiêu nâng cao sức khỏe và hạnh phúc của tất cả người dân Việt
+          Đây là kim chỉ nam dẫn lối STA vì mục tiêu nâng cao sức khỏe và hạnh phúc của tất cả người dân Việt
           Nam. <br />
           Tận tâm chăm sóc.
         </p>

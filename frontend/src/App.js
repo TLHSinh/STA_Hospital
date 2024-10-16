@@ -6,7 +6,7 @@ import Footer from './Components/Customer/Footer/Footer'; // Import Footer
 
 const App = () => {
   const location = useLocation(); // Lấy đường dẫn hiện tại
-  const hideNavAndFooter = location.pathname === '/login-register'; // Kiểm tra nếu là trang login-register
+  const hideNavAndFooter = location.pathname === '/login'|| location.pathname === '/register'; // Kiểm tra nếu là trang login-register
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
