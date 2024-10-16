@@ -3,12 +3,20 @@ import '../../Pages/Customer/VeChungToi.css';
 import Card2BacSi from '../../Components/Customer/Card/Card2BacSi'; 
 import Card6 from '../../Components/Customer/Card/Card6'; 
 import Card7 from '../../Components/Customer/Card/Card7'; 
+import Card8 from '../../Components/Customer/Card/Card8'; 
 import BannerVCT from '../../Components/Customer/Banner/BannerVeChungToi/BannerVCT';
 
 function VeChungToi() {
+  const doctors = [
+    { id: 1, imgSrc: "/Images/STA_BACSI/bacsi_tran-kim-duong.png", imgAlt: "Card Image 1", title: "BS. Trần Kim Dương", description: "Bác Sĩ Đa Khoa", link: "bs-tran-kim-duong" },
+    { id: 2, imgSrc: "/Images/STA_BACSI/bacsi_le-thi-anh.png", imgAlt: "Card Image 2", title: "BS. Lê Thị Ánh", description: "Bác Sĩ Đa Khoa", link: "bs-le-thi-anh" },
+    { id: 3, imgSrc: "/Images/STA_BACSI/bacsi_chu-minh-tuan.png", imgAlt: "Card Image 3", title: "BS. Chu Minh Tuấn", description: "Bác Sĩ Đa Khoa", link: "bs-chu-minh-tuan" },
+    { id: 4, imgSrc: "/Images/STA_BACSI/bacsi_bui-thi-truc-my.png", imgAlt: "Card Image 4", title: "BS. Bùi Thị Trúc My", description: "Bác Sĩ Đa Khoa", link: "bs-bui-thi-truc-my" },
+    { id: 5, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
+    { id: 6, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
+  ];
   return (
     <div>
-      
       <BannerVCT />
       <div className='container-content'>
         <div className='intro'>
@@ -21,87 +29,48 @@ function VeChungToi() {
         </div>
         
         <div className='item'>
-        <Card6
-          title="Tầm nhìn & Sứ mệnh"
-          description={
-            <>
-              Tại Hạnh Phúc, chúng tôi hướng tới mục tiêu trở thành đơn vị tiên phong trong lĩnh vực chăm sóc sức khoẻ đa chuyên khoa cao cấp và trải nghiệm toàn diện. <br />
-              Sứ mệnh của chúng tôi là định hình văn hóa chăm sóc sức khỏe đa chuyên khoa cao cấp tại Việt Nam thông qua mạng lưới bệnh viện và phòng khám đạt tiêu chuẩn quốc tế.
-            </>
-          }
-        />
+          <h1 className='article-item'></h1>
+          <Card6
+            title="Tầm nhìn & Sứ mệnh"
+            description={
+              <>
+                Tại STA, chúng tôi hướng tới mục tiêu trở thành đơn vị tiên phong trong lĩnh vực chăm sóc sức khoẻ đa chuyên khoa cao cấp và trải nghiệm toàn diện. <br />
+                Sứ mệnh của chúng tôi là định hình văn hóa chăm sóc sức khỏe đa chuyên khoa cao cấp tại Việt Nam thông qua mạng lưới bệnh viện và phòng khám đạt tiêu chuẩn quốc tế.
+              </>
+            }
+          />
         </div>
 
         <div className='item'>
           <h1 className='article-item'>Giá Trị Cốt Lõi</h1>
-          {/* <div class="background-box">
-                  <p>
-                  Với mục tiêu nâng cao sức khỏe và hạnh phúc cho tất cả người dân Việt Nam, chúng tôi tận tâm chăm sóc bằng triết lý CARE, 
-                  trong đó: C là Cam kết (Commitment), A là Trách nhiệm (Accountability), R là Tôn trọng (Respect), và E là Đồng cảm (Empathy).
-                  </p>
-          </div> */}
-          
+          <Card8 />  
         </div>
 
         <div className='item'>
           <h1 className='article-item'>Những Thành Tựu</h1>
           <Card7 />
-          
         </div>
         
-        <div className='item'>
-          <h1 className='article-item'>Đội ngũ bác sĩ nhiều năm kinh nghiệm</h1>
-          <div className='card-grid'>
-            <Card2BacSi 
-              imgSrc="/Images/STA_BACSI/bacsi_tran-kim-duong.png"
-              imgAlt="Card Image 1"
-              title="BS. Trần Kim Dương"
-              description="Bác Sĩ Đa Khoa"
-              buttonText="Learn More"
-              link="bs-tran-kim-duong"
-            />
-            <Card2BacSi 
-              imgSrc="/Images/STA_BACSI/bacsi_le-thi-anh.png"
-              imgAlt="Card Image 2"
-              title="BS. Lê Thị Ánh"
-              description="Bác Sĩ Đa Khoa"
-              buttonText="Learn More"
-              link="bs-le-thi-anh"
-            />
-            <Card2BacSi 
-              imgSrc="/Images/STA_BACSI/bacsi_chu-minh-tuan.png"
-              imgAlt="Card Image 3"
-              title="BS. Chu Minh Tuấn"
-              description="Bác Sĩ Đa Khoa"
-              buttonText="Learn More"
-              link="bs-chu-minh-tuan"
-            />
-            <Card2BacSi 
-              imgSrc="/Images/STA_BACSI/bacsi_bui-thi-truc-my.png"
-              imgAlt="Card Image 4"
-              title="BS. Bùi Thị Trúc My"
-              description="Bác Sĩ Đa Khoa"
-              buttonText="Learn More"
-              link="bs-bui-thi-truc-my"
-            />
-            <Card2BacSi 
-              imgSrc="/Images/STA_BACSI/bacsi_nguyen-man-nhi.png"
-              imgAlt="Card Image 5"
-              title="BS. Nguyễn Mẫn Nhi"
-              description="Bác Sĩ Đa Khoa"
-              buttonText="Learn More"
-              link="bs-nguyen-man-nhi"
-            />
-            <Card2BacSi 
-              imgSrc="/Images/STA_BACSI/bacsi_nguyen-mai-huy.png"
-              imgAlt="Card Image 6"
-              title="BS. Nguyễn Mai Huy"
-              description="Bác Sĩ Đa Khoa"
-              buttonText="Learn More"
-              link="bs-nguyen-mai-huy"
-            />
+        <section>
+          <div className="item">
+            <div className='container'>
+              <h1 className='article-item text-center'>Bác Sĩ</h1>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 justify-items-center">
+                {doctors.map(doctor => (
+                  <Card2BacSi
+                    key={doctor.id}
+                    imgSrc={doctor.imgSrc}
+                    imgAlt={doctor.imgAlt}
+                    title={doctor.title}
+                    description={doctor.description}
+                    buttonText="Learn More"
+                    link={doctor.link}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   )

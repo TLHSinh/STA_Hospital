@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
 import './Footer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PopupLichHen from '../Dialog/PopupLichHen'; // Import PopupLichHen
@@ -13,6 +12,11 @@ const Footer = () => {
 
   const handleClosePopup = () => {
     setOpenPopup(false); // Đóng popup
+  };
+
+  // Hàm điều hướng trang sử dụng window.location.href
+  const navigateTo = (path) => {
+    window.location.href = path;
   };
 
   return (
@@ -34,16 +38,16 @@ const Footer = () => {
           {/* Column3 */}
           <div className="col">
             <ul className="list-unstyled">
-              <li><Link to="/vechungtoi">Về chúng tôi</Link></li>
-              <li><Link to="/chuyenkhoa">Chuyên khoa</Link></li>
-              <li><Link to="/bacsi">Bác sĩ</Link></li>
+              <li><a href="#!" onClick={() => navigateTo('/vechungtoi')}>Về chúng tôi</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/chuyenkhoa')}>Chuyên khoa</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/bacsi')}>Bác sĩ</a></li>
             </ul>
           </div>
           {/* Column4 */}
           <div className="col">
             <ul className="list-unstyled">
-              <li><Link to="/goikham">Gói khám</Link></li>
-              <li><Link to="/lienhe">Liên hệ</Link></li>
+              <li><a href="#!" onClick={() => navigateTo('/goikham')}>Gói khám</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/lienhe')}>Liên hệ</a></li>
               <li><a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a></li> {/* Sử dụng hàm mở popup */}
             </ul>
           </div>

@@ -5,7 +5,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ */
     max-width: 1000px; /* Chiều rộng tối đa */
     margin: 20px auto; /* Khoảng cách tự động từ hai bên */
-    background-color: #fff; /* Màu nền */
+    background-color: #f5feff; /* Màu nền */
     transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển động */
 }
 
