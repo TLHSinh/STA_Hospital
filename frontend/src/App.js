@@ -11,7 +11,7 @@ const App = () => {
   // const hideNavAndFooter = location.pathname === '/login'|| location.pathname === '/register'; // Kiểm tra nếu là trang login-register
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div>
       <BrowserRouter>
         <Routes>
           {/* đây là hướng đi của khách hàng */}

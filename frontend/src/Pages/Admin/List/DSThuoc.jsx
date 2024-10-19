@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Medicine = () => {
+function Thuoc() {
   return (
     <div>Thuoc</div>
   )
 }
 
-export default Medicine
+export default Thuoc

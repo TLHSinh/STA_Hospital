@@ -1,0 +1,17 @@
+/* Thêm CSS vào tệp CSS của bạn */
+.container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .layout-content {
+    border-radius: 20px;
+    background: #f8f9fa;
+    margin-left: 270px; /* Để nội dung không bị che bởi sidebar */
+    padding: 20px;      /* Khoảng cách bên trong */
+    flex-grow: 1;       /* Nội dung sẽ chiếm phần còn lại */
+    overflow-y: auto;   /* Cho phép cuộn nếu nội dung lớn */
+    height: 100vh;      /* Chiều cao 100% của viewport */
+  }
+  
