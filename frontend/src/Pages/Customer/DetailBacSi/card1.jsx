@@ -55,10 +55,10 @@ function BS1() {
                               <Link
                                 to="/bacsi"
                                 className="mt-6 w-full max-w-xs px-4 py-2 bg-purple-400 text-white rounded-md hover:bg-purple-500 text-center no-underline"
-                                style={{ textDecoration: 'none' }}  // Thêm style này
                               >
                                 Quay lại trang tìm kiếm
                               </Link>
+
                             </div>
 
                             {/* Cột 2: Văn bản */}
@@ -92,16 +92,17 @@ function BS1() {
                               <SidePanel
                                 price="500.000 VNĐ"
                                 schedule={schedule}
-                                buttonLabel={<a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a>} // Gán nút bấm vào buttonLabel
+                                buttonLabel={
+                                  <buttonLabel
+                                    className=" text-white rounded-md text-center no-underline"
+                                    onClick={handleOpenPopup}
+                                  >
+                                    Đặt lịch hẹn
+                                  </buttonLabel>
+                                }
                               />
-                              <PopupLichHen open={openPopup} handleClose={handleClosePopup} /> {/* Hiển thị popup */}
+                              <PopupLichHen open={openPopup} handleClose={handleClosePopup} />
                             </div>
-                           
-      
-                            
-
-
-
                         </div>
                     </div>
                 </section>

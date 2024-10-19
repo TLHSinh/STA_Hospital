@@ -6,6 +6,7 @@ import PopupLichHen from '../Dialog/PopupLichHen';
 import { FaRegCircleUser } from "react-icons/fa6";
 
 
+
 function Navbar() {
     const navRef = useRef();
 
@@ -26,38 +27,39 @@ function Navbar() {
     };
 
     return (
-        <header className="header">
-            <Link to="/" className="logo">
-                <img src="Home.png" alt="Logo" />
-            </Link>
-            <nav className="navbar" ref={navRef}>
-                <Link to='/vechungtoi'>Về chúng tôi</Link>
-                <Link to='/chuyenkhoa'>Chuyên khoa</Link>
-                <Link to='/goikham'>Gói khám</Link>
-                <Link to='/bacsi'>Bác sĩ</Link>
-                <Link to='/lienhe'>Liên hệ</Link>
-                {/* <Link to='/datlichhen'>Đặt lịch hẹn</Link> */}
-                <a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a>
-                 <button
-                    className="nav-btn nav-close-btn"
-                     onClick={showNavbar}
-                    >
-                    <FaTimes />
-                </button> 
-            </nav>
-            <PopupLichHen open={openPopup} handleClose={handleClosePopup} />
-             <button
-                className="nav-btn"
-                 onClick={showNavbar}
-                >
-                <FaBars />
-            </button> 
+        
+<header className="header">
+    <Link to="/customer/home" className="logo">
+        <img src="/Images/Home.png" alt="Logo" />
+    </Link>
 
-            <Link to="/login-register" className="user">
-                <FaRegCircleUser color='#0b8fac' size='2rem' />
-            </Link>
+    <nav className="navbar" ref={navRef}>
+        <Link to="/customer/vechungtoi">Về chúng tôi</Link>
+        <Link to="/customer/chuyenkhoa">Chuyên khoa</Link>
+        <Link to="/customer/goikham">Gói khám</Link>
+        <Link to="/customer/bacsi">Bác sĩ</Link>
+        <Link to="/customer/lienhe">Liên hệ</Link>
 
-        </header>
+        {/* Đặt lịch hẹn mở qua popup */}
+        <a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a>
+
+        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+            <FaTimes />
+        </button>
+    </nav>
+
+    {/* Popup đặt lịch hẹn */}
+    <PopupLichHen open={openPopup} handleClose={handleClosePopup} />
+
+    <button className="nav-btn" onClick={showNavbar}>
+        <FaBars />
+    </button>
+
+    {/* Đường dẫn đến trang đăng nhập */}
+    <Link to="/customer/login" className="user">
+        <FaRegCircleUser color="#0b8fac" size="2rem" />
+    </Link>
+</header>
     );
 }
 

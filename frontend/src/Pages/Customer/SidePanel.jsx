@@ -29,7 +29,7 @@ const SidePanel = ({ price, schedule, buttonLabel }) => {
   
         <div className="flex justify-center">
           {/* Hiển thị label của nút từ props */}
-          <button className="bt-datlich px-2 w-full rounded-md">{buttonLabel}</button>
+          <button className="bt-datlich px-2 w-full text-white rounded-md text-center no-underline">{buttonLabel}</button>
         </div>
       </div>
     );

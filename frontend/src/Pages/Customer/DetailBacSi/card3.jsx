@@ -86,9 +86,16 @@ Bác sĩ Tuấn tốt nghiệp Bác sĩ Đa khoa tại Đại học Y Dược Th
                               <SidePanel
                                 price="500.000 VNĐ"
                                 schedule={schedule}
-                                buttonLabel={<a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a>} // Gán nút bấm vào buttonLabel
+                                buttonLabel={
+                                  <buttonLabel
+                                    className=" text-white rounded-md text-center no-underline"
+                                    onClick={handleOpenPopup}
+                                  >
+                                    Đặt lịch hẹn
+                                  </buttonLabel>
+                                }
                               />
-                              <PopupLichHen open={openPopup} handleClose={handleClosePopup} /> {/* Hiển thị popup */}
+                              <PopupLichHen open={openPopup} handleClose={handleClosePopup} />
                             </div>
                         </div>
                     </div>

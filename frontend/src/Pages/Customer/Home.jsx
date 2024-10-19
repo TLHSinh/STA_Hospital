@@ -9,8 +9,6 @@ import Card5LienHe from '../../Components/Customer/Card/Card5LienHe';
 import Card4GoiKham from '../../Components/Customer/Card/Card4GoiKham';
 import BannerHome2 from '../../Components/Customer/Banner/BannerHome2/BannerHome2';
 
-
-
 const Home = () => {
   const doctors = [
     { id: 1, imgSrc: "/Images/STA_BACSI/bacsi_tran-kim-duong.png", imgAlt: "Card Image 1", title: "BS. Trần Kim Dương", description: "Bác Sĩ Đa Khoa", link: "bs-tran-kim-duong" },
@@ -86,7 +84,6 @@ const Home = () => {
               <h1 className='article-item'></h1>
               <BannerHome2 />
         </div>
-
       </div>
     </div>
   );
