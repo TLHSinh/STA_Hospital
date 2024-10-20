@@ -1,0 +1,60 @@
+/* Phần container bao gồm cả left và right */
+.BannerHome2-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff; /* Màu nền */
+  }
+  
+  /* Phần bên trái (left) - chứa hình ảnh */
+  .BannerHome2-left {
+    width: 50%; /* Điều chỉnh kích thước phần bên trái */
+    overflow: hidden; /* Giữ hình ảnh trong khuôn khổ khi zoom in */
+  }
+  
+  .BannerHome2-image img {
+    width: 100%; /* Điều chỉnh kích thước hình ảnh */
+    height: 100%;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out; /* Hiệu ứng khi hover */
+  }
+  
+  .BannerHome2-image img:hover {
+    transform: scale(1.05); /* Zoom in nhẹ khi hover */
+  }
+  
+  /* Phần bên phải (right) - chứa nội dung */
+  .BannerHome2-right {
+    width: 45%; /* Kích thước phần bên phải */
+    padding-left: 20px;
+  }
+  
+  /* Nội dung của phần right */
+  .BannerHome2-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* Logo */
+  .BannerHome2-logo {
+    width: 400px; /* Điều chỉnh kích thước logo */
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  /* Tiêu đề */
+  .BannerHome2-content h1 {
+    color: #002d72; /* Màu chữ */
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Đoạn văn bản */
+  .BannerHome2-content p {
+    color: #4a4a4a;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  

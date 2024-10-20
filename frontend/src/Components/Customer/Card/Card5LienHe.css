@@ -1,0 +1,59 @@
+.contact-card {
+    display: flex;
+    border-radius: 40px; /* Bo tròn góc */
+    overflow: hidden; /* Ẩn phần vượt quá */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ */
+    max-width: 1000px; /* Chiều rộng tối đa */
+    margin: 20px auto; /* Khoảng cách tự động từ hai bên */
+    background-color: #f5feff; /* Màu nền */
+    transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển động */
+}
+
+.contact-card:hover {
+    transform: translateY(-5px); /* Đẩy card lên khi hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Tăng bóng đổ khi hover */
+}
+
+.contact-card-image {
+    flex: 1; /* Chia đều không gian cho hình ảnh */
+}
+
+.contact-card-image img {
+    width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng */
+    height: 100%; /* Hình ảnh chiếm toàn bộ chiều cao */
+    object-fit: cover; /* Cắt hình ảnh theo tỉ lệ khung hình */
+    border-top-left-radius: 15px; /* Bo tròn góc trên bên trái */
+    border-bottom-left-radius: 15px; /* Bo tròn góc dưới bên trái */
+}
+
+.contact-card-info {
+    flex: 1; /* Chia đều không gian cho thông tin */
+    padding: 20px; /* Khoảng cách bên trong */
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo chiều dọc */
+    justify-content: center; /* Canh giữa nội dung theo chiều dọc */
+    text-align: justify; /* Canh đều nội dung văn bản */
+}
+
+.contact-card-info h2 {
+    font-size: 1.5rem; /* Kích thước chữ cho tiêu đề */
+    margin-bottom: 1.5rem; /* Khoảng cách dưới tiêu đề */
+    color: #3f4e67; /* Màu chữ */
+    text-align: center; /* Canh giữa tiêu đề */
+}
+
+.contact-card-info p {
+    font-size: 1rem; /* Kích thước chữ cho văn bản */
+    margin-bottom: 0.75rem; /* Khoảng cách dưới các đoạn văn */
+    display: flex; /* Sử dụng flex để sắp xếp icon và văn bản */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: flex-start; /* Canh trái cho các icon và văn bản */
+    color: #3f4e67; /* Màu chữ */
+}
+
+.contact-card-info p i {
+    margin-right: 20px; /* Tăng khoảng cách giữa icon và văn bản */
+    color: #0b8fac; /* Màu icon */
+}
+
+

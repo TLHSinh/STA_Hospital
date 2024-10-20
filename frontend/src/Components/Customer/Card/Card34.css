@@ -1,0 +1,92 @@
+.cards-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 40px;
+}
+.cards{
+    width: 325px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0,0,0, 0.3);
+    overflow: hidden;
+}
+.cards img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.cards-content{
+    padding: 20px;
+}
+.cards-content h1{
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #0b8fac;
+}
+.cards-content p{
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+.cards-button{
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+}
+
+.cards {
+    width: 325px;
+    background-color: #eafcff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
+}
+
+.cards:hover {
+    transform: scale(1.05); /* Phóng to thẻ khi hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Tăng cường bóng đổ khi hover */
+}
+
+.cards img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s ease; /* Thêm hiệu ứng chuyển tiếp cho hình ảnh */
+}
+
+.cards:hover img {
+    opacity: 0.9; /* Giảm độ trong suốt của hình ảnh khi hover */
+}
+
+.cards-content {
+    padding: 20px;
+}
+
+.cards-content h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #0b8fac;
+}
+
+.cards-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.cards-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px; /* Thêm padding cho nút */
+    border-radius: 5px; /* Bo góc cho nút */
+    text-decoration: none; /* Xóa gạch chân cho nút */
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển tiếp cho màu nền nút */
+}
+
+.cards-button:hover {
+    background-color: #2980b9; /* Thay đổi màu nền nút khi hover */
+}
