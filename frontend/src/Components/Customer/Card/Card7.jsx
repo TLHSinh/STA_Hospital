@@ -19,6 +19,11 @@ const Card7 = () => {
       title: '2024',
       description: 'Bệnh viện Quốc tế Hạnh Phúc đã ra mắt dịch vụ điều trị cao cấp, là điểm đến y tế và chăm sóc sức khỏe hàng đầu Việt Nam',
     },
+    {
+      image: "/2024.png", // Uncomment and set the correct path
+      title: '2024',
+      description: 'Bệnh viện Quốc tế Hạnh Phúc đã ra mắt dịch vụ điều trị cao cấp, là điểm đến y tế và chăm sóc sức khỏe hàng đầu Việt Nam',
+    },
   ];
 
   return (
