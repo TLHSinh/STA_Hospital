@@ -1,10 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from '../Pages/Admin/Dashboard/Dashboard';
-import KhachHang from '../Pages/Admin/List/KhachHang';
-import BacSi from '../Pages/Admin/List/BacSi';
-import Lichhen from '../Pages/Admin/List/Lichhen';
-import Thuoc from '../Pages/Admin/List/Thuoc';
-import AdminLayout from '../Layouts/AdminLayout';
+import KhachHang from '../Pages/Admin/List/DSKhachHang';
+import BacSi from '../Pages/Admin/List/DSBacSi';
+import Lichhen from '../Pages/Admin/List/DSLichhen';
+import Thuoc from '../Pages/Admin/List/DSThuoc';
+import AdminLayout from '../Layouts/AdminLayout/AdminLayout';
+import ThemKhachHang from '../Pages/Admin/Create/ThemKhachHang';
+import ThemBacSi from '../Pages/Admin/Create/ThemBacSi';
 
 
 const AdminRouter = () => (
@@ -15,6 +17,8 @@ const AdminRouter = () => (
         <Route path="danhsachbacsi" element={<BacSi/>} />
         <Route path="danhsachthuoc" element={<Thuoc/>} />
         <Route path="danhsachlichhen" element={<Lichhen/>} />
+        <Route path="themkhachhang" element={<ThemKhachHang/>} />
+        <Route path="thembacsi" element={<ThemBacSi/>} />
       </Route>
     </Routes>
 );
