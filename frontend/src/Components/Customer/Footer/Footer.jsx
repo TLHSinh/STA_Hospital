@@ -38,16 +38,16 @@ const Footer = () => {
           {/* Column3 */}
           <div className="col">
             <ul className="list-unstyled">
-              <li><a href="#!" onClick={() => navigateTo('/vechungtoi')}>Về chúng tôi</a></li>
-              <li><a href="#!" onClick={() => navigateTo('/chuyenkhoa')}>Chuyên khoa</a></li>
-              <li><a href="#!" onClick={() => navigateTo('/bacsi')}>Bác sĩ</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/customer/vechungtoi')}>Về chúng tôi</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/customer/chuyenkhoa')}>Chuyên khoa</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/customer/bacsi')}>Bác sĩ</a></li>
             </ul>
           </div>
           {/* Column4 */}
           <div className="col">
             <ul className="list-unstyled">
-              <li><a href="#!" onClick={() => navigateTo('/goikham')}>Gói khám</a></li>
-              <li><a href="#!" onClick={() => navigateTo('/lienhe')}>Liên hệ</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/customer/goikham')}>Gói khám</a></li>
+              <li><a href="#!" onClick={() => navigateTo('/customer/lienhe')}>Liên hệ</a></li>
               <li><a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a></li> {/* Sử dụng hàm mở popup */}
             </ul>
           </div>

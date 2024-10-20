@@ -11,7 +11,7 @@ function Card({ imgSrc, imgAlt, title, description, link }) {
       <img className="card-img" src={imgSrc} alt={imgAlt} />
       <h3 className="card-title">{title}</h3>
       <p className="card-description">{description}</p>
-      <Link to={`/bacsi/${link}`} className="card-btn">Tìm hiểu thêm</Link>
+      <Link to={`/customer/bacsi/${link}`} className="card-btn">Tìm hiểu thêm</Link>
     </div>
   
   );
