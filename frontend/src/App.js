@@ -1,6 +1,7 @@
 import React from 'react';
  import { BrowserRouter, Navigate, Route, Router, Routes } from 'react-router-dom'; // Import useLocation
 import AdminRouter from './Routers/AdminRouter';
+import CustomerRoutes from './Routers/CustomerRouter';
 
 
 
@@ -16,7 +17,7 @@ const App = () => {
         <Routes>
           {/* đây là hướng đi của khách hàng */}
             {/* <Route path="/customer/*" element={<CustomerRoutes />} />
-            <Route path="/" element={<Navigate to="/customer/home" />} /> Điều hướng mặc định */}
+            <Route path="/" element={<Navigate to="/customer/home" />} />  */}
 
           {/* đây là hướng đi của admin */}
           <Route path="/admin/*" element={<AdminRouter/>} />

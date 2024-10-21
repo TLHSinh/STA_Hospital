@@ -110,45 +110,6 @@ const ThemKhachHang = () => {
         
         <button type='submit'>Tạo</button>
       </form>
-
-
-
-
-
-{/* 
-      <form>
-        <div className='column'>
-          <div className='input-box'>
-            <label htmlFor='name'>Họ và tên</label>
-            <input type='text' />
-          </div>
-          <div className='input-box'>
-            <label>Ngày sinh</label>
-            <input type='date' />
-          </div>
-        
-        </div>
-
-        <label htmlFor='gender'>Giới tính</label>
-        <input type='radio' name='gender'/> Nam 
-        <input type='radio' name='gender'/> Nữ 
-        <input type='radio' name='gender'/> Khác 
-
-
-        <label>Nhóm máu</label>
-        <input type='text' />
-
-        <label htmlFor='contact'>Số điện thoại</label>
-        <input type='text' name='contact' />
-
-        <label htmlFor='email'>Email</label>
-        <input type='email' name='email' />
-        
-        <label>Mật khẩu</label>
-        <input type='password' />
-
-        <button type='submit'>Tạo</button>
-      </form> */}
     </div>
   )
 }

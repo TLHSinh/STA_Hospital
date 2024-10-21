@@ -8,10 +8,16 @@
   .layout-content {
     border-radius: 20px;
     background: #f8f9fa;
-    margin-left: 270px; /* Để nội dung không bị che bởi sidebar */
+    margin-left: 220px; /*Để nội dung không bị che bởi sidebar */
     padding: 20px;      /* Khoảng cách bên trong */
     flex-grow: 1;       /* Nội dung sẽ chiếm phần còn lại */
     overflow-y: auto;   /* Cho phép cuộn nếu nội dung lớn */
-    height: 100vh;      /* Chiều cao 100% của viewport */
+    height: 93vh;      /* Chiều cao 100% của viewport */
+    width: 100%;
   }
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1328px;
+    }
+}
   
