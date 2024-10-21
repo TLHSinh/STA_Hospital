@@ -5,16 +5,17 @@ import bcrypt from 'bcryptjs'
 
 
 const generateToken=user=>{
-    return jwt.sign({id:user._id, role:user.role},process.env.JWT_SECET_KEY, {
+    return jwt.sign({id:user._id, role:user.role, email:user.email},process.env.JWT_SECRET_KEY, {
         expiresIn:'15d',
     })
 }
 
 
 export const register = async(req,res)=>{
-
+/* 
     console.log("Request Headers: ", req.headers);  // Kiểm tra các headers
     console.log("Request Body: ", req.body);  // Kiểm tra dữ liệu body
+     */
     const{email,password,name,role,photo,gender}=req.body;
 
     try{
@@ -74,6 +75,7 @@ export const login = async(req,res)=>{
     console.log("request body:",req.body);
     const{ email}=req.body
 
+
     try{
         let user=null
         const patient=await User.findOne({email})
@@ -107,6 +109,7 @@ export const login = async(req,res)=>{
         return res
             .status(200)
             .json({status: true,message:"Dang nhap thanh cong", token,data:{...rest},role });
+            
 
     }catch (err) {
         return res
