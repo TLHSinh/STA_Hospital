@@ -1,18 +1,31 @@
 import React from 'react';
-import { Outlet, useLocation } from 'react-router-dom'; // Import useLocation
-import Navbar from './Components/Customer/Navbar/Navbar'; // Import Navbar
-import Footer from './Components/Customer/Footer/Footer'; // Import Footer
+ import { BrowserRouter, Navigate, Route, Router, Routes } from 'react-router-dom'; // Import useLocation
+import AdminRouter from './Routers/AdminRouter';
+import CustomerRoutes from './Routers/CustomerRouter';
 
 
 const App = () => {
-  const location = useLocation(); // Lấy đường dẫn hiện tại
-  const hideNavAndFooter = location.pathname === '/login'|| location.pathname === '/register'; // Kiểm tra nếu là trang login-register
+  // const location = useLocation(); // Lấy đường dẫn hiện tại
+  // const hideNavAndFooter = location.pathname === '/login'|| location.pathname === '/register'; // Kiểm tra nếu là trang login-register
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      {!hideNavAndFooter && <Navbar />} {/* Không hiển thị Navbar nếu ở trang login-register */}
-      <Outlet /> {/* Đây là nơi các trang con sẽ được render */}
-      {!hideNavAndFooter && <Footer />} {/* Không hiển thị Footer nếu ở trang login-register */}
+      <BrowserRouter>
+        <Routes>
+          {/* đây là hướng đi của khách hàng */}
+            <Route path="/customer/*" element={<CustomerRoutes />} />
+            <Route path="/" element={<Navigate to="/customer/home" />} /> 
+
+          {/* đây là hướng đi của admin */}
+          <Route path="/admin/*" element={<AdminRouter/>} />
+          <Route path="/" element={<Navigate to="/admin/dashboard" />} /> Điều hướng mặc định
+
+          {/* đây là hướng đi của doctor */}
+          <Route path="/doctor/*" element={<AdminRouter/>} />
+          <Route path="/" element={<Navigate to="/doctor/dashboard" />} /> Điều hướng mặc định
+
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

@@ -1,7 +1,8 @@
 .card-grid {
     display: flex;
     flex-wrap: wrap; /* Cho phép các card xuống hàng */
-    justify-content: space-between; /* Căn giữa các card */
+    justify-content: center; /* Căn giữa các card tốt hơn */
+    align-items: stretch; /* Đảm bảo tất cả các card có cùng chiều cao */
     gap: 1rem; /* Khoảng cách giữa các card */
     margin: 1rem; /* Thêm khoảng cách giữa card-grid và các thành phần khác */
 }
@@ -20,7 +21,6 @@
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease, opacity 0.3s ease; /* Hiệu ứng khi hover */
 }
 
-/* Hiệu ứng hover */
 .card-container:hover {
     transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
     box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.2); /* Thay đổi bóng khi hover */
@@ -42,15 +42,14 @@
     font-size: 1rem; /* Kích thước chữ mô tả */
 }
 
-/* Nút Learn More */
 .card-btn {
     text-align: center;
     width: 80%; /* Đặt chiều rộng của nút */
     border-radius: 5px;
     padding: 0.5rem 1rem;
     background-color: transparent; /* Nền trong suốt */
-    border: 2px solid rgb(0, 0, 0); /* Viền trắng */
-    color: rgb(0, 0, 0); /* Chữ trắng */
+    border: 2px solid rgb(0, 0, 0); /* Viền đen */
+    color: rgb(0, 0, 0); /* Chữ đen */
     text-decoration: none;
     position: absolute; /* Đặt vị trí nút */
     top: 50%; /* Căn giữa theo chiều dọc */
@@ -60,7 +59,6 @@
     transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
 }
 
-/* Hiển thị nút khi hover */
 .card-container:hover .card-btn {
     opacity: 1; /* Hiển thị nút khi hover */
     transform: translate(-50%, -50%) scale(1.1); /* Phóng to nút khi hover */
@@ -82,5 +80,65 @@
 @media (max-width: 480px) {
     .card-container {
         width: 100%; /* Trên thiết bị rất nhỏ, mỗi card chiếm 100% chiều rộng */
+    }
+}
+
+.card-container {
+    width: 260px; /* Giảm chiều rộng của thẻ */
+    height: 380px; /* Giảm chiều cao của thẻ */
+    border-radius: 1rem;
+    box-shadow: 0px 10px 8px #999;
+    display: flex;
+    flex-direction: column;
+    background-color: #0066ff2c;
+    margin: 0.5rem; /* Khoảng cách giữa các card */
+    position: relative; /* Để position absolute hoạt động cho nút */
+    overflow: hidden; /* Ẩn phần dư thừa của nút "Learn More" */
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease, opacity 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Card có chiều rộng tối thiểu là 250px */
+    gap: 1rem; /* Khoảng cách giữa các card */
+    margin: 1rem; /* Khoảng cách với các phần tử khác */
+}
+
+.card-container {
+    width: 100%; /* Đặt width là 100% của cột grid */
+    max-width: 300px; /* Đặt kích thước tối đa cho mỗi card */
+    height: auto; /* Chiều cao tự động theo nội dung */
+    border-radius: 1rem;
+    box-shadow: 0px 10px 8px #999;
+    display: flex;
+    flex-direction: column;
+    background-color: #0066ff2c;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s ease;
+}
+
+/* Thẻ img */
+.card-img {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Điều chỉnh cho màn hình nhỏ hơn */
+    }
+}
+
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Điều chỉnh thêm cho thiết bị nhỏ */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-grid {
+        grid-template-columns: 1fr; /* Mỗi card chiếm toàn bộ chiều rộng trên màn hình rất nhỏ */
     }
 }
