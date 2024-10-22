@@ -30,7 +30,7 @@ export const register = async(req,res)=>{
 
         //kiem tra neu user ton tai
         if(user){
-            return res.status(400).json({message:"nguoi dung da ton tai"})
+            return res.status(400).json({message:"Người dùng đã tồn tại"})
         }
 
         //hash password
@@ -60,11 +60,11 @@ export const register = async(req,res)=>{
         }
 
         await user.save()
-        res.status(200).json({message:"dang ky nguoi dung thanh cong"})
+        res.status(200).json({message:"Đăng ký người dùng thành công"})
 
 
     }catch (err) {
-        res.status(500).json({success:false,message:"Mat ket noi server"})
+        res.status(500).json({success:false,message:"Mất kết nối sever"})
 
     }
 }
@@ -89,7 +89,7 @@ export const login = async(req,res)=>{
         }
         //kiểm tra nếu user tồn tại hoặc không
         if(!user){
-            return res.status(404).json({message:"Khong im thay user"});
+            return res.status(404).json({message:"Không tìm thấy người dùng"});
         }
 
         //kiểm tra password
@@ -108,12 +108,12 @@ export const login = async(req,res)=>{
 
         return res
             .status(200)
-            .json({status: true,message:"Dang nhap thanh cong", token,data:{...rest},role });
+            .json({status: true,message:"Đăng nhập thành công", token,data:{...rest},role });
             
 
     }catch (err) {
         return res
             .status(500)
-            .json({status: false,message:"Dang nhap khong thanh cong"});
+            .json({status: false,message:"Đăng nhập không thành công"});
     }
 }
