@@ -17,6 +17,8 @@ const Home = () => {
     { id: 4, imgSrc: "/Images/STA_BACSI/bacsi_bui-thi-truc-my.png", imgAlt: "Card Image 4", title: "BS. Bùi Thị Trúc My", description: "Bác Sĩ Đa Khoa", link: "bs-bui-thi-truc-my" },
     { id: 5, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
     { id: 6, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
+    { id: 7, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
+    { id: 8, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
   ];
 
   return (
@@ -38,9 +40,9 @@ const Home = () => {
 
         <section>
           <div className="item">
-            <div className='container'>
-              <h1 className='article-item text-center'>Bác Sĩ</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 justify-items-center">
+            <div className="container">
+              <h1 className="article-item text-center">Bác Sĩ</h1>
+              <div className="card-grid">
                 {doctors.map(doctor => (
                   <Card2BacSi
                     key={doctor.id}

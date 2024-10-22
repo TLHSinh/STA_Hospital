@@ -12,6 +12,8 @@ const doctors = [
   { id: 4, imgSrc: "/Images/STA_BACSI/bacsi_bui-thi-truc-my.png", imgAlt: "Card Image 4", title: "BS. Bùi Thị Trúc My", description: "Bác Sĩ Đa Khoa", link: "bs-bui-thi-truc-my" },
   { id: 5, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
   { id: 6, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
+  { id: 7, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
+  { id: 8, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
 ];
 
 function BacSi() {
@@ -35,29 +37,30 @@ function BacSi() {
           </p>
         </div>
 
+       
+
         <section className="item">
           <div className="container text-center">
-            <div className="max-w-[700px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center">
+            <div className="max-w-[800px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center">
               <input
                 type="search"
-                className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none placeholder:text-gray-500"
-                placeholder="Search Doctor"
+                className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none placeholder:text-gray-500 text-[18px]"
+                placeholder="Tìm kiếm Bác Sĩ"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="bg-[#0b8fac] text-white px-4 rounded-r-md">
+              <button className="bg-[#0b8fac] text-white px-6 py-4 rounded-r-md text-[18px] h-full">
                 Search
               </button>
             </div>
           </div>
         </section>
 
-
         <section>
           <div className="item">
-            <div className='container'>
-              <h1 className='article-item text-center'>Bác Sĩ</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 justify-items-center">
+            <div className="container">
+              <h1 className="article-item text-center">Bác Sĩ</h1>
+              <div className="card-grid">
                 {filteredDoctors.map(doctor => (
                   <Card2BacSi
                     key={doctor.id}
@@ -73,6 +76,7 @@ function BacSi() {
             </div>
           </div>
         </section>
+
 
 
       </div>

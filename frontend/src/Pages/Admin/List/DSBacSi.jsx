@@ -12,7 +12,7 @@ const BacSi = () => {
   };
   return (
     <div style={{ position: 'relative' }}>
-      <div className='title'>
+      <div className='title-ad'>
         <h1>DANH SÁCH BÁC SĨ</h1>
       </div>
       {/* Nội dung của trang chính */}

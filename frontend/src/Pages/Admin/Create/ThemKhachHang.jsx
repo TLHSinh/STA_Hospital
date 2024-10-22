@@ -49,10 +49,10 @@ const ThemKhachHang = () => {
 
   return (
     <div>
-      <div className='title'>
+      <div className='title-ad'>
         <div className='icon-back'>
             <Link to="/admin/danhsachkhachhang">
-              <FaChevronLeft />
+              <FaChevronLeft color='#66B5A3' />
             </Link>
         </div>
         <h1>THÊM KHÁCH HÀNG</h1>

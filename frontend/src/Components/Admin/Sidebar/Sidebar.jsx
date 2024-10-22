@@ -5,29 +5,29 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { FaCapsules, FaHospitalUser, FaUserDoctor } from "react-icons/fa6";
 const Sidebar = () => {
   return (
-    <div className='menu'>
-      <div className='logo'>
+    <div className='menu-ad'>
+      <div className='logo-ad'>
           <img src="/Images/Home.png" alt="Logo" />
       </div>
 
-      <div className='menu-list'>
-        <Link to="/admin/dashboard" className = 'item' >
+      <div className='menu-list-ad'>
+        <Link to="/admin/dashboard" className = 'item-ad' >
             <MdOutlineSpaceDashboard   className='icon'/>
             Dashboard
         </Link>
-        <Link to="/admin/danhsachkhachhang" className = 'item' >
+        <Link to="/admin/danhsachkhachhang" className = 'item-ad' >
             <FaHospitalUser className='icon' />
             Khách Hàng
         </Link>
-        <Link to="/admin/danhsachbacsi" className = 'item' >
+        <Link to="/admin/danhsachbacsi" className = 'item-ad' >
             <FaUserDoctor  className='icon'/>
             Bác Sĩ
         </Link>
-        <Link to="/admin/danhsachlichhen" className = 'item' >
+        <Link to="/admin/danhsachlichhen" className = 'item-ad' >
             <MdOutlineSpaceDashboard  className='icon'/>
             Lịch Hẹn
         </Link>
-        <Link to="/admin/danhsachthuoc" className = 'item' >
+        <Link to="/admin/danhsachthuoc" className = 'item-ad' >
             <FaCapsules  className='icon'/>
             Thuốc
         </Link>

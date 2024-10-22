@@ -1,23 +1,25 @@
 /* Thêm CSS vào tệp CSS của bạn */
-.container {
-    display: flex;
-    padding: 20px;
-    gap: 20px;
-  }
-  
-  .layout-content {
-    border-radius: 20px;
-    background: #f8f9fa;
-    margin-left: 220px; /*Để nội dung không bị che bởi sidebar */
-    padding: 20px;      /* Khoảng cách bên trong */
-    flex-grow: 1;       /* Nội dung sẽ chiếm phần còn lại */
-    overflow-y: auto;   /* Cho phép cuộn nếu nội dung lớn */
-    height: 93vh;      /* Chiều cao 100% của viewport */
-    width: 100%;
-  }
-@media (min-width: 1280px) {
-    .container {
-        max-width: 1328px;
-    }
+.container-ad {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
 }
-  
+
+.layout-content-ad {
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  top: 0;
+  left: 250px;
+  height: 100vh;
+  width: calc(100% - 250px);
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  overflow-y: auto;
+  /* transition: var(--tran-05); */
+}
+@media (min-width: 1280px) {
+  .container-ad {
+      max-width: 1328px;
+  }
+}

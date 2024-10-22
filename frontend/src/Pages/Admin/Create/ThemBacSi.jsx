@@ -48,10 +48,10 @@ const ThemBacSi = () => {
     }
   return (
     <div>
-      <div className='title'>
+      <div className='title-ad'>
         <div className='icon-back'>
             <Link to="/admin/danhsachbacsi">
-              <FaChevronLeft />
+              <FaChevronLeft color='#66B5A3'/>
             </Link>
         </div>
         <h1>THÊM BÁC SĨ</h1>
