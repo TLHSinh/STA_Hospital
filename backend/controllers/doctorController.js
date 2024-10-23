@@ -1,3 +1,4 @@
+import e from "cors";
 import Doctor from "../models/DoctorSchema.js";
 
 export const updateDoctor=async(req,res)=>{
@@ -5,7 +6,11 @@ export const updateDoctor=async(req,res)=>{
 
     try{
 
-        const updateDoctor= await Doctor.findByIdAndUpdate(id,{$set:req.body},{new:true});
+        const updateDoctor= await Doctor.findByIdAndUpdate(
+            id,
+            {$set:req.body},
+            {new:true}
+        );
 
         res.status(200).json({ success:true, message:'cap nhap thanh cong',data:updateDoctor});
 
@@ -37,9 +42,9 @@ export const getSingleDoctor=async(req,res)=>{
 
     try{
 
-        const getDoctor= await Doctor.findById(id).select("-password");
+        const getaDoctor= await Doctor.findById(id).select("-password");
 
-        res.status(200).json({ success:true, message:'tim nguoi dung thanh cong',data:getDoctor})
+        res.status(200).json({ success:true, message:'tim nguoi dung thanh cong',data:getaDoctor})
 
     }catch(err){
         res.status(500).json({ success:false, message:'tim nguoi dung khong thanh cong'})
@@ -52,21 +57,20 @@ export const getAllDoctor=async(req,res)=>{
 
     try{
 
-        
+        const {query}=req.query
+        let getDoctor ;
 
-        if (query){
-            doctor=await Doctor.find({
-                isApproved:'approved',
-                $or:[
-                    {name:{$regex:query, $options:'i'}},
-                    {specialization: {$regex:query,$options:"i" }},
-                ],
-            }).select("-password");
-        } else{
-
-        const getDoctor= await Doctor.find({}).select("-password");
-        }
-
+        if(query) {
+            getDoctor = await Doctor.find({
+            isApproved:"approved", 
+            $or:[
+                {name:{$regex:query, $options:"i"}},
+                {specialization:{$regex:query, $options:"i"}}
+            ],
+        }).select("-password");
+    } else{
+            getDoctor= await Doctor.find({isApproved:"approved"}).select("-password");
+    }
         res.status(200).json({ success:true, message:'tim nguoi dung thanh cong',data:getDoctor})
 
     }catch(err){

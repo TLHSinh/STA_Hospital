@@ -1,36 +1,41 @@
 import React from 'react';
- import { BrowserRouter, Navigate, Route, Router, Routes } from 'react-router-dom'; // Import useLocation
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AdminRouter from './Routers/AdminRouter';
 import CustomerRoutes from './Routers/CustomerRouter';
-
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';  
+import { AuthContextProvider } from './context/AuthContext';  // Import AuthContextProvider
 
 const App = () => {
-  // const location = useLocation(); // Lấy đường dẫn hiện tại
-  // const hideNavAndFooter = location.pathname === '/login'|| location.pathname === '/register'; // Kiểm tra nếu là trang login-register
-
   return (
-    <div >
-      <BrowserRouter>
-        <Routes>
-          {/* đây là hướng đi của khách hàng */}
+    <AuthContextProvider> {/* Bao bọc ứng dụng trong AuthContextProvider */}
+      <div>
+        {/* Đặt ToastContainer ở đây */}
+        <ToastContainer
+          theme="dark"
+          position="top-right"
+          autoClose={3000}
+          closeOnClick
+          pauseOnHover={false}
+        />
+
+        <BrowserRouter>
+          <Routes>
+            {/* đây là hướng đi của khách hàng */}
             <Route path="/customer/*" element={<CustomerRoutes />} />
             <Route path="/" element={<Navigate to="/customer/home" />} /> 
 
+            {/* đây là hướng đi của admin */}
+            <Route path="/admin/*" element={<AdminRouter />} />
+            <Route path="/" element={<Navigate to="/admin/dashboard" />} /> 
 
-          {/* đây là hướng đi của admin */}
-          <Route path="/admin/*" element={<AdminRouter/>} />
-          <Route path="/" element={<Navigate to="/admin/dashboard" />} /> 
-
-
-          {/* đây là hướng đi của doctor */}
-          <Route path="/doctor/*" element={<AdminRouter/>} />
-          <Route path="/" element={<Navigate to="/doctor/dashboard" />} /> 
-
-
-        </Routes>
-      </BrowserRouter>
-    </div>
+            {/* đây là hướng đi của doctor */}
+            <Route path="/doctor/*" element={<AdminRouter />} />
+            <Route path="/" element={<Navigate to="/doctor/dashboard" />} /> 
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </AuthContextProvider>
   );
 };
 
