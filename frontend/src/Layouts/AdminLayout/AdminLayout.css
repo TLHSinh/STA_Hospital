@@ -8,10 +8,8 @@
 .layout-content-ad {
   padding: 20px;
   position: absolute;
-  top: 0;
-  top: 0;
   left: 250px;
-  height: 100vh;
+  height: 90vh;
   width: calc(100% - 250px);
   background-color: #f8f9fa;
   border-radius: 10px;

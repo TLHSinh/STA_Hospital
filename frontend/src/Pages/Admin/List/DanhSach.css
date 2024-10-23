@@ -7,3 +7,10 @@
     color: #66B5A3;
     font-weight: 500;
 }
+.rbc-today{
+    background: #f0fcf8 !important;
+}
+.rbc-btn-group button{
+    color: #66B5A3 !important;
+    border: 1px solid#66B5A3 !important;
+}

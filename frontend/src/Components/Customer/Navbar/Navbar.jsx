@@ -39,26 +39,22 @@ function Navbar() {
         <Link to="/customer/goikham">Gói khám</Link>
         <Link to="/customer/bacsi">Bác sĩ</Link>
         <Link to="/customer/lienhe">Liên hệ</Link>
-
-        {/* Đặt lịch hẹn mở qua popup */}
         <a href="#!" onClick={handleOpenPopup}>Đặt lịch hẹn</a>
-
+        <Link to="/customer/login" className="user">
+            <FaRegCircleUser color="#0b8fac" size="2rem" />
+        </Link>
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <FaTimes />
         </button>
     </nav>
 
-    {/* Popup đặt lịch hẹn */}
     <PopupLichHen open={openPopup} handleClose={handleClosePopup} />
-
     <button className="nav-btn" onClick={showNavbar}>
         <FaBars />
     </button>
 
     {/* Đường dẫn đến trang đăng nhập */}
-    <Link to="/customer/login" className="user">
-        <FaRegCircleUser color="#0b8fac" size="2rem" />
-    </Link>
+    
 </header>
     );
 }

@@ -106,7 +106,7 @@ const ThemKhachHang = () => {
           </div>
           <input type="text" placeholder="Nhóm máu" required />
         </div>
-        </div>
+      </div>
         
         <button type='submit'>Tạo</button>
       </form>
