@@ -30,17 +30,15 @@ const Appointment = () => {
         onClick={handleClick}
         sx={{
           backgroundColor: '#66B5A3',
-          '&:hover': {
-            backgroundColor: '#97c9bc',
-          },
-          position: 'absolute',
-          bottom: 10,
-          right: 50
-          ,
+          '&:hover': { backgroundColor: '#97c9bc' },
+          position: 'fixed',
+          bottom: 50,
+          right: 50,
+          animation: 'animate 2s linear infinite',
         }}
         aria-label="add"
       >
-        <AddIcon />
+        <AddIcon color='white' />
       </Fab>
     </div>
     </div>

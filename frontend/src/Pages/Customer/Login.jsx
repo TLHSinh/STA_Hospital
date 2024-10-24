@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/AuthContext.jsx';
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",
-        password: "",
+        matKhau: "",
     });
 
     const [loading, setLoading] = useState(false);
@@ -51,7 +51,7 @@ const Login = () => {
             // Điều hướng dựa trên role
             if (data.role === 'admin') {
                 navigate("/admin/dashboard");  // Điều hướng đến trang admin
-            } else if (data.role === 'patient') {
+            } else if (data.role === 'benhNhan') {
                 navigate("/");    // Điều hướng đến trang user
             } else {
                 navigate("/");                 // Mặc định điều hướng nếu không xác định được role
@@ -93,7 +93,7 @@ const Login = () => {
                         <input
                             type="password"
                             placeholder="Mật Khẩu"
-                            name="password"
+                            name="matKhau"
                             value={formData.password}
                             onChange={handleInputChange}
                             className="w-full px-3 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"

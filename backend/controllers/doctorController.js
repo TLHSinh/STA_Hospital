@@ -1,80 +1,65 @@
 import e from "cors";
-import Doctor from "../models/DoctorSchema.js";
+import BacSi from "../models/BacSiSchema.js";
 
-export const updateDoctor=async(req,res)=>{
-    const id= req.params.id;
+export const updateDoctor = async (req, res) => {
+    const id = req.params.id;
 
-    try{
-
-        const updateDoctor= await Doctor.findByIdAndUpdate(
+    try {
+        const updateDoctor = await BacSi.findByIdAndUpdate(
             id,
-            {$set:req.body},
-            {new:true}
+            { $set: req.body },
+            { new: true }
         );
 
-        res.status(200).json({ success:true, message:'cap nhap thanh cong',data:updateDoctor});
-
-    }catch(err){
-        res.status(500).json({ success:false, message:'cap nhap khong thanh cong'});
-
+        res.status(200).json({ success: true, message: 'Cập nhật thành công', data: updateDoctor });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Cập nhật không thành công' });
     }
 }
 
+export const deleteDoctor = async (req, res) => {
+    const id = req.params.id;
 
-export const deleteDoctor=async(req,res)=>{
-    const id= req.params.id;
+    try {
+        await BacSi.findByIdAndDelete(id);
 
-    try{
-        
-        await Doctor.findByIdAndDelete(id);
-
-        res.status(200).json({ success:true, message:'xoa nguoi dung thanh cong'})
-
-    }catch(err){
-        res.status(500).json({ success:false, message:'xoa nguoi dung khong thanh cong'})
-
+        res.status(200).json({ success: true, message: 'Xóa người dùng thành công' });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Xóa người dùng không thành công' });
     }
 }
 
+export const getSingleDoctor = async (req, res) => {
+    const id = req.params.id;
 
-export const getSingleDoctor=async(req,res)=>{
-    const id= req.params.id
+    try {
+        const getaDoctor = await BacSi.findById(id).select("-matKhau");
 
-    try{
-
-        const getaDoctor= await Doctor.findById(id).select("-password");
-
-        res.status(200).json({ success:true, message:'tim nguoi dung thanh cong',data:getaDoctor})
-
-    }catch(err){
-        res.status(500).json({ success:false, message:'tim nguoi dung khong thanh cong'})
-
+        res.status(200).json({ success: true, message: 'Tìm người dùng thành công', data: getaDoctor });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Tìm người dùng không thành công' });
     }
 }
 
+export const getAllDoctor = async (req, res) => {
+    try {
+        const { query } = req.query;
+        let getDoctor;
 
-export const getAllDoctor=async(req,res)=>{
+        if (query) {
+            getDoctor = await BacSi.find({
+                trangThai: "duocDuyet", // Thay đổi từ isApproved thành trangThai và giá trị "approved" thành "duocDuyet"
+                $or: [
+                    { ten: { $regex: query, $options: "i" } }, // Thay name bằng ten
+                    { chuyenKhoa: { $regex: query, $options: "i" } } // Thay specialization bằng chuyenKhoa
+                ],
+            }).select("-matKhau"); // Thay password bằng matKhau
+        } else {
+            getDoctor = await BacSi.find({ trangThai: "duocDuyet" }).select("-matKhau"); // Thay password bằng matKhau
+        }
 
-    try{
-
-        const {query}=req.query
-        let getDoctor ;
-
-        if(query) {
-            getDoctor = await Doctor.find({
-            isApproved:"approved", 
-            $or:[
-                {name:{$regex:query, $options:"i"}},
-                {specialization:{$regex:query, $options:"i"}}
-            ],
-        }).select("-password");
-    } else{
-            getDoctor= await Doctor.find({isApproved:"approved"}).select("-password");
-    }
-        res.status(200).json({ success:true, message:'tim nguoi dung thanh cong',data:getDoctor})
-
-    }catch(err){
-        res.status(500).json({ success:false, message:'tim nguoi dung khong thanh cong'})
-
+        res.status(200).json({ success: true, message: 'Tìm người dùng thành công', data: getDoctor });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Tìm người dùng không thành công' });
     }
 }

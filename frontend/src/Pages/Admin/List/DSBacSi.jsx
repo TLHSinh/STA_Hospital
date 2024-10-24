@@ -20,13 +20,11 @@ const BacSi = () => {
         onClick={handleClick}
         sx={{
           backgroundColor: '#66B5A3',
-          '&:hover': {
-            backgroundColor: '#97c9bc',
-          },
-          position: 'absolute',
-          bottom: -450,
-          right: 30
-          ,
+          '&:hover': { backgroundColor: '#97c9bc' },
+          position: 'fixed',
+          bottom: 50,
+          right: 50,
+          animation: 'animate 2s linear infinite',
         }}
         aria-label="add"
       >

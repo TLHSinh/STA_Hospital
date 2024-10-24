@@ -10,14 +10,15 @@ const SignUp = () => {
   const [previewURL, setPreviewURL] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Điều chỉnh các trường formData theo schema của backend
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    rePassword: "", // Thêm trường rePassword vào state
-    photo: selectedFile,
-    gender: "",
-    role: "patient",
+    ten: "",             // Tên bệnh nhân
+    email: "",           // Email
+    matKhau: "",         // Mật khẩu
+    rePassword: "",      // Xác nhận mật khẩu
+    hinhAnh: selectedFile, // Hình ảnh (URL)
+    gioiTinh: "",        // Giới tính
+    role: "benhnhan",    // Vai trò: mặc định là bệnh nhân
   });
 
   const navigate = useNavigate();
@@ -31,54 +32,44 @@ const SignUp = () => {
     const data = await uploadImageToCloudinary(file);
     setPreviewURL(data.url);
     setSelectedFile(data.url);
-    setFormData({ ...formData, photo: data.url });
+    setFormData({ ...formData, hinhAnh: data.url });
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
-  
+
     // Kiểm tra password và rePassword
-    if (formData.password !== formData.rePassword) {
+    if (formData.matKhau !== formData.rePassword) {
       toast.error("Mật khẩu và xác nhận mật khẩu không khớp.");
       setLoading(false);
       return;
     }
 
-    // quan trọng ko đc xoá sau này mở ra h đóng cho tiện 
-    // Kiểm tra độ dài và điều kiện của mật khẩu
-/*     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
-    if (!passwordRegex.test(formData.password)) {
-      toast.error("Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm cả chữ cái và số.");
-      setLoading(false);
-      return;
-    } */
-  
     try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
         method: 'post',
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData)  // Gửi formData lên backend
       });
-  
+
       const { message } = await res.json();
-  
+
       if (!res.ok) {
         throw new Error(message);
       }
-  
+
       setLoading(false);
       toast.success(message);
       navigate("/customer/login");
-  
+
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
     }
   };
-  
 
   return (
     <section className="px-2 xl:px-0 py-10">
@@ -98,8 +89,8 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="Họ và Tên"
-                  name="name"
-                  value={formData.name}
+                  name="ten"  // Tên phải là 'ten' theo schema
+                  value={formData.ten}
                   onChange={handleInputChange}
                   className="w-full px-2 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[14px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   required
@@ -122,8 +113,8 @@ const SignUp = () => {
                 <input
                   type="password"
                   placeholder="Mật Khẩu"
-                  name="password"
-                  value={formData.password}
+                  name="matKhau"  // Phải là 'matKhau' theo schema
+                  value={formData.matKhau}
                   onChange={handleInputChange}
                   className="w-full px-2 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[14px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   required
@@ -146,15 +137,15 @@ const SignUp = () => {
                 <label className="text-headingColor font-bold text-[13px] leading-6 inline-flex items-center">
                   Giới Tính:
                   <select
-                    name="gender"
-                    value={formData.gender}
+                    name="gioiTinh"  // Phải là 'gioiTinh' theo schema
+                    value={formData.gioiTinh}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[13px] leading-6 px-2 py-2 focus:outline-none ml-2"
                   >
-                    <option value="none">Chọn</option>
-                    <option value="male">Nam</option>
-                    <option value="female">Nữ</option>
-                    <option value="other">Khác</option>
+                    <option value="">Chọn</option>
+                    <option value="nam">Nam</option>
+                    <option value="nu">Nữ</option>
+                    <option value="khac">Khác</option>
                   </select>
                 </label>
               </div>
@@ -169,7 +160,7 @@ const SignUp = () => {
                 <div className="relative w-[110px] h-[40px]">
                   <input
                     type="file"
-                    name="photo"
+                    name="hinhAnh"  // Phải là 'hinhAnh' theo schema
                     id="customFile"
                     onChange={handleFileInputChange}
                     accept=".jpg, .png"
@@ -209,3 +200,19 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+
+
+
+
+
+
+
+// quan trọng ko đc xoá sau này mở ra h đóng cho tiện 
+    // Kiểm tra độ dài và điều kiện của mật khẩu
+/*     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      toast.error("Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm cả chữ cái và số.");
+      setLoading(false);
+      return;
+    } */

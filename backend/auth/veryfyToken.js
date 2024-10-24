@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import Doctor from '../models/DoctorSchema.js'
 import User from '../models/UserSchema.js'
+import BacSi from '../models/BacSiSchema.js';
+import BenhNhan from '../models/BenhNhanSchema.js';
 
 /* export const authenticate=async(req,res,next)=>{
     
@@ -47,6 +49,28 @@ import User from '../models/UserSchema.js'
     }
 }; */
 
+
+/* export const restrict = roles => async(req, res, next)=>{
+    const userId=req.userId
+
+    let user;
+
+    const patient =await User.findById(userId)
+    const doctor =await Doctor.findById(userId)
+
+    if (patient){
+        user=patient
+    }
+    if(doctor){
+        user=doctor
+    }
+    if(!roles.includes(user.role)){
+        return res.status(401).json({success:false, message:'you not authorization'})
+
+    }
+
+    next();
+}; */
 
 
 export const authenticate = async (req, res, next) => {
@@ -109,11 +133,11 @@ export const restrict = (roles) => async (req, res, next) => {
     let user = null;
     try {
         // Thử tìm người dùng trong bảng User
-        user = await User.findById(userId);
+        user = await BenhNhan.findById(userId);
 
         // Nếu không tìm thấy trong User, kiểm tra bảng Doctor
         if (!user) {
-            user = await Doctor.findById(userId);
+            user = await BacSi.findById(userId);
         }
     } catch (error) {
         console.error("Lỗi khi tìm người dùng:", error);
@@ -145,25 +169,3 @@ export const restrict = (roles) => async (req, res, next) => {
 };
 
 
-
-/* export const restrict = roles => async(req, res, next)=>{
-    const userId=req.userId
-
-    let user;
-
-    const patient =await User.findById(userId)
-    const doctor =await Doctor.findById(userId)
-
-    if (patient){
-        user=patient
-    }
-    if(doctor){
-        user=doctor
-    }
-    if(!roles.includes(user.role)){
-        return res.status(401).json({success:false, message:'you not authorization'})
-
-    }
-
-    next();
-}; */
