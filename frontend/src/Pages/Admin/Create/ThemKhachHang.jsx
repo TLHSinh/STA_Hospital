@@ -4,6 +4,23 @@ import { FaChevronLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useRef, useState  } from "react";
 const ThemKhachHang = () => {
+
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    rePassword: "", // Thêm trường rePassword vào state
+    // photo: selectedFile,
+    gender: "",
+    role: "patient",
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+
   const inputRef = useRef(null);
   const [image, setImage] = useState ("");
 
@@ -77,7 +94,7 @@ const ThemKhachHang = () => {
       <div class="column">
           <div class="input-box">
             <label>Họ và tên</label>
-            <input type="text" required />
+            <input type="text" value={formData.name}  onChange={handleInputChange} required />
           </div>
           <div class="input-box">
             <label>Ngày sinh</label>

@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Đảm bảo route đăng ký sử dụng phương thức POST
 router.get('/:id', authenticate, restrict(["patient"]), getSingleUser);
-router.get('/',authenticate, restrict(["admin"]), getAllUser);
+router.get('/',authenticate,  getAllUser);
 router.put('/:id', authenticate, restrict(["patient"]),updateUser);
 router.delete('/:id', authenticate, restrict(["patient"]),deleteUser);
 
