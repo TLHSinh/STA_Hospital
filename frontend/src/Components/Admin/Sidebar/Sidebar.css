@@ -1,10 +1,19 @@
 .menu-ad{
-    position: fixed;
+    /* position: fixed;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     height:100vh ;
-    width: 18%;
+    width: 15%; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+   
+    /* transition: var(--tran-05); */
+    z-index: 100; 
     
 }
 .logo-ad{
@@ -12,6 +21,10 @@
     display: flex;
     align-items: center;
     gap:20px
+}
+.logo-ad img{
+    min-height: 60px;
+    width: 100%;
 }
 .menu-list-ad{
     display: flex;

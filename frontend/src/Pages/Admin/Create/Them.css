@@ -13,12 +13,10 @@
     font-weight: 500;
     padding: 0 16px;
 }
-h1{
+.title h1{
     text-align: center;
     margin: 0 auto;
 }
-
-
 
 
 
@@ -117,7 +115,6 @@ h1{
     border-radius: 50%;        /* Tạo hình tròn cho ảnh */
     object-fit: cover;         /* Đảm bảo ảnh không bị méo */
     cursor: pointer;           /* Đổi con trỏ khi hover */
-     /* Thêm viền cho ảnh */
   }
   
   /*Responsive*/
@@ -129,39 +126,3 @@ h1{
       row-gap: 15px;
     }
   }
-
-
-
-
-/* label{
-    font-size: 15px;
-    display: block;
-    width: 100%;
-    margin-top: 8px;
-    margin-bottom: 5px;
-    text-align: left;
-    color: #555;
-    font-weight: bold;
-}
-form .input-box{
-   width: 100%;
-   margin-top: 20px;
-}
-input[type='radio']{
-    display: inline;
-    width: 10%;
-}
-button{
-    padding: 10px 15px;
-    border-radius: 6px;
-    margin: 15px;
-    border: none;
-    color: white;
-    background-color: #66B5A3;
-    width: 40%;
-    font-size: 16px;
-}
-form .column{
-    display: flex;
-    column-gap: 15px;
-} */

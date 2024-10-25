@@ -20,7 +20,7 @@ const AdminLayout = () => {
   {!hideNavAndFooter && <Sidebar />} {/* Không hiển thị Navbar nếu ở trang login-register */}
   <div className='layout-content-ad'>
     <Outlet />
-  </div> {/* Đây là nơi các trang con sẽ được render */}
+  </div>
   {/* {!hideNavAndFooter && <Footer />} Không hiển thị Footer nếu ở trang login-register */}
 </div>
 

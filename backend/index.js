@@ -42,7 +42,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use('/api/v1/auth',authRoute); //domain/api/v1/auth/register
-app.use('/api/v1/users',userRoute); //domain/api/v1/users/
+app.use('/api/v1/users',userRoute); //domain/api/v1/users/...
 app.use('/api/v1/doctors',doctorRoute); //domain/api/v1/doctors/
 
 

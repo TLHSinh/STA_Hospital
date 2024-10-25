@@ -4,6 +4,23 @@ import { FaChevronLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useRef, useState  } from "react";
 const ThemKhachHang = () => {
+
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    rePassword: "", // Thêm trường rePassword vào state
+    // photo: selectedFile,
+    gender: "",
+    role: "patient",
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+
   const inputRef = useRef(null);
   const [image, setImage] = useState ("");
 
@@ -49,10 +66,10 @@ const ThemKhachHang = () => {
 
   return (
     <div>
-      <div className='title'>
+      <div className='title-ad'>
         <div className='icon-back'>
             <Link to="/admin/danhsachkhachhang">
-              <FaChevronLeft />
+              <FaChevronLeft color='#66B5A3' />
             </Link>
         </div>
         <h1>THÊM KHÁCH HÀNG</h1>
@@ -77,7 +94,7 @@ const ThemKhachHang = () => {
       <div class="column">
           <div class="input-box">
             <label>Họ và tên</label>
-            <input type="text" required />
+            <input type="text" value={formData.name}  onChange={handleInputChange} required />
           </div>
           <div class="input-box">
             <label>Ngày sinh</label>
@@ -106,49 +123,10 @@ const ThemKhachHang = () => {
           </div>
           <input type="text" placeholder="Nhóm máu" required />
         </div>
-        </div>
+      </div>
         
         <button type='submit'>Tạo</button>
       </form>
-
-
-
-
-
-{/* 
-      <form>
-        <div className='column'>
-          <div className='input-box'>
-            <label htmlFor='name'>Họ và tên</label>
-            <input type='text' />
-          </div>
-          <div className='input-box'>
-            <label>Ngày sinh</label>
-            <input type='date' />
-          </div>
-        
-        </div>
-
-        <label htmlFor='gender'>Giới tính</label>
-        <input type='radio' name='gender'/> Nam 
-        <input type='radio' name='gender'/> Nữ 
-        <input type='radio' name='gender'/> Khác 
-
-
-        <label>Nhóm máu</label>
-        <input type='text' />
-
-        <label htmlFor='contact'>Số điện thoại</label>
-        <input type='text' name='contact' />
-
-        <label htmlFor='email'>Email</label>
-        <input type='email' name='email' />
-        
-        <label>Mật khẩu</label>
-        <input type='password' />
-
-        <button type='submit'>Tạo</button>
-      </form> */}
     </div>
   )
 }

@@ -7,6 +7,8 @@ import Thuoc from '../Pages/Admin/List/DSThuoc';
 import AdminLayout from '../Layouts/AdminLayout/AdminLayout';
 import ThemKhachHang from '../Pages/Admin/Create/ThemKhachHang';
 import ThemBacSi from '../Pages/Admin/Create/ThemBacSi';
+import ThemLichHen from '../Pages/Admin/Create/ThemLichHen';
+import ChinhSuaKhachHang from '../Pages/Admin/Update/ChinhSuaKhachHang';
 
 
 const AdminRouter = () => (
@@ -19,6 +21,8 @@ const AdminRouter = () => (
         <Route path="danhsachlichhen" element={<Lichhen/>} />
         <Route path="themkhachhang" element={<ThemKhachHang/>} />
         <Route path="thembacsi" element={<ThemBacSi/>} />
+        <Route path="themlichhen" element={<ThemLichHen/>} />
+        <Route path="chinhsuakhachhang/:id" element={<ChinhSuaKhachHang/>} />
       </Route>
     </Routes>
 );
