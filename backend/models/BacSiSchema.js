@@ -11,6 +11,8 @@ const BacSiSchema = new mongoose.Schema({
                 enum: ["nam", "nu", "khac"], 
                 required: true }, // Giới tính
   ngaySinh: { type: Date }, // Ngày sinh
+  cccd: { type: String }, // Căn cước công dân
+  diaChi: { type: String }, // Địa chỉ
   chuyenKhoa: { type: String, }, // Chuyên khoa
   giaKham: { type: Number }, // Giá khám
   role: { 
