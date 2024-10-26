@@ -100,7 +100,7 @@ const ThemKhachHang = () => {
             <label>Ngày sinh</label>
             <input type="date" required />
           </div>
-        </div>
+      </div>
         <div class="column">
           <div class="input-box">
             <label>Số điện thoại</label>
