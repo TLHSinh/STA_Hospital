@@ -8,7 +8,7 @@ import dotenv from 'dotenv'
 import authRoute from "./routes/auth.js"
 import userRoute from "./routes/user.js"
 import doctorRoute from "./routes/doctor.js"
-
+import inventoryRoute from "./routes/inventory.js"
 
 dotenv.config()
 
@@ -44,7 +44,7 @@ app.use(cors(corsOptions));
 app.use('/api/v1/auth',authRoute); //domain/api/v1/auth/register
 app.use('/api/v1/users',userRoute); //domain/api/v1/users/...
 app.use('/api/v1/doctors',doctorRoute); //domain/api/v1/doctors/
-
+app.use('/api/v1/inventory',inventoryRoute); //domain/api/v1/inventory/
 
 app.listen(port,()=>{
     connectDB();
