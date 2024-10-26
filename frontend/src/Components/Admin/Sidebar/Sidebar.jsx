@@ -27,7 +27,7 @@ const Sidebar = () => {
             <MdOutlineSpaceDashboard  className='icon'/>
             Lịch Hẹn
         </Link>
-        <Link to="/admin/danhsachthuoc" className = 'item-ad' >
+        <Link to="/admin/danhsachthuocvattu" className = 'item-ad' >
             <FaCapsules  className='icon'/>
             Thuốc
         </Link>

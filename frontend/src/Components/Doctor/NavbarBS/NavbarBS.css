@@ -1,0 +1,121 @@
+.header{
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; */
+	/* height: 180px; */
+    padding: 30px 2rem;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar{
+	width: 100%;
+}
+.navbar a{
+    position: relative;
+    font-size: 18px;
+    color: #0b8fac;
+    font-weight: 500;
+    margin-left: 40px;
+	text-decoration: none;
+}
+.navbar a::before{
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background:#0b8fac;
+    transition: .3s;
+}
+.navbar a:hover::before{
+    width: 100%;
+}
+.logo{
+	height: 100%;
+	width: 48%;
+}
+.logo img {
+    height: 100%; /* Giữ chiều cao tối đa của logo */
+    width: 100%;      /* Tự động điều chỉnh chiều rộng theo tỷ lệ */
+    /* object-fit: cover; Giữ nguyên tỷ lệ hình ảnh */
+    margin-left: 0px; /* Tạo khoảng cách giữa logo và padding của header */
+}
+
+.header .nav-btn {
+	padding: 5px;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--textColor);
+	visibility: hidden;
+	opacity: 0;
+	font-size: 1.8rem;
+}
+
+.header div,
+.navbar {
+	display: flex;
+	align-items: center;
+}
+@media only screen and (max-width: 1024px) {
+	
+	.header .nav-btn {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	.header .navbar {
+		z-index: 1;
+		position: fixed;
+		top: -100vh;
+		left: 0;
+		height: 100vh;
+		width: 30%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5rem;
+		background-color: white;
+		transition: 1s;
+		left: 70%;
+	}
+
+	header .responsive_nav {
+		transform: translateY(100vh);
+	}
+
+	.navbar .nav-close-btn {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+	}
+
+	.navbar a {
+		font-size: 1.5rem;
+	}
+}
+
+.user {
+    display: flex;                 /* Sử dụng flex để căn giữa logo */
+    align-items: center;          /* Căn giữa logo theo chiều dọc */
+    margin-right: auto;           /* Đẩy logo sang bên trái */
+}
+
+.user img {
+    width: 50px;                  /* Chiều rộng của logo */
+    height: auto;                 /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    object-fit: contain;          /* Giữ nguyên tỷ lệ hình ảnh */
+}
+
+@media (max-width: 768px) {     /* Thay đổi kích thước logo trên màn hình nhỏ hơn */
+    .user img {
+        width: 40px;              /* Chiều rộng logo trên màn hình nhỏ */
+    }
+}
+
