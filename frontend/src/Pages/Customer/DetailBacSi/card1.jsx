@@ -53,7 +53,7 @@ function BS1() {
                               
                               {/* Nút Quay lại trang tìm kiếm */}
                               <Link
-                                to="/bacsi"
+                                to="/customer/bacsi"
                                 className="mt-6 w-full max-w-xs px-4 py-2 bg-purple-400 text-white rounded-md hover:bg-purple-500 text-center no-underline"
                               >
                                 Quay lại trang tìm kiếm

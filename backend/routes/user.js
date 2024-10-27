@@ -1,14 +1,16 @@
 import express from 'express';
-import { deleteUser, getAllUser, getSingleUser, updateUser } from '../controllers/userController.js';
+import { addUser, deleteUser, getAllUser, getMyAppointments, getSingleUser, getUserProfile, updateUser } from '../controllers/userController.js';
+import { authenticate, restrict } from '../auth/veryfyToken.js';
 
-
-import { authenticate , restrict} from '../auth/veryfyToken.js';
 const router = express.Router();
 
 // Đảm bảo route đăng ký sử dụng phương thức POST
-router.get('/:id', authenticate, restrict(["patient"]), getSingleUser);
-router.get('/',authenticate, restrict(["admin"]), getAllUser);
-router.put('/:id', authenticate, restrict(["patient"]),updateUser);
-router.delete('/:id', authenticate, restrict(["patient"]),deleteUser);
+router.get('/:id', authenticate, restrict(["admin"]), getSingleUser); 
+router.get('/', getAllUser);
+router.put('/:id', authenticate, restrict(["admin"]), updateUser); 
+router.delete('/:id', deleteUser); 
+router.post('/addUser', addUser);
+router.get('/profile/me', getUserProfile); 
+router.get('/appointment/my-appointment', getMyAppointments); 
 
 export default router;

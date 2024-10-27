@@ -1,0 +1,23 @@
+/* Thêm CSS vào tệp CSS của bạn */
+.container-ad {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.layout-content-ad {
+  padding: 20px;
+  position: absolute;
+  left: 250px;
+  height: 95vh;
+  width: calc(100% - 250px);
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  overflow-y: auto;
+  /* transition: var(--tran-05); */
+}
+@media (min-width: 1280px) {
+  .container-ad {
+      max-width: 1328px;
+  }
+}

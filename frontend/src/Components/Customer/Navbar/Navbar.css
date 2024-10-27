@@ -18,7 +18,7 @@
     font-size: 18px;
     color: #0b8fac;
     font-weight: 500;
-    margin-left: 50px;
+    margin-left: 40px;
 	text-decoration: none;
 }
 .navbar a::before{
@@ -33,6 +33,10 @@
 }
 .navbar a:hover::before{
     width: 100%;
+}
+.logo{
+	height: 100%;
+	width: 48%;
 }
 .logo img {
     height: 100%; /* Giữ chiều cao tối đa của logo */
