@@ -5,7 +5,7 @@ import BacSi from '../Pages/Admin/List/BacSi';
 import Lichhen from '../Pages/Admin/List/Lichhen';
 import Thuoc from '../Pages/Admin/List/Thuoc';
 import DoctorLayout from '../Layouts/AdminLayout';
-
+import DoctorDashboard from '../Dashboard/doctor-account/Doctor-Dashboard';
 
 const DoctorRouter = () => (
     <Routes>
@@ -15,6 +15,14 @@ const DoctorRouter = () => (
         <Route path="danhsachbacsi" element={<BacSi/>} />
         <Route path="danhsachthuoc" element={<Thuoc/>} />
         <Route path="danhsachlichhen" element={<Lichhen/>} />
+
+
+
+        <Route path= "/doctors/profile/me" element={<DoctorDashboard />} />
+
+
+
+
       </Route>
     </Routes>
 );

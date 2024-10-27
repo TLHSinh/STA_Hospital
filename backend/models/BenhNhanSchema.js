@@ -11,8 +11,8 @@ const BenhNhanSchema = new mongoose.Schema({
   diaChi: { type: String }, // Địa chỉ
   role: { 
           type: String, 
-          enum: ["benhnhan", "admin"], 
-          default: "benhnhan" },                // Vai trò
+          enum: ["BenhNhan", "admin"], 
+          default: "BenhNhan" },                // Vai trò
   gioiTinh: { 
           type: String, 
           enum: ["nam", "nu", "khac"], 

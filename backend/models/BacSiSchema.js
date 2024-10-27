@@ -17,7 +17,7 @@ const BacSiSchema = new mongoose.Schema({
   giaKham: { type: Number }, // Giá khám
   role: { 
             type: String, 
-            default: "doctor" // Vai trò mặc định là bác sĩ
+            default: "BacSi" // Vai trò mặc định là bác sĩ
   },
   bangCap: [{ bang: String, truong: String, nam: Number }], // Bằng cấp
   kinhNghiem: [{ viTri: String, benhVien: String, soNam: Number }], // Kinh nghiệm
