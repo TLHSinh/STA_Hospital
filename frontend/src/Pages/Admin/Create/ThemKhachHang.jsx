@@ -1,7 +1,6 @@
-
 import './Them.css';
 import { FaChevronLeft } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState  } from "react";
 const ThemKhachHang = () => {
 

@@ -12,6 +12,9 @@ import ChinhSuaKhachHang from '../Pages/Admin/Update/ChinhSuaKhachHang';
 import ThemThuocVatTu from '../Pages/Admin/Create/ThemThuocVatTu';
 import ChinhSuaThuocVatTu from '../Pages/Admin/Update/ChinhSuaThuocVatTu';
 import ChinhSuaBacSi from '../Pages/Admin/Update/ChinhSuaBacSi';
+import ChiTietBacSi from '../Pages/Admin/Details/CTBacSi';
+import ChiTietThuocVatTu from '../Pages/Admin/Details/CTThuocVatTu';
+import ChiTietKhachHang from '../Pages/Admin/Details/CTKhachHang';
 
 
 
@@ -30,6 +33,9 @@ const AdminRouter = () => (
         <Route path="chinhsuakhachhang/:id" element={<ChinhSuaKhachHang/>} />
         <Route path="chinhsuabacsi/:id" element={<ChinhSuaBacSi/>} />
         <Route path="chinhsuathuocvattu/:id" element={<ChinhSuaThuocVatTu/>} />
+        <Route path="chitietbacsi/:id" element={<ChiTietBacSi/>} />
+        <Route path="chitietkhachhang/:id" element={<ChiTietKhachHang/>} />
+        <Route path="chitietthuocvattu/:id" element={<ChiTietThuocVatTu/>} />
       </Route>
     </Routes>
 );

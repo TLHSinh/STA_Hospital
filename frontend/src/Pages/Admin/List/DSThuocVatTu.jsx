@@ -5,18 +5,19 @@ import { Fab } from '@mui/material';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../config';
 import { AuthContext } from '../../../context/AuthContext.jsx'; // Import AuthContext để lấy token
-import { FaPenToSquare,FaTrash, FaPlus } from "react-icons/fa6";
+import { FaPenToSquare,FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
+
 
 const DSThuocVatTu = () => {
   const navigate = useNavigate();
 
-  const [users, setUsers] = useState([]);
+  const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Lấy token từ AuthContext
   const { token } = useContext(AuthContext);
-  const fetchUsers = async () => {
+  const fetchInventory = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/v1/inventory`, {
         method: 'GET',
@@ -31,7 +32,7 @@ const DSThuocVatTu = () => {
   
       // Kiểm tra nếu API trả về thành công và có dữ liệu
       if (result.success && Array.isArray(result.data)) {
-        setUsers(result.data); // Gán mảng người dùng vào state
+        setInventory(result.data); // Gán mảng người dùng vào state
       } else {
         throw new Error(result.message || 'Lỗi lấy danh sách thuốc và vật tư');
       }
@@ -59,7 +60,7 @@ const deleteUser = async (id) => {
     const result = await res.json();
     if (result.success) {
       toast.success(result.message); // Hiển thị thông báo thành công
-      setUsers(users.filter((user) => user._id !== id));
+      setInventory(inventory.filter((inventory) => inventory._id !== id));
     } else {
       toast.error(result.message); // Hiển thị thông báo lỗi từ server
     }
@@ -69,7 +70,7 @@ const deleteUser = async (id) => {
 };
 
   useEffect(() => {
-    fetchUsers();
+    fetchInventory();
   }, []);
 
   const handleAddUser = () => {
@@ -79,6 +80,10 @@ const deleteUser = async (id) => {
 
   const handleEditUser = (id) => {
     navigate(`/admin/chinhsuathuocvattu/${id}`); // Chuyển hướng tới trang chỉnh sửa kèm ID
+  };
+
+  const detailUser = (id) => {
+    navigate(`/admin/chitietthuocvattu/${id}`); 
   };
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
@@ -99,25 +104,29 @@ const deleteUser = async (id) => {
             <th>Số lượng</th>
             <th>Giá</th>
             <th>Đơn vị</th>
+            <th>Chức năng</th>
           </tr>
         </thead>
         <tbody>
-            {users.length > 0 ? (
-              users.map((user) => (
-                <tr key={user._id}>
-                  <td>
-                   
-                  </td>
-                  <td>{user.ten}</td>
-                  <td>{user.email}</td>
-                  <td>{user.soDienThoai}</td>
+            {inventory.length > 0 ? (
+              inventory.map((inventory) => (
+                <tr key={inventory._id}>
+                  <td>{inventory.tenVatTu}</td>
+                  <td>{inventory.loaiVatTu}</td>
+                  <td>{inventory.soLuong}</td>
+                  <td>{inventory.gia}</td>
+                  <td>{inventory.donViTinh}</td>
                   <td >
-                  <button className="icon-function" onClick={() => handleEditUser(user._id)}>
+                  <button className="icon-function" onClick={() => handleEditUser(inventory._id)}>
                     <FaPenToSquare color="#66B5A3" />
                   </button>
-                  <button className="icon-function" onClick={() => deleteUser(user._id)}>
+                  <button className="icon-function" onClick={() => deleteUser(inventory._id)}>
                     <FaTrash color="#66B5A3" />
                   </button>
+                  <button className="icon-function" onClick={() => detailUser(inventory._id)}>
+                    <FaRegEye color="#66B5A3" />
+                  </button>
+
                   </td>
                 </tr>
               ))

@@ -34,7 +34,6 @@ const CustomerRoutes = () => (
         <Route path= "bacsi/bs-bui-thi-truc-my" element={<Card4/>} />
         <Route path= "bacsi/bs-nguyen-man-nhi" element={<Card5/>} />
         <Route path= "bacsi/bs-nguyen-mai-huy" element={<Card6/>} />
-    
       </Route>
     </Routes>
 );

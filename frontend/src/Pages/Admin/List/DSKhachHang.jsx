@@ -5,7 +5,7 @@ import { Fab } from '@mui/material';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../config';
 import { AuthContext } from '../../../context/AuthContext.jsx'; // Import AuthContext để lấy token
-import { FaPenToSquare,FaTrash, FaPlus } from "react-icons/fa6";
+import { FaPenToSquare,FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
 
 const DSKhachHang = () => {
    const navigate = useNavigate();
@@ -14,7 +14,7 @@ const DSKhachHang = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Lấy token từ AuthContext
+  // Lấy danh sách khách hàng
   const { token } = useContext(AuthContext);
   const fetchUsers = async () => {
     try {
@@ -25,7 +25,6 @@ const DSKhachHang = () => {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-  
       const result = await res.json(); // Chuyển đổi JSON từ API
       console.log(result); // Kiểm tra dữ liệu trả về
   
@@ -43,7 +42,7 @@ const DSKhachHang = () => {
   };
 
 
-// Xóa người dùng với xác thực và kiểm tra quyền
+// Xóa khách hàng với xác thực và kiểm tra quyền
 const deleteUser = async (id) => {
   if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return;
 
@@ -58,13 +57,13 @@ const deleteUser = async (id) => {
 
     const result = await res.json();
     if (result.success) {
-      toast.success(result.message); // Hiển thị thông báo thành công
+      toast.success(result.message); 
       setUsers(users.filter((user) => user._id !== id));
     } else {
-      toast.error(result.message); // Hiển thị thông báo lỗi từ server
+      toast.error(result.message); 
     }
   } catch (err) {
-    toast.error(`Lỗi: ${err.message}`); // Hiển thị lỗi nếu có
+    toast.error(`Lỗi: ${err.message}`); 
   }
 };
 
@@ -72,14 +71,24 @@ const deleteUser = async (id) => {
     fetchUsers();
   }, []);
 
+
+  // Điều hướng đến trang thêm người dùng
   const handleAddUser = () => {
-    navigate('/admin/themkhachhang'); // Điều hướng đến trang thêm người dùng
+    navigate('/admin/themkhachhang'); 
   };
 
 
+  // Chuyển hướng tới trang chỉnh sửa kèm ID
   const handleEditUser = (id) => {
-    navigate(`/admin/chinhsuakhachhang/${id}`); // Chuyển hướng tới trang chỉnh sửa kèm ID
+    navigate(`/admin/chinhsuakhachhang/${id}`); 
   };
+
+
+  // Chuyển hướng tới trang chi tiết người dùng với ID
+  const detailUser = (id) => {
+    navigate(`/admin/chitietkhachhang/${id}`); 
+  };
+  
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
@@ -121,6 +130,9 @@ const deleteUser = async (id) => {
                   </button>
                   <button className="icon-function" onClick={() => deleteUser(user._id)}>
                     <FaTrash color="#66B5A3" />
+                  </button>
+                  <button className="icon-function" onClick={() => detailUser(user._id)}>
+                    <FaRegEye color="#66B5A3" />
                   </button>
                   </td>
                 </tr>
