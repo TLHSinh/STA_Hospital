@@ -13,7 +13,7 @@ const BacSiSchema = new mongoose.Schema({
   ngaySinh: { type: Date }, // Ngày sinh
   cccd: { type: String }, // Căn cước công dân
   diaChi: { type: String }, // Địa chỉ
-  chuyenKhoa: { type: String, }, // Chuyên khoa
+  chuyenKhoa: { type: String }, // Chuyên khoa
   giaKham: { type: Number }, // Giá khám
   role: { 
             type: String, 
@@ -23,12 +23,17 @@ const BacSiSchema = new mongoose.Schema({
   kinhNghiem: [{ viTri: String, benhVien: String, soNam: Number }], // Kinh nghiệm
   gioiThieuNgan: { type: String, maxLength: 100 }, // Giới thiệu ngắn
   gioiThieuChiTiet: { type: String }, // Giới thiệu chi tiết
-  lichLamViec: [{ ngay: String, batDau: Date, ketThuc: Date }], // Lịch làm việc
+  lichLamViec: [{ 
+                ngay: Date, 
+                batDau: String, 
+                ketThuc: String, 
+                daDuocDat: { type: Boolean, default: false } }], // Lịch làm việc
   trangThai: { 
                 type: String, 
                 enum: ["choDuyet", "duocDuyet", "huy"], 
                 default: "choDuyet" }, // Trạng thái phê duyệt
   lichHen: [{ type: mongoose.Types.ObjectId, ref: "LichHen" }], // Lịch hẹn
 }, { timestamps: true });
+
 
 export default mongoose.model("BacSi", BacSiSchema);
