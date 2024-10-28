@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const CTKhachHang = () => {
   const { id } = useParams(); // Lấy ID từ URL
   const navigate = useNavigate();
-  const { token } = useContext(AuthContext); // Lấy token từ context
+  const { token, role } = useContext(AuthContext); // Lấy token từ context
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +25,8 @@ const CTKhachHang = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("Token:", token);
+      console.log("Role:", role);
       const result = await res.json();
       if (result.success) {
         setUser(result.data);

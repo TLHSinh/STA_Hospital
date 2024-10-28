@@ -42,8 +42,7 @@ const CustomerRoutes = () => (
         <Route path= "bacsi/bs-bui-thi-truc-my" element={<Card4/>} />
         <Route path= "bacsi/bs-nguyen-man-nhi" element={<Card5/>} />
         <Route path= "bacsi/bs-nguyen-mai-huy" element={<Card6/>} />
-<<<<<<< HEAD
-=======
+
     
 
 
@@ -54,8 +53,6 @@ const CustomerRoutes = () => (
         <Route path= "/doctors/profile/me" element={<ProtectedRoute  allowedRoles={['BacSi']}>     <DoctorDashboard />    </ProtectedRoute>} />
 
 
-
->>>>>>> 9d47c448c52ba162c737f32d1c138a44bafec592
       </Route>
     </Routes>
 );
