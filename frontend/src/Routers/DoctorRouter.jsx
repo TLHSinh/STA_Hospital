@@ -9,7 +9,7 @@ import KeDonThuoc from '../Pages/Doctor/KeDonThuoc';
 const DoctorRouter = () => (
     <Routes>
       <Route element={<DoctorLayout />}>
-        <Route path="dashboard" element={<HomeBacSi/>} />
+        <Route path="home" element={<HomeBacSi/>} />
         <Route path="danhsachlichhenBS" element={<DSLichHenBS/>} />
         <Route path="kedonthuoc" element={<KeDonThuoc/>} />
       </Route>
