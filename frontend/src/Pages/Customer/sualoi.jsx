@@ -1,21 +1,20 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../config.js";
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
-import { AuthContext } from '../../context/AuthContext.jsx';
+import { authContext } from '../../context/AuthContext.jsx';
 
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",
-        matKhau: "",
+        password: "",
     });
 
     const [loading, setLoading] = useState(false);
+    const [result, setResult] = useState(null); // Thêm state để lưu kết quả từ API
     const navigate = useNavigate();
-
-    // Sử dụng AuthContext để dispatch action và truy cập token, role
-    const { dispatch } = useContext(AuthContext);
+    const { dispatch } = useContext(authContext);
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -36,7 +35,10 @@ const Login = () => {
                 throw new Error(data.message);
             }
 
-            // Dispatch action khi đăng nhập thành công và lưu token, role vào context
+            // Cập nhật state kết quả từ API
+            setResult(data);
+
+            // Dispatch action khi đăng nhập thành công
             dispatch({
                 type: 'LOGIN_SUCCESS',
                 payload: {
@@ -47,16 +49,6 @@ const Login = () => {
             });
 
             toast.success(data.message);
-
-            // Điều hướng dựa trên role
-            if (data.role === 'admin') {
-                navigate("/admin/dashboard");  // Điều hướng đến trang admin
-            } else if (data.role === 'benhNhan') {
-                navigate("/");    // Điều hướng đến trang user
-            } else {
-                navigate("/");                 // Mặc định điều hướng nếu không xác định được role
-            }
-
         } catch (err) {
             toast.error(err.message);
         } finally {
@@ -68,46 +60,57 @@ const Login = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Dùng useEffect để theo dõi kết quả đăng nhập và điều hướng
+    useEffect(() => {
+        if (result && result.token) {
+            navigate("/");
+        }
+    }, [result, navigate]);
+
     return (
+
+        
         <section className="px-3 lg:px-0">
             <div className="w-full max-w-[400px] mx-auto rounded-lg shadow-md md:p-6 mt-16">
                 <h3 className="text-headingColor text-[20px] leading-8 font-bold mb-6">
-                    Hello! <span className="text-primaryColor">Welcome</span> Back{" "}
-                    <span role="img" aria-label="wave">👋</span>
+                Hello! <span className="text-primaryColor">Welcome</span> Back{" "}
+                <span role="img" aria-label="wave">👋</span>
                 </h3>
                 
                 <form className="py-3 md:py-0" onSubmit={submitHandler}>
                     <div className="mb-4">
+
                         <input
-                            type="email"
-                            placeholder="Email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            className="w-full px-3 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
-                            required
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+                        required
                         />
                     </div>
 
                     <div className="mb-4">
                         <input
-                            type="password"
-                            placeholder="Mật Khẩu"
-                            name="matKhau"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            className="w-full px-3 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
-                            required
+                        type="password"
+                        placeholder="Mật Khẩu"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-6 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
+                        required
                         />
                     </div>
 
                     <div className="mt-6">
                         <button
-                            disabled={loading}
-                            type="submit"
-                            className="w-full bg-primaryColor text-white text-[16px] leading-[28px] rounded-lg px-3 py-2"
+
+                        disabled={loading}
+                        type="submit"
+                        className="w-full bg-primaryColor text-white text-[16px] leading-[28px] rounded-lg px-3 py-2"
                         >
-                            {loading ? (
+                        {loading ? (
                                 <HashLoader size={35} color="#ffffff" />
                             ) : ('Đăng Nhập')}
                         </button>
@@ -116,7 +119,8 @@ const Login = () => {
                     <p className="mt-4 text-textColor text-center text-[14px]">
                         Bạn chưa có tài khoản?{" "}
                         <Link to="/customer/register" className="text-primaryColor font-medium ml-1">
-                            Đăng Ký Ngay
+                        Đăng Ký Ngay
+
                         </Link>
                     </p>
                 </form>
