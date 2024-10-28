@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken'
-import Doctor from '../models/DoctorSchema.js'
-import User from '../models/UserSchema.js'
 import BacSi from '../models/BacSiSchema.js';
 import BenhNhan from '../models/BenhNhanSchema.js';
 
