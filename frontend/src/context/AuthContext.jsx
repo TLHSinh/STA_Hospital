@@ -2,8 +2,8 @@ import { createContext, useReducer } from "react";
 
 const initialState = {
     user: null,
-    role: null,
-    token: null,
+    role: localStorage.getItem('role') || null,
+    token: localStorage.getItem('token') || null,
 };
 
 export const AuthContext = createContext(initialState);
@@ -18,6 +18,8 @@ const authReducer = (state, action) => {
             };
 
         case 'LOGIN_SUCCESS':
+            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('role', action.payload.role);
             return {
                 user: action.payload.user,
                 token: action.payload.token,
@@ -25,6 +27,8 @@ const authReducer = (state, action) => {
             };
 
         case 'LOGOUT':
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
             return {
                 user: null,
                 role: null,

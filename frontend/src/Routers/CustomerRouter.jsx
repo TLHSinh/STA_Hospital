@@ -9,6 +9,14 @@ import Login from '../Pages/Customer/Login';
 import CustomerLayout from '../Layouts/CustomerLayout';
 import SignUp from '../Pages/Customer/SignUp';
 
+import MyAccount from '../Dashboard/user-account/MyAccount';
+
+/* cho bác sĩ tá túc tạm */
+import DoctorDashboard from '../Dashboard/doctor-account/Doctor-Dashboard';
+import ProtectedRoute from './ProtecttedRoute';
+
+
+
 import Card1 from '../Pages/Customer/DetailBacSi/card1';
 import Card2 from '../Pages/Customer/DetailBacSi/card2';
 import Card3 from '../Pages/Customer/DetailBacSi/card3';
@@ -34,6 +42,19 @@ const CustomerRoutes = () => (
         <Route path= "bacsi/bs-bui-thi-truc-my" element={<Card4/>} />
         <Route path= "bacsi/bs-nguyen-man-nhi" element={<Card5/>} />
         <Route path= "bacsi/bs-nguyen-mai-huy" element={<Card6/>} />
+
+    
+
+
+        <Route path= "/users/profile/me" element={<ProtectedRoute allowedRoles={["BenhNhan"]}>    <MyAccount />   </ProtectedRoute>} />
+
+
+        {/* cho bác sĩ tá túc tạm */}
+        <Route path= "/doctors/profile/me" element={<ProtectedRoute  allowedRoles={['BacSi']}>     <DoctorDashboard />    </ProtectedRoute>} />
+
+
+
+
       </Route>
     </Routes>
 );

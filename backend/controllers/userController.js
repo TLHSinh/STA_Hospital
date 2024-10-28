@@ -1,5 +1,6 @@
 import BenhNhan from '../models/BenhNhanSchema.js'
 import BacSi from '../models/BacSiSchema.js'
+import LichHen from '../models/LichHenSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
@@ -26,7 +27,7 @@ export const addUser = async (req,res)=>{
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(matKhau, salt);
 
-        if (role === "benhnhan") {
+        if (role === "BenhNhan") {
             user = new BenhNhan({
 
 
@@ -97,5 +98,48 @@ export const getAllUser = async (req, res) => {
         res.status(200).json({ success: true, message: 'Tìm người dùng thành công', data: getUser });
     } catch (err) {
         res.status(500).json({ success: false, message: 'Tìm người dùng không thành công' });
+    }
+}
+
+export const getUserProfile = async(req,res)=>{
+    const userID = req.userID
+
+    try{
+        const user =await BenhNhan.findById(userID)
+
+        if(!user){
+            return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng' });
+        }
+
+        const {matKhau, ...rest}=user._doc
+        res.status(200).json({ success: true, message: 'Tìm người dùng thành công', data:{...rest}});
+
+    }
+    catch(err) {
+        res.status(500).json({ success: true, message: 'Tìm người dùng Khong thành công' });
+    }
+};
+
+
+export const getMyAppointments = async(req,res)=>{
+    try {
+
+        // step 1 :retrieve appointments from booking for specific user
+        
+        const LichHens = await LichHen.find({user:req.userID})
+
+
+        // step 2: extract doctor ids from appointment bookings
+
+        const doctorIds = LichHen.map(el=>el.doctor.id)
+
+        // step 3: retrieve doctors using doctor ids
+
+        const doctors = await BacSi.find({_id: {$in:doctorIds}}).select('-matKhau')
+
+        res.status(200).json({ success: true, message: 'Appointments are getting', data:doctors });
+        
+    } catch (error) {
+        res.status(500).json({ success: true, message: 'Tìm người dùng Khong thành công' });
     }
 }
