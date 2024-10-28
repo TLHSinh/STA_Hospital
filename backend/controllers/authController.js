@@ -19,9 +19,9 @@ export const register = async (req, res) => {
     try {
         let user = null;
 
-        if (role === "benhnhan") {
+        if (role === "BenhNhan") {
             user = await BenhNhan.findOne({ email });
-        } else if (role === "doctor") {
+        } else if (role === "BacSi") {
             user = await BacSi.findOne({ email });
         }
 
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(matKhau, salt);
 
-        if (role === "benhnhan") {
+        if (role === "BenhNhan") {
             user = new BenhNhan({
                 ten,
                 email,
@@ -45,7 +45,7 @@ export const register = async (req, res) => {
             });
         }
 
-        if (role === "doctor") {
+        if (role === "BacSi") {
             user = new BacSi({
                 ten,
                 email,
@@ -71,13 +71,13 @@ export const login = async (req, res) => {
     try {
         let user = null;
         const benhNhan = await BenhNhan.findOne({ email });
-        const doctor = await BacSi.findOne({ email });
+        const bacSi = await BacSi.findOne({ email });
 
         if (benhNhan) {
             user = benhNhan;
         }
-        if (doctor) {
-            user = doctor;
+        if (bacSi) {
+            user = bacSi;
         }
 
         // Kiểm tra nếu user không tồn tại

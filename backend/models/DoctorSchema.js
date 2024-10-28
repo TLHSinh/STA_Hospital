@@ -9,7 +9,7 @@ const DoctorSchema = new mongoose.Schema({
   ticketPrice: { type: Number }, // Giá khám
   role: { 
     type: String, 
-    default: "doctor" // Vai trò mặc định là bác sĩ
+    default: "BacSi" // Vai trò mặc định là bác sĩ
   },
   specialization: { type: String }, // Chuyên khoa
   qualifications: { type: [Array] }, // Bằng cấp
