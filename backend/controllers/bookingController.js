@@ -169,17 +169,19 @@ export const updateBookingStatus = async (req, res) => {
     }
 };
 
-
 export const getAllBookings = async (req, res) => {
     try {
+        console.log('Getting all bookings');
         // Tìm tất cả lịch hẹn, bao gồm cả trạng thái đã duyệt, chưa duyệt, và huỷ
         const bookings = await LichHen.find()
             .populate('bacSi', 'ten email soDienThoai') // Lấy thông tin cơ bản của bác sĩ
             .populate('benhNhan', 'ten email soDienThoai'); // Lấy thông tin cơ bản của bệnh nhân
 
+        console.log('Bookings retrieved:', bookings);
         // Trả về danh sách lịch hẹn
         res.status(200).json({ success: true, bookings });
     } catch (err) {
+        console.error('Error getting all bookings:', err);
         res.status(500).json({ success: false, message: 'Mất kết nối server' });
     }
 };
@@ -187,18 +189,22 @@ export const getAllBookings = async (req, res) => {
 export const getBookingById = async (req, res) => {
     const { id } = req.params;
     try {
+        console.log(`Getting booking by ID: ${id}`);
         // Tìm lịch hẹn theo ID
         const booking = await LichHen.findById(id)
             .populate('bacSi', 'ten email soDienThoai') // Lấy thông tin cơ bản của bác sĩ
             .populate('benhNhan', 'ten email soDienThoai'); // Lấy thông tin cơ bản của bệnh nhân
 
         if (!booking) {
+            console.warn(`Booking not found for ID: ${id}`);
             return res.status(404).json({ success: false, message: 'Không tìm thấy lịch hẹn' });
         }
 
+        console.log('Booking retrieved:', booking);
         // Trả về thông tin lịch hẹn
         res.status(200).json({ success: true, booking });
     } catch (err) {
+        console.error(`Error getting booking by ID: ${id}`, err);
         res.status(500).json({ success: false, message: 'Mất kết nối server' });
     }
 };
@@ -206,19 +212,24 @@ export const getBookingById = async (req, res) => {
 export const deleteBookingById = async (req, res) => {
     const { id } = req.params;
     try {
+        console.log(`Deleting booking by ID: ${id}`);
         // Xóa lịch hẹn theo ID
         const booking = await LichHen.findByIdAndDelete(id);
 
         if (!booking) {
+            console.warn(`Booking not found for deletion with ID: ${id}`);
             return res.status(404).json({ success: false, message: 'Không tìm thấy lịch hẹn' });
         }
 
+        console.log(`Booking deleted successfully for ID: ${id}`);
         // Trả về thông báo xóa thành công
         res.status(200).json({ success: true, message: 'Xóa lịch hẹn thành công' });
     } catch (err) {
+        console.error(`Error deleting booking by ID: ${id}`, err);
         res.status(500).json({ success: false, message: 'Mất kết nối server' });
     }
 };
+
 
 
 
