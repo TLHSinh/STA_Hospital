@@ -22,8 +22,6 @@ export const addInventory = async (req,res)=>{
 
       
        iventory = new ThuocVatTu({
-
-
             tenVatTu,
             loaiVatTu,
             soLuong,
@@ -34,8 +32,6 @@ export const addInventory = async (req,res)=>{
             gia,
             ngaySanXuat,
             hanSuDung
-
-
            });
        
 

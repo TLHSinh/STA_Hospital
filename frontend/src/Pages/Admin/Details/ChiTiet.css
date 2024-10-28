@@ -1,0 +1,43 @@
+.icon-back {
+    color: #66B5A3;
+    margin-right: auto;
+    position: absolute;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 25px;
+    line-height: 44px;
+     color: #66B5A3; 
+    font-weight: 500;
+    padding: 0 16px;
+}
+
+.title h1 {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.item-detail {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    background: white;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+    align-items: center;
+    display: flex;
+}
+.avt-name-detail{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

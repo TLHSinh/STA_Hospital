@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';  
 import { AuthContextProvider } from './context/AuthContext';  // Import AuthContextProvider
 import Login from './Pages/Customer/Login';
+import DoctorRouter from './Routers/DoctorRouter';
 
 const App = () => {
   return (
@@ -31,7 +32,7 @@ const App = () => {
             <Route path="/" element={<Navigate to="/admin/dashboard" />} /> 
 
             {/* đây là hướng đi của doctor */}
-            <Route path="/doctor/*" element={<AdminRouter />} />
+            <Route path="/doctor/*" element={<DoctorRouter />} />
             <Route path="/" element={<Navigate to="/doctor/dashboard" />} /> 
 
             <Route path="/login" element={<Login />} />
