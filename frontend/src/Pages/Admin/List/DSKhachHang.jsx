@@ -15,7 +15,7 @@ const DSKhachHang = () => {
   const [error, setError] = useState(null);
 
   // Lấy danh sách khách hàng
-  const { token } = useContext(AuthContext);
+  const { token, role } = useContext(AuthContext);
   const fetchUsers = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/v1/users`, {
@@ -25,6 +25,8 @@ const DSKhachHang = () => {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
+      console.log("Token:", token);
+      console.log("Role:", role);
       const result = await res.json(); // Chuyển đổi JSON từ API
       console.log(result); // Kiểm tra dữ liệu trả về
   
