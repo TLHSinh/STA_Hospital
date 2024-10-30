@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import BannerBS from '../../Components/Customer/Banner/BannerBacSi/BannerBS';
 import Card2BacSi from '../../Components/Customer/Card/Card2BacSi';
 import '../../Pages/Customer/BacSi.css';
