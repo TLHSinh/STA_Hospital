@@ -5,6 +5,12 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import LichHen from "../models/LichHenSchema.js";
 import moment from 'moment';
+import pkg from 'moment-range';
+const { extendMoment } = pkg;
+const momentRange = extendMoment(moment);
+
+
+
 
 export const addDoctor = async (req, res) => {
     // Lấy thông tin từ body request
@@ -172,28 +178,55 @@ export const addWorkingSchedule = async (req, res) => {
     // Lấy thông tin từ body request
     const { ngay, batDau, ketThuc } = req.body;
     const id = req.params.id;
-    const bacSiId=id
-
-    
-    
+    const bacSiId = id;
 
     try {
-        // Tìm bác sĩ theo ID
+        console.log(`Adding working schedule for doctor ID: ${bacSiId}`);
+        console.log(`Working schedule details - Date: ${ngay}, Start: ${batDau}, End: ${ketThuc}`);
         const doctor = await BacSi.findById(bacSiId);
         if (!doctor) {
+            console.warn(`Doctor not found with ID: ${bacSiId}`);
             return res.status(404).json({ message: "Không tìm thấy bác sĩ" });
         }
 
-        // Thêm khung giờ làm việc mới vào danh sách lichLamViec của bác sĩ
-        doctor.lichLamViec.push({ ngay, batDau, ketThuc, daDuocDat: false }); // daDuocDat: false để đánh dấu khung giờ chưa được đặt
+        // Tạo khoảng thời gian mới cho ca làm việc
+        const newStart = moment(`${ngay} ${batDau}`, 'YYYY-MM-DD HH:mm');
+        const newEnd = moment(`${ngay} ${ketThuc}`, 'YYYY-MM-DD HH:mm');
+        const newRange = momentRange.range(newStart, newEnd);
 
-        
-        // Lưu thay đổi vào cơ sở dữ liệu
+        console.log('Checking for schedule conflicts...');
+        // Kiểm tra xem có xung đột với bất kỳ khoảng thời gian nào trong lịch làm việc hiện tại không
+        const isConflict = doctor.lichLamViec.some((slot) => {
+            // Chuyển đổi thông tin lịch làm việc hiện tại thành khoảng thời gian
+            const slotStart = moment(slot.ngay).set({ hour: moment(slot.batDau, 'HH:mm').hour(), minute: moment(slot.batDau, 'HH:mm').minute() });
+            const slotEnd = moment(slot.ngay).set({ hour: moment(slot.ketThuc, 'HH:mm').hour(), minute: moment(slot.ketThuc, 'HH:mm').minute() });
+            const slotRange = momentRange.range(slotStart, slotEnd);
+
+            console.log(`Comparing with existing schedule - Date: ${slot.ngay}, Start: ${slot.batDau}, End: ${slot.ketThuc}`);
+            // Kiểm tra xem khoảng thời gian mới có chồng lấn với bất kỳ khoảng thời gian nào hiện tại không
+            return newRange.overlaps(slotRange, { adjacent: false });
+        });
+
+        if (isConflict) {
+            console.warn(`Working schedule conflict for doctor ID: ${bacSiId} on ${ngay}, ${batDau} - ${ketThuc}`);
+            return res.status(400).json({ message: "Khung giờ này đã tồn tại trong lịch làm việc của bác sĩ." });
+        }
+
+        // Thêm ca làm việc mới vào danh sách lịch làm việc của bác sĩ
+        doctor.lichLamViec.push({
+            ngay, // Ngày của ca làm việc
+            batDau, // Giờ bắt đầu của ca làm việc
+            ketThuc, // Giờ kết thúc của ca làm việc
+            daDuocDat: false // Trạng thái mặc định là chưa được đặt
+        });
+
+        // Lưu thông tin bác sĩ sau khi thêm ca làm việc
         await doctor.save();
-        
+
+        console.log(`Working schedule added successfully for doctor ID: ${bacSiId}`);
         res.status(200).json({ success: true, message: "Thêm lịch làm việc thành công", data: doctor.lichLamViec });
     } catch (err) {
-        // Xử lý lỗi kết nối server
+        console.error(`Error adding working schedule for doctor ID: ${bacSiId}`, err);
         res.status(500).json({ success: false, message: "Mất kết nối server" });
     }
 };
