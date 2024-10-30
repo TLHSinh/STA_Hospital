@@ -51,10 +51,10 @@ const Login = () => {
             // Điều hướng dựa trên role
             if (data.role === 'admin') {
                 navigate("/admin/dashboard");  // Điều hướng đến trang admin
-            } else if (data.role === 'benhNhan') {
-                navigate("/");    // Điều hướng đến trang user
-            } else {
-                navigate("/");                 // Mặc định điều hướng nếu không xác định được role
+            } else if (data.role === 'BenhNhan') {
+                navigate("/customer/home");    // Điều hướng đến trang user
+            } else if (data.role === 'BacSi') {
+                navigate("/doctor/home");                 // Mặc định điều hướng nếu không xác định được role
             }
 
         } catch (err) {

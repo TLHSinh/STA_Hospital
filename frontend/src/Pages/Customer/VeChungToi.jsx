@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 import '../../Pages/Customer/VeChungToi.css';
 import Card2BacSi from '../../Components/Customer/Card/Card2BacSi'; 
 import Card6 from '../../Components/Customer/Card/Card6'; 
@@ -6,18 +6,50 @@ import Card7 from '../../Components/Customer/Card/Card7';
 import Card8 from '../../Components/Customer/Card/Card8'; 
 import BannerVCT from '../../Components/Customer/Banner/BannerVeChungToi/BannerVCT';
 
+import { BASE_URL } from '../../config';
+import { AuthContext } from '../../context/AuthContext';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+
 function VeChungToi() {
-  const doctors = [
-    { id: 1, imgSrc: "/Images/STA_BACSI/bacsi_tran-kim-duong.png", imgAlt: "Card Image 1", title: "BS. Trần Kim Dương", description: "Bác Sĩ Đa Khoa", link: "bs-tran-kim-duong" },
-    { id: 2, imgSrc: "/Images/STA_BACSI/bacsi_le-thi-anh.png", imgAlt: "Card Image 2", title: "BS. Lê Thị Ánh", description: "Bác Sĩ Đa Khoa", link: "bs-le-thi-anh" },
-    { id: 3, imgSrc: "/Images/STA_BACSI/bacsi_chu-minh-tuan.png", imgAlt: "Card Image 3", title: "BS. Chu Minh Tuấn", description: "Bác Sĩ Đa Khoa", link: "bs-chu-minh-tuan" },
-    { id: 4, imgSrc: "/Images/STA_BACSI/bacsi_bui-thi-truc-my.png", imgAlt: "Card Image 4", title: "BS. Bùi Thị Trúc My", description: "Bác Sĩ Đa Khoa", link: "bs-bui-thi-truc-my" },
-    { id: 5, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
-    { id: 6, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
-    { id: 7, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-man-nhi.png", imgAlt: "Card Image 5", title: "BS. Nguyễn Mẫn Nhi", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-man-nhi" },
-    { id: 8, imgSrc: "/Images/STA_BACSI/bacsi_nguyen-mai-huy.png", imgAlt: "Card Image 6", title: "BS. Nguyễn Mai Huy", description: "Bác Sĩ Đa Khoa", link: "bs-nguyen-mai-huy" },
-    
-  ];
+  const navigate = useNavigate();
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const { token } = useContext(AuthContext);
+
+  const fetchDoctors = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/doctors`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result = await res.json();
+
+      if (result.success && Array.isArray(result.data)) {
+        setDoctors(result.data);
+      } else {
+        throw new Error(result.message || 'Lỗi lấy danh sách bác sĩ');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p>Lỗi: {error}</p>;
   return (
     <div>
       <BannerVCT />
@@ -61,19 +93,20 @@ function VeChungToi() {
               <div className="card-grid">
                 {doctors.map(doctor => (
                   <Card2BacSi
-                    key={doctor.id}
-                    imgSrc={doctor.imgSrc}
-                    imgAlt={doctor.imgAlt}
-                    title={doctor.title}
-                    description={doctor.description}
+                    key={doctor._id}
+                    imgSrc={doctor.hinhAnh}
+                    imgAlt={`Hình của ${doctor.ten}`}
+                    title={doctor.ten}
+                    description={doctor.moTa}
                     buttonText="Learn More"
-                    link={doctor.link}
+                    link={`${doctor._id}`} // Link dẫn đến chi tiết bác sĩ
                   />
                 ))}
               </div>
             </div>
           </div>
         </section>
+
       </div>
     </div>
   )
