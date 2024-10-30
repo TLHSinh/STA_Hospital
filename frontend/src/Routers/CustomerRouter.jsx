@@ -53,8 +53,6 @@ const CustomerRoutes = () => (
         <Route path= "/doctors/profile/me" element={<ProtectedRoute  allowedRoles={['BacSi']}>     <DoctorDashboard />    </ProtectedRoute>} />
 
 
-
-
       </Route>
     </Routes>
 );

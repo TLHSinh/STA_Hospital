@@ -31,7 +31,7 @@ const BacSiSchema = new mongoose.Schema({
   trangThai: { 
                 type: String, 
                 enum: ["choDuyet", "duocDuyet", "huy"], 
-                default: "choDuyet" }, // Trạng thái phê duyệt
+                default: "duocDuyet" }, // Trạng thái phê duyệt
   lichHen: [{ type: mongoose.Types.ObjectId, ref: "LichHen" }], // Lịch hẹn
 }, { timestamps: true });
 
