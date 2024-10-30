@@ -173,9 +173,9 @@ const ChinhSuaKhachHang = () => {
             <div class="select-box">
               <select name="gioiTinh" value={formData.gioiTinh} onChange={handleInputChange}>
                 <option value="">Giới tính</option>
-                <option value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
-                <option value="Khác">Khác</option>
+                <option value="nam">Nam</option>
+                <option value="nu">Nữ</option>
+                <option value="khac">Khác</option>
               </select>
             </div>
             <input type="text" name="nhomMau" value={formData.nhomMau} onChange={handleInputChange} placeholder="Nhóm máu" />
