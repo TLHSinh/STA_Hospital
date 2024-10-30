@@ -13,7 +13,7 @@ router.put('/:id', authenticate, restrict(["doctor","admin"]), updateDoctor);
 router.delete('/:id', authenticate, restrict(["admin"]), deleteDoctor);
 router.post('/addDoctor', addDoctor);
 router.post('/addWorkingSchedule/:id', addWorkingSchedule);
-router.post('/getWorkingSchedule/:id', getWorkingSchedule);
+router.get('/getWorkingSchedule/:id', getWorkingSchedule);
 
 router.get('/profile/me', getDoctorProfile); 
 //router.get('/appointment/my-appointment', getMyAppointments); 
