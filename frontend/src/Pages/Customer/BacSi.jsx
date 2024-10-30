@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import BannerBS from '../../Components/Customer/Banner/BannerBacSi/BannerBS';
 import Card2BacSi from '../../Components/Customer/Card/Card2BacSi';
 import '../../Pages/Customer/BacSi.css';
@@ -14,7 +13,7 @@ function BacSi() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { token } = useContext(AuthContext);
+  const { token, role } = useContext(AuthContext);
 
   const fetchDoctors = async () => {
     try {
@@ -43,6 +42,12 @@ function BacSi() {
     fetchDoctors();
   }, []);
 
+
+
+  const detailDoctor = (id) => {
+    navigate(`/customer/chitietbacsidatlich/${id}`);
+  };
+
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
 
@@ -54,16 +59,20 @@ function BacSi() {
         <div className="container">
           <h1 className="article-item text-center">Bác Sĩ</h1>
           <div className="card-grid">
-            {doctors.map(doctor => (
-              <Card2BacSi
-                key={doctor._id}
-                imgSrc={doctor.hinhAnh}
-                imgAlt={`Hình của ${doctor.ten}`}
-                title={doctor.ten}
-                description={doctor.moTa}
-                buttonText="Learn More"
-                link={`${doctor._id}`} // Link dẫn đến chi tiết bác sĩ
-              />
+            {doctors.map((doctor) => (
+              <div key={doctor._id}>
+                <div className="card-container">
+                  <img className="card-img" src={doctor.hinhAnh} alt={`Hình của ${doctor.ten}`} />
+                  <h3 className="card-title">{doctor.ten}</h3>
+                  <p className="card-description">{doctor.moTa}</p>
+                  <div>
+                    {/* Thêm nút hoặc liên kết để gọi hàm detailUser */}
+                    <button onClick={() => detailDoctor(doctor._id)} className="card-btn">
+                      Xem chi tiết
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
