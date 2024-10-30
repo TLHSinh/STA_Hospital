@@ -69,6 +69,8 @@ export const booking = async (req, res) => {
     const { lichLamViecId, benhNhan, gia } = req.body;
 
     try {
+        console.log(`Booking request with lichLamViecId: ${lichLamViecId}, benhNhan: ${benhNhan}, gia: ${gia}`);
+
         // Kiểm tra xem bác sĩ có lịch làm việc này không
         const doctor = await BacSi.findOne({ "lichLamViec._id": lichLamViecId });
         if (!doctor) {
@@ -77,7 +79,10 @@ export const booking = async (req, res) => {
 
         // Tìm lịch làm việc dựa trên ID trong danh sách lịch làm việc của bác sĩ
         const lichLamViec = doctor.lichLamViec.find((slot) => slot._id.toString() === lichLamViecId);
-        
+        if (!lichLamViec) {
+            return res.status(404).json({ message: "Không tìm thấy lịch làm việc" });
+        }
+
         // Kiểm tra xem lịch làm việc đã được đặt chưa
         if (lichLamViec.daDuocDat) {
             return res.status(400).json({ message: "Khung giờ này đã có người đặt. Vui lòng chọn khung giờ khác." });
@@ -97,12 +102,13 @@ export const booking = async (req, res) => {
             thoiGianBatDau: lichLamViec.batDau, // Sử dụng giờ bắt đầu
             thoiGianKetThuc: lichLamViec.ketThuc, // Sử dụng giờ kết thúc
             gia,
-            trangThai: 'choDuyet', // Mặc định là chờ duyệt
+            trangThai: 'ChoDuyet', // Mặc định là chờ duyệt
             daThanhToan: false, // Mặc định là chưa thanh toán
         });
 
         // Lưu lịch hẹn vào cơ sở dữ liệu
         await newBooking.save();
+        console.log(`New booking saved with ID: ${newBooking._id}`);
 
         // Cập nhật lịch hẹn cho bác sĩ và bệnh nhân
         doctor.lichHen.push(newBooking._id);
@@ -116,14 +122,17 @@ export const booking = async (req, res) => {
             return slot;
         });
 
+        // Lưu cập nhật vào cơ sở dữ liệu
         await doctor.save();
         await patient.save();
 
         res.status(200).json({ success: true, message: "Đặt lịch hẹn thành công", booking: newBooking });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ success: false, message: "Mất kết nối server" });
     }
 };
+
 
 
 export const updateBookingStatus = async (req, res) => {
