@@ -66,10 +66,10 @@ import BacSi from '../models/BacSiSchema.js';
 import LichHen from '../models/LichHenSchema.js';
 
 export const booking = async (req, res) => {
-    const { lichLamViecId, benhNhan, gia } = req.body;
+    const { lichLamViecId, benhNhan } = req.body;
 
     try {
-        console.log(`Booking request with lichLamViecId: ${lichLamViecId}, benhNhan: ${benhNhan}, gia: ${gia}`);
+        console.log(`Booking request with lichLamViecId: ${lichLamViecId}, benhNhan: ${benhNhan}`);
 
         // Kiểm tra xem bác sĩ có lịch làm việc này không
         const doctor = await BacSi.findOne({ "lichLamViec._id": lichLamViecId });
@@ -101,7 +101,7 @@ export const booking = async (req, res) => {
             ngayHen: lichLamViec.ngay, // Sử dụng ngày làm việc
             thoiGianBatDau: lichLamViec.batDau, // Sử dụng giờ bắt đầu
             thoiGianKetThuc: lichLamViec.ketThuc, // Sử dụng giờ kết thúc
-            gia,
+            gia: doctor.giaKham, // Lấy giá khám từ bác sĩ
             trangThai: 'ChoDuyet', // Mặc định là chờ duyệt
             daThanhToan: false, // Mặc định là chưa thanh toán
         });

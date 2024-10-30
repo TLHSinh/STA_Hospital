@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
-
+import '../../Pages/Customer/DetailsBacSi.css';
+import '../../Pages/Customer/FormBooking.css';
 
 const DetailsBacSi = () => {
   const navigate = useNavigate();
@@ -10,8 +11,13 @@ const DetailsBacSi = () => {
   const { token } = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [workingSchedules, setWorkingSchedules] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isBookingFormVisible, setIsBookingFormVisible] = useState(false);
+  const [bookingFormData, setBookingFormData] = useState({
+    benhNhan: '',
+  });
 
   const fetchUserDetail = async () => {
     try {
@@ -35,9 +41,6 @@ const DetailsBacSi = () => {
     }
   };
 
-
-
-  // Lấy lịch làm việc
   const fetchWorkingSchedules = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/v1/doctors/getWorkingSchedule/${id}`, {
@@ -54,6 +57,49 @@ const DetailsBacSi = () => {
     }
   };
 
+  const handleShowBookingForm = () => {
+    setIsBookingFormVisible(true);
+  };
+
+  const handleBooking = async (e) => {
+    e.preventDefault(); // Ngăn form reload trang khi submit
+
+    if (selectedDate === null) {
+      alert('Vui lòng chọn ngày và giờ muốn đặt lịch');
+      return;
+    }
+
+    const schedule = workingSchedules[selectedDate];
+    const bookingData = {
+      lichLamViecId: schedule._id,
+      benhNhan: bookingFormData.benhNhan,
+      gia: bookingFormData.gia,
+    };
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/bookings/booking`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        alert('Đặt lịch hẹn thành công');
+        setIsBookingFormVisible(false);
+        navigate('/customer/bacsi');
+      } else {
+        alert(result.message || 'Không thể đặt lịch hẹn');
+      }
+    } catch (err) {
+      console.error('Lỗi khi đặt lịch hẹn:', err);
+      alert('Có lỗi xảy ra khi đặt lịch hẹn. Vui lòng thử lại sau.');
+    }
+  };
+
   useEffect(() => {
     fetchUserDetail();
     fetchWorkingSchedules();
@@ -63,80 +109,94 @@ const DetailsBacSi = () => {
   if (error) return <p>Lỗi: {error}</p>;
 
   return (
-    <div className="flex flex-col items-center p-6">
-      <div className="flex space-x-6 mb-6 w-full max-w-3xl">
-        <div className="w-1/4 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
-          <img
-            src={user.hinhAnh}
-            alt="Doctor"
-            className="w-full h-full object-cover"
-            style={{ height: '100%' }}
-          />
+    <div className="prescripto">
+      <div className="doc-details-container">
+        <div className="doc-image-wrapper">
+          <img src={user?.hinhAnh} alt="Doctor" className="doc-image" />
         </div>
 
-        <div className="flex-1">
-          <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
-            <h1 className="text-2xl font-semibold text-gray-800">
-              {user.ten} <span className="text-blue-500"></span>
-            </h1>
-            <p className="text-gray-500 mt-1">{user.chuyenKhoa} • {/* {user.namKinhNghiem} Years */}</p>
-            <p className="text-gray-700 mt-4 text-sm">
-              <strong>Mô tả:</strong> {user.moTa}
-            </p>
-            <p className="text-gray-800 mt-4 font-semibold">
-              Giá Khám: <span className="text-black font-bold">{user.giaKham} VND</span>
+        <div className="doc-info-wrapper">
+          <div className="doc-info-content">
+            <h1 className="doc-name">{user?.ten}</h1>
+            <div className="experience-badge">{user?.chuyenKhoa} Chuyên khoa: 
+              <p className="doc-specialty">{user?.chuyenKhoa}</p>
+            </div>
+            
+            <div className="experience-badge">{user?.kinhNghiem} Kinh ngiệm: </div>
+
+            <div className="about-title">Mô tả: 
+              <p className="doc-description">{user?.moTa}</p>
+            </div>
+            
+            <p className="appointment-fee">
+              Appointment fee: <span className="fee-amount">${user?.giaKham}</span>
             </p>
           </div>
         </div>
       </div>
 
-      <div className="w-full max-w-3xl bg-white border border-gray-200 rounded-lg shadow-md p-4">
-        <h2 className="text-lg font-semibold text-gray-800">Lịch Làm Việc</h2>
-        <table className="user-table">
-        <thead>
-          <tr>
-            <th>Ngày</th>
-            <th>Thời gian</th>
-          </tr>
-        </thead>
-        <tbody>
-          {workingSchedules.length > 0 ? (
-            workingSchedules.map((schedule, index) => (
-              <tr key={index}>
-                <td>{new Date(schedule.ngay).toLocaleDateString()}</td>
-                <td>{schedule.batDau}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4">Không có lịch làm việc nào</td>
-            </tr>
+      <div className="schedule-container">
+        <h2>Lịch làm việc của bác sĩ </h2>
+
+        {/* ngày làm việc */}
+        <div className="day-selector">
+          {workingSchedules.map((schedule, index) => (
+            <div
+              key={index}
+              className={`day-rectangle ${selectedDate === index ? 'selected' : ''}`}
+              onClick={() => setSelectedDate(index)}
+            >
+              <div className="day-name">
+                {new Date(schedule.ngay).toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
+              </div>
+              <div className="day-date">
+                {new Date(schedule.ngay).getDate()}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Khung giờ ca làm việc */}
+        <div className="time-slots">
+          {selectedDate !== null && (
+            <>
+              <div className="time-rectangle">
+                {workingSchedules[selectedDate].batDau} - {workingSchedules[selectedDate].ketThuc}
+              </div>
+            </>
           )}
-        </tbody>
-      </table>
+        </div>
+
+        <div className="buttons">
+          <button onClick={() => navigate('/customer/bacsi')} className="back-button">Quay lại</button>
+          <button onClick={handleShowBookingForm} className="appointment-button">Đặt lịch</button>
+        </div>
       </div>
 
-      <div className="flex justify-end w-full max-w-3xl mt-4 space-x-4">
-        <button
-          onClick={() => navigate('/customer/bacsi')}
-          className="px-6 py-3 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400"
-        >
-          Quay lại
-        </button>
-        <button
-          className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
-        >
-          Đặt Lịch Hẹn
-        </button>
+      {isBookingFormVisible && (
+        <div className="booking-form-container">
+        <div className="booking-form">
+          <h3 className="form-title">Thông tin đặt lịch</h3>
+          <form onSubmit={handleBooking}>
+            <div className="form-group">
+              <label htmlFor="benhNhan" className="form-label">Mã bệnh nhân:</label>
+              <input
+                type="text"
+                id="benhNhan"
+                className="form-input"
+                value={bookingFormData.benhNhan}
+                onChange={(e) => setBookingFormData({ ...bookingFormData, benhNhan: e.target.value })}
+                required
+              />
+            </div>
+    
+            <button type="submit" className="confirm-button">Xác nhận đặt lịch</button>
+          </form>
+        </div>
       </div>
+      )}
     </div>
   );
 };
 
 export default DetailsBacSi;
-
-
-
-
-
-
