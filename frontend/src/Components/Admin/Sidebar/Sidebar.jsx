@@ -2,7 +2,7 @@ import React from 'react'
 import './Sidebar.css';
 import { Link } from "react-router-dom";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { FaCapsules, FaHospitalUser, FaUserDoctor } from "react-icons/fa6";
+import { FaCapsules, FaHospitalUser, FaUserDoctor, FaArrowRightFromBracket } from "react-icons/fa6";
 const Sidebar = () => {
   return (
     <div className='menu-ad'>
@@ -30,6 +30,10 @@ const Sidebar = () => {
         <Link to="/admin/danhsachthuocvattu" className = 'item-ad' >
             <FaCapsules  className='icon'/>
             Thuốc
+        </Link>
+        <Link to="/login" className = 'item-ad' >
+            <FaArrowRightFromBracket  className='icon'/>
+            Đăng xuất
         </Link>
       </div>
     </div>
