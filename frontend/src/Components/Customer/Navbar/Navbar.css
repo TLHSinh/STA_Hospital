@@ -119,3 +119,58 @@
     }
 }
 
+/* hhih */
+.user-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: 220%; /* Vị trí ngay bên dưới icon */
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+    border-radius: 4px; /* Bo tròn góc */
+    overflow: hidden;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column; /* Sắp xếp các mục theo cột */
+}
+
+.user-dropdown-menu a {
+    padding: 15px 20px; /* Khoảng cách bên trong */
+    color: #0b8fac; /* Màu văn bản */
+    text-decoration: none; /* Bỏ gạch chân */
+    white-space: nowrap; /* Ngăn văn bản xuống dòng */
+}
+
+.user-dropdown-menu a:hover {
+    background-color: #f0f0f0; /* Hiệu ứng nền khi hover */
+    text-decoration: none; /* Đảm bảo không có gạch chân khi hover */
+}
+
+
+
+.user-icon-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2rem; /* Thay đổi kích thước văn bản, nếu có */
+    width: 2rem;     /* Thay đổi chiều rộng */
+    height: 2rem;    /* Thay đổi chiều cao */
+}
+
+
+.user-avatar {
+    width: 40px;            /* Chiều rộng hình ảnh */
+    height: 40px;           /* Chiều cao hình ảnh (cần bằng chiều rộng để tạo hình tròn) */
+    border-radius: 50%;     /* Tạo hình tròn cho hình ảnh */
+    object-fit: cover;      /* Đảm bảo hình ảnh không bị méo và phù hợp với khung */
+    display: block;         /* Đảm bảo không có khoảng trống dưới hình ảnh */
+}
+
+
+
+
+

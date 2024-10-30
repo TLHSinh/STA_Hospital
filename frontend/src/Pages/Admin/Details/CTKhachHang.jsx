@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const CTKhachHang = () => {
   const { id } = useParams(); // Lấy ID từ URL
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { token, role } = useContext(AuthContext); // Lấy token từ context
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

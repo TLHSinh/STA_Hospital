@@ -1,18 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 
-// khong biet sai hay dung
 import DoctorLayout from '../Layouts/DoctorLayout';
 import HomeBacSi from '../Pages/Doctor/HomeBacSi';
-// ko biet sai hay dung
+import DSLichHenBS from '../Pages/Doctor/DSLichHenBS';
+import KeDonThuoc from '../Pages/Doctor/KeDonThuoc';
+import ProfileBS from '../Pages/Doctor/ProfileBS';
 
-//import DoctorLayout from '../Layouts/AdminLayout';
-import DoctorDashboard from '../Dashboard/doctor-account/Doctor-Dashboard';
 
 
 const DoctorRouter = () => (
     <Routes>
       <Route element={<DoctorLayout />}>
-        <Route path= "/doctors/profile/me" element={<DoctorDashboard />} />
+        <Route path="home" element={<HomeBacSi/>} />
+        <Route path="danhsachlichhenBS" element={<DSLichHenBS/>} />
+        <Route path="kedonthuoc" element={<KeDonThuoc/>} />
+        <Route path="profile-bs" element={<ProfileBS/>} />
       </Route>
     </Routes>
 );

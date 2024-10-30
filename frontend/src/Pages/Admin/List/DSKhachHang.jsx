@@ -1,36 +1,34 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DanhSach.css';
-import { Fab } from '@mui/material';
+import { Fab, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../config';
 import { AuthContext } from '../../../context/AuthContext.jsx'; // Import AuthContext để lấy token
-import { FaPenToSquare,FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
+import { FaPenToSquare, FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
 
 const DSKhachHang = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filtered, setFilteredDoctors] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Lấy danh sách khách hàng
-  const { token, role } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const fetchUsers = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/v1/users`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Thêm token vào header
+          Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Token:", token);
-      console.log("Role:", role);
+
       const result = await res.json(); // Chuyển đổi JSON từ API
-      console.log(result); // Kiểm tra dữ liệu trả về
-  
-      // Kiểm tra nếu API trả về thành công và có dữ liệu
       if (result.success && Array.isArray(result.data)) {
         setUsers(result.data); // Gán mảng người dùng vào state
       } else {
@@ -43,54 +41,59 @@ const DSKhachHang = () => {
     }
   };
 
+  // Xử lý tìm kiếm
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = users.filter((user) =>
+      user.ten.toLowerCase().includes(query) // Lọc theo tên người dùng
+    );
+    setFilteredDoctors(filtered);
+  };
 
-// Xóa khách hàng với xác thực và kiểm tra quyền
-const deleteUser = async (id) => {
-  if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return;
+  // Xóa khách hàng với xác thực
+  const deleteUser = async (id) => {
+    if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return;
 
-  try {
-    const res = await fetch(`${BASE_URL}/api/v1/users/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/users/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    const result = await res.json();
-    if (result.success) {
-      toast.success(result.message); 
-      setUsers(users.filter((user) => user._id !== id));
-    } else {
-      toast.error(result.message); 
+      const result = await res.json();
+      if (result.success) {
+        toast.success(result.message);
+        setUsers(users.filter((user) => user._id !== id));
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      toast.error(`Lỗi: ${err.message}`);
     }
-  } catch (err) {
-    toast.error(`Lỗi: ${err.message}`); 
-  }
-};
+  };
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-
   // Điều hướng đến trang thêm người dùng
   const handleAddUser = () => {
-    navigate('/admin/themkhachhang'); 
+    navigate('/admin/themkhachhang');
   };
-
 
   // Chuyển hướng tới trang chỉnh sửa kèm ID
   const handleEditUser = (id) => {
-    navigate(`/admin/chinhsuakhachhang/${id}`); 
+    navigate(`/admin/chinhsuakhachhang/${id}`);
   };
-
 
   // Chuyển hướng tới trang chi tiết người dùng với ID
   const detailUser = (id) => {
-    navigate(`/admin/chitietkhachhang/${id}`); 
+    navigate(`/admin/chitietkhachhang/${id}`);
   };
-  
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
@@ -100,6 +103,15 @@ const deleteUser = async (id) => {
       <div className='title-ad'>
         <h1>DANH SÁCH NGƯỜI DÙNG</h1>
       </div>
+
+      <TextField
+        label="Tìm kiếm khách hàng"
+        variant="outlined"
+        value={searchQuery}
+        onChange={handleSearch}
+        fullWidth
+        margin="normal"
+      />
 
       {/* Bảng danh sách người dùng */}
       <table className="user-table">
@@ -113,20 +125,20 @@ const deleteUser = async (id) => {
           </tr>
         </thead>
         <tbody>
-            {users.length > 0 ? (
-              users.map((user) => (
-                <tr key={user._id}>
-                  <td>
-                    <img 
-                      src={user.hinhAnh} 
-                      alt={`Hình của ${user.ten}`} 
-                      style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }} 
-                    />
-                  </td>
-                  <td>{user.ten}</td>
-                  <td>{user.email}</td>
-                  <td>{user.soDienThoai}</td>
-                  <td >
+          {(searchQuery ? filtered : users).length > 0 ? (
+            (searchQuery ? filtered : users).map((user) => (
+              <tr key={user._id}>
+                <td>
+                  <img 
+                    src={user.hinhAnh} 
+                    alt={`Hình của ${user.ten}`} 
+                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }} 
+                  />
+                </td>
+                <td>{user.ten}</td>
+                <td>{user.email}</td>
+                <td>{user.soDienThoai}</td>
+                <td>
                   <button className="icon-function" onClick={() => handleEditUser(user._id)}>
                     <FaPenToSquare color="#66B5A3" />
                   </button>
@@ -136,16 +148,15 @@ const deleteUser = async (id) => {
                   <button className="icon-function" onClick={() => detailUser(user._id)}>
                     <FaRegEye color="#66B5A3" />
                   </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4">Không có người dùng nào</td>
+                </td>
               </tr>
-            )}
-</tbody>
-
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5">Không có người dùng nào</td>
+            </tr>
+          )}
+        </tbody>
       </table>
 
       {/* Nút thêm người dùng */}

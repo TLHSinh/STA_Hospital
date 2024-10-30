@@ -6,9 +6,19 @@ import { FaCapsules, FaHospitalUser, FaUserDoctor, FaArrowRightFromBracket } fro
 const Sidebar = () => {
   return (
     <div className='menu-ad'>
-      <div className='logo-ad'>
+      {/* <div className='logo-ad'>
           <img src="/Images/Home.png" alt="Logo" />
-      </div>
+      </div> */}
+
+<div className='logo-ad'>
+  <span 
+    className="logo-text" 
+    style={{ color: '#66B5A3', fontWeight: 'bold', fontSize: '25px' }}
+  >
+    STA HOSPITAL.
+  </span>
+</div>
+
 
       <div className='menu-list-ad'>
         <Link to="/admin/dashboard" className = 'item-ad' >
