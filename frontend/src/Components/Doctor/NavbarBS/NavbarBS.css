@@ -17,7 +17,7 @@
 /* Định dạng cho các liên kết trong navbar */
 .navbar a {
     position: relative;
-    font-size: 18px;
+    font-size: 20px;
     color: #0b8fac; /* Màu chữ cho các liên kết */
     font-weight: bold; /* Cân chỉnh độ đậm cho chữ */
     text-decoration: none; /* Loại bỏ gạch chân */
@@ -64,7 +64,7 @@
 .logo {
     text-decoration: none; /* Loại bỏ gạch chân cho logo */
     color: #0b8fac; /* Màu chữ cho logo */
-    margin-left: 40px; /* Khoảng cách bên trái cho logo */
+    margin-right: 40px; /* Khoảng cách bên trái cho logo */
 }
 
 /* Media queries cho kích thước màn hình nhỏ hơn */
@@ -101,4 +101,10 @@
     }
 }
 
+.user-avatar-2 {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Biến hình ảnh thành hình tròn */
+    object-fit: cover; /* Đảm bảo ảnh phù hợp với khung mà không bị biến dạng */
+}
 
