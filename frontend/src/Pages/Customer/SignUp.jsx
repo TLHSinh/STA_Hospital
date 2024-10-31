@@ -18,7 +18,7 @@ const SignUp = () => {
     rePassword: "",      // Xác nhận mật khẩu
     hinhAnh: selectedFile, // Hình ảnh (URL)
     gioiTinh: "",        // Giới tính
-    role: "benhnhan",    // Vai trò: mặc định là bệnh nhân
+    role: "BenhNhan",    // Vai trò: mặc định là bệnh nhân
   });
 
   const navigate = useNavigate();

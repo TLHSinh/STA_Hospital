@@ -28,7 +28,7 @@ function Navbar() {
                 {user ? (
                     <div className="user-icon-container" onClick={toggleUserMenu}>
                         {user.hinhAnh ? (  // Kiểm tra xem có avatar hay không
-                            <img src={user.hinhAnh} alt="User Avatar" className="user-avatar" />
+                            <img src={user.hinhAnh} alt="User Avatar" className="user-avatar-2" />
                         ) : (
                             <FaRegCircleUser color="#0b8fac" size="2rem" />
                         )}
