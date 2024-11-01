@@ -10,6 +10,7 @@ import { BASE_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../Components/Customer/Card/Card2.css';
 
 
 const Home = () => {
@@ -30,6 +31,7 @@ const Home = () => {
         },
       });
 
+      console.log('token',token)
       const result = await res.json();
 
       if (result.success && Array.isArray(result.data)) {

@@ -28,6 +28,8 @@ const DSKhachHang = () => {
         },
       });
 
+      console.log('token',token)
+
       const result = await res.json(); // Chuyển đổi JSON từ API
       if (result.success && Array.isArray(result.data)) {
         setUsers(result.data); // Gán mảng người dùng vào state
@@ -51,6 +53,8 @@ const DSKhachHang = () => {
     setFilteredDoctors(filtered);
   };
 
+
+  
   // Xóa khách hàng với xác thực
   const deleteUser = async (id) => {
     if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return;

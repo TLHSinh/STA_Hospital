@@ -57,15 +57,24 @@ export const addUser = async (req,res)=>{
 
 export const updateUser = async (req, res) => {
     const id = req.params.id;
+    const { matKhau, ...rest } = req.body;
 
     try {
-        const updateUser = await BenhNhan.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+        // Nếu có trường matKhau trong dữ liệu cập nhật, tiến hành băm mật khẩu
+        if (matKhau) {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(matKhau, salt);
+            rest.matKhau = hashedPassword;
+        }
 
-        res.status(200).json({ success: true, message: 'Cập nhật thành công', data: updateUser });
+        const updatedUser = await BenhNhan.findByIdAndUpdate(id, { $set: rest }, { new: true });
+
+        res.status(200).json({ success: true, message: 'Cập nhật thành công', data: updatedUser });
     } catch (err) {
         res.status(500).json({ success: false, message: 'Cập nhật không thành công' });
     }
-}
+};
+
 
 export const deleteUser = async (req, res) => {
     const id = req.params.id;
