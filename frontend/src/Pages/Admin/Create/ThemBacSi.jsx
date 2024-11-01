@@ -24,7 +24,7 @@ const ThemBacSi = () => {
     giaKham: "", // Giá khám
     // bangCap: "" , // Bằng cấp
     // kinhNghiem:"" , // Kinh nghiệm
-    // gioiThieuNgan: "", // Giới thiệu ngắn
+    gioiThieuNgan: "", // Giới thiệu ngắn
     // gioiThieuChiTiet: "", // Giới thiệu chi tiết
     // lichLamViec: "" , // Lịch làm việc
     trangThai: "duocDuyet", // Trạng thái phê duyệt
@@ -177,6 +177,10 @@ const ThemBacSi = () => {
           <div className="input-box">
             <label>Giá khám</label>
             <input type="number" name="giaKham" value={formData.giaKham} onChange={handleInputChange} />
+          </div>
+          <div className="input-box">
+            <label>Mô tả</label>
+            <input type="text" name="giaKham" value={formData.gioiThieuNgan} onChange={handleInputChange} />
           </div>
           {/* <div className="input-box">
             <label>Giới thiệu ngắn</label>

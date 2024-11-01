@@ -129,25 +129,25 @@ const DSKhachHang = () => {
             (searchQuery ? filtered : users).map((user) => (
               <tr key={user._id}>
                 <td>
-                  <img 
-                    src={user.hinhAnh} 
-                    alt={`Hình của ${user.ten}`} 
-                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }} 
+                  <img
+                    src={user.hinhAnh}
+                    alt={`Hình của ${user.ten}`}
+                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }}
                   />
                 </td>
                 <td>{user.ten}</td>
                 <td>{user.email}</td>
                 <td>{user.soDienThoai}</td>
                 <td>
-                  <button className="icon-function" onClick={() => handleEditUser(user._id)}>
-                    <FaPenToSquare color="#66B5A3" />
-                  </button>
-                  <button className="icon-function" onClick={() => deleteUser(user._id)}>
-                    <FaTrash color="#66B5A3" />
-                  </button>
-                  <button className="icon-function" onClick={() => detailUser(user._id)}>
-                    <FaRegEye color="#66B5A3" />
-                  </button>
+                    <button className="icon-function" onClick={() => handleEditUser(user._id)}>
+                      <FaPenToSquare color="#66B5A3" />
+                    </button>
+                    <button className="icon-function" onClick={() => deleteUser(user._id)}>
+                      <FaTrash color="#66B5A3" />
+                    </button>
+                    <button className="icon-function" onClick={() => detailUser(user._id)}>
+                      <FaRegEye color="#66B5A3" />
+                    </button>
                 </td>
               </tr>
             ))

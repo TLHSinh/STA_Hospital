@@ -9,8 +9,8 @@ const router = express.Router();
 // Đảm bảo route đăng ký sử dụng phương thức POST
 router.get('/:id', getSingleDoctor);
 router.get('/',getAllDoctor);
-router.put('/:id', authenticate, restrict(["BacSi"]), updateDoctor);
-router.delete('/:id', authenticate, restrict(["BacSi"]), deleteDoctor);
+router.put('/:id', authenticate, restrict(["BacSi", "admin"]), updateDoctor);
+router.delete('/:id', authenticate, restrict(["BacSi", "admin"]), deleteDoctor);
 // router.put('/:id', authenticate, restrict(["doctor","admin"]), updateDoctor);
 // router.delete('/:id', authenticate, restrict(["admin"]), deleteDoctor);
 router.post('/addDoctor', addDoctor)

@@ -2,7 +2,7 @@ import React from 'react'
 // import '../Pages/GoiKham.css';
 // import Card3GoiKham from '../Components/Card/Card3GoiKham';
 // import Card4GoiKham from '../Components/Card/Card4GoiKham';
-import BannerGK from '../../Components/Customer/Banner/BannerGoiKham/BannerGK';
+import BannerGK from '../../Components/Customer/Banner/BannerGK';
 import Card3GoiKham from '../../Components/Customer/Card/Card3GoiKham';
 import Card4GoiKham from '../../Components/Customer/Card/Card4GoiKham';
 
