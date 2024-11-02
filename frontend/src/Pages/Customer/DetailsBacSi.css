@@ -1,185 +1,184 @@
 .prescripto {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    background-color: #ffffff;
-  }
-  
-  .doc-details-container {
-    display: flex;
-    gap: 30px;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1000px;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 12px;
-  }
-  
-  .doc-image-wrapper {
-    width: 300px;
-    height: 300px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #0b8fac;
-  }
-  
-  .doc-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .doc-info-wrapper {
-    flex: 1;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .doc-info-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .doc-name {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1f2937;
-  }
-  
-  .doc-specialty {
-    font-size: 18px;
-    color: #4b5563;
-  }
-  
-  /* .experience-badge {
-    display: inline-block;
-    background-color: #0b8fac;
-    color: white;
-    font-size: 14px;
-    padding: 4px 12px;
-    border-radius: 16px;
-    margin-bottom: 10px;
-  } */
-  
-  .about-title {
-    font-size: 20px;
-    font-weight: 500;
-    color: #1f2937;
-    margin-top: 16px;
-  }
-  
-  .doc-description {
-    font-size: 15px;
-    color: #4b5563;
-    line-height: 1.6;
-  }
-  
-  .appointment-fee {
-    font-size: 16px;
-    font-weight: 500;
-    color: #1f2937;
-    margin-top: 12px;
-  }
-  
-  .fee-amount {
-    color: #0b8fac;
-    font-weight: 600;
-  }
-  
-  .schedule-container {
-    width: 100%;
-    max-width: 800px;
-    text-align: center;
-  }
-  
-  .schedule-container h2 {
-    font-size: 20px;
-    font-weight: 500;
-    color: #1f2937;
-    margin-bottom: 20px;
-  }
-  
-  .day-selector {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .day-rectangle {
-    width: 60px;
-    height: 80px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .day-rectangle.selected {
-    background-color: #0b8fac;
-    color: #ffffff;
-  }
-  
-  .day-name {
-    font-size: 12px;
-    font-weight: bold;
-  }
-  
-  .day-date {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .time-slots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .time-rectangle {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 20px;
-    padding: 10px 20px;
-    text-align: center;
-    color: #333;
-    font-size: 14px;
-  }
-  
-  .buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .back-button, .appointment-button {
-    padding: 12px 24px;
-    font-size: 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    border: none;
-    font-weight: 600;
-  }
-  
-  .back-button {
-    background-color: #e0e0e0;
-    color: #333;
-  }
-  
-  .appointment-button {
-    background-color: #0b8fac;
-    color: white;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #ffffff;
+}
+
+.doc-details-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+}
+
+.doc-image-wrapper {
+  width: 300px;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #0b8fac;
+}
+
+.doc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doc-info-wrapper {
+  flex: 1;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.doc-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.doc-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.doc-specialty {
+  font-size: 18px;
+  color: #4b5563;
+}
+
+/* .experience-badge {
+  display: inline-block;
+  background-color: #0b8fac;
+  color: white;
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+} */
+
+.about-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-top: 16px;
+}
+
+.doc-description {
+  font-size: 15px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.appointment-fee {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-top: 12px;
+}
+
+.fee-amount {
+  color: #0b8fac;
+  font-weight: 600;
+}
+
+.schedule-container {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.schedule-container h2 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 20px;
+}
+
+.day-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.day-rectangle {
+  width: 60px;
+  height: 80px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.day-rectangle.selected {
+  background-color: #0b8fac;
+  color: #ffffff;
+}
+
+.day-name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.day-date {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.time-slots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.time-rectangle {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+  padding: 10px 20px;
+  text-align: center;
+  color: #333;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.back-button, .appointment-button {
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}
+
+.back-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.appointment-button {
+  background-color: #0b8fac;
+  color: white;
+}

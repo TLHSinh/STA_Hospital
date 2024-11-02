@@ -1,11 +1,9 @@
-import BannerBS from '../../Components/Customer/Banner/BannerBacSi/BannerBS';
-import Card2BacSi from '../../Components/Customer/Card/Card2BacSi';
+import BannerBS from '../../Components/Customer/Banner/BannerBS';
 import '../../Pages/Customer/BacSi.css';
 import { BASE_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 function BacSi() {
   const navigate = useNavigate();
@@ -13,7 +11,7 @@ function BacSi() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { token, role } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   const fetchDoctors = async () => {
     try {
@@ -24,6 +22,7 @@ function BacSi() {
           Authorization: `Bearer ${token}`,
         },
       });
+
       const result = await res.json();
 
       if (result.success && Array.isArray(result.data)) {

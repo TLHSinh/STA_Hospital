@@ -34,9 +34,14 @@
     width: 100%;
 }
 
+
+
 .logo {
-    width: 48%;
+	width: 48%;
 }
+
+
+
 
 .header .nav-btn {
     padding: 5px;
@@ -100,6 +105,27 @@
     margin-right: auto;
 }
 
+
+
+
+
+
+
+.user img {
+    width: 50px;                  /* Chiều rộng của logo */
+    height: auto;                 /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    object-fit: contain;          /* Giữ nguyên tỷ lệ hình ảnh */
+}
+
+@media (max-width: 768px) {     /* Thay đổi kích thước logo trên màn hình nhỏ hơn */
+    .user img {
+        width: 40px;              /* Chiều rộng logo trên màn hình nhỏ */
+    }
+}
+
+
+
+
 .user-icon-container {
     position: relative;
     display: flex;
@@ -113,6 +139,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    margin-left: 38px;
 }
 
 .user-dropdown-menu {
@@ -133,8 +160,19 @@
     color: #0b8fac;
     text-decoration: none;
     white-space: nowrap;
+    margin-left: 0px;
 }
 
 .user-dropdown-menu a:hover {
     background-color: #f0f0f0;
 }
+
+
+
+
+
+
+
+
+
+

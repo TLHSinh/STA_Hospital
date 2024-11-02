@@ -1,151 +1,3 @@
-// // DoctorProfile.jsx
-// import React, { useContext } from 'react';
-// import { AuthContext } from '../../context/AuthContext';
-
-
-// const DoctorProfile = () => {
-
-//   const { user } = useContext(AuthContext);
-
-//   if (!user) {
-//       return <p>Loading...</p>;  // Hoặc điều hướng nếu chưa có thông tin
-//   }
-
-//   return (
-//     // <div className="container mx-auto p-6">
-//     //   <h2 className="text-2xl font-bold mb-4">Thông tin bác sĩ</h2>
-
-//     //   {/* Hiển thị thông tin bác sĩ */}
-//     //   <div className="bg-white shadow-md rounded-lg p-4 mb-4">
-//     //     <h3 className="text-xl font-semibold">{user.ten}</h3>
-//     //     <p>Chuyên khoa: {user.chuyenKhoa}</p>
-//     //     <p>Kinh nghiệm: {user.kinhNghiem} năm</p>
-//     //     <p>Địa chỉ phòng khám: {user.diaChi}</p>
-//     //   </div>
-
-//     //   {/* Hiển thị danh sách bác sĩ */}
-//     //   <div>
-        
-//     //       <div key={user._id} className="bg-gray-100 p-4 rounded mb-2">
-//     //         <h3 className="font-semibold">{user.ten}</h3>
-//     //         <p>Chuyên khoa: {user.chuyenKhoa}</p>
-//     //       </div>
-
-//     //   </div>
-
-//     //   {/* Hiển thị lịch hẹn */}
-//     //   <h3 className="text-xl font-bold mt-6">Lịch hẹn</h3>
-//     //   <div>
-
-//     //   </div>
-//     // </div>
-
-//     <div className="max-w-lg flex flex-col gap-4 p-6 text-sm">
-//             <img className="w-36 rounded-full mx-auto" src={user.image} alt="Profile" />
-
-//             {isEdit ? (
-//                 <input
-//                     className="bg-gray-50 text-3xl font-medium max-w-60 text-center"
-//                     type="text"
-//                     value={user.name}
-//                     onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-//                 />
-//             ) : (
-//                 <p className="font-medium text-3xl text-center text-neutral-800">{userData.name}</p>
-//             )}
-
-//             <hr className="bg-zinc-400 h-[1px] border-none" />
-
-//             <div>
-//                 <p className="font-semibold text-gray-600">CONTACT INFORMATION</p>
-//                 <div className="mt-2">
-//                     <p className="text-gray-600">Email id:</p>
-//                     {isEdit ? (
-//                         <input
-//                             type="text"
-//                             className="bg-gray-50 w-full mt-1 p-1 border rounded"
-//                             value={userData.email}
-//                             onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-//                         />
-//                     ) : (
-//                         <p className="text-blue-600">{userData.email}</p>
-//                     )}
-//                 </div>
-//                 <div className="mt-2">
-//                     <p className="text-gray-600">Phone:</p>
-//                     {isEdit ? (
-//                         <input
-//                             type="text"
-//                             className="bg-gray-50 w-full mt-1 p-1 border rounded"
-//                             value={userData.phone}
-//                             onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-//                         />
-//                     ) : (
-//                         <p className="text-blue-600">{userData.phone}</p>
-//                     )}
-//                 </div>
-//                 <div className="mt-2">
-//                     <p className="text-gray-600">Address:</p>
-//                     {isEdit ? (
-//                         <input
-//                             type="text"
-//                             className="bg-gray-50 w-full mt-1 p-1 border rounded"
-//                             value={userData.address}
-//                             onChange={(e) => setUserData({ ...userData, address: e.target.value })}
-//                         />
-//                     ) : (
-//                         <p>{userData.address}</p>
-//                     )}
-//                 </div>
-//             </div>
-
-//             <hr className="bg-zinc-400 h-[1px] border-none" />
-
-//             <div>
-//                 <p className="font-semibold text-gray-600">BASIC INFORMATION</p>
-//                 <div className="mt-2">
-//                     <p className="text-gray-600">Gender:</p>
-//                     {isEdit ? (
-//                         <input
-//                             type="text"
-//                             className="bg-gray-50 w-full mt-1 p-1 border rounded"
-//                             value={userData.gender}
-//                             onChange={(e) => setUserData({ ...userData, gender: e.target.value })}
-//                         />
-//                     ) : (
-//                         <p>{userData.gender}</p>
-//                     )}
-//                 </div>
-//                 <div className="mt-2">
-//                     <p className="text-gray-600">Birthday:</p>
-//                     {isEdit ? (
-//                         <input
-//                             type="date"
-//                             className="bg-gray-50 w-full mt-1 p-1 border rounded"
-//                             value={userData.birthday}
-//                             onChange={(e) => setUserData({ ...userData, birthday: e.target.value })}
-//                         />
-//                     ) : (
-//                         <p>{userData.birthday}</p>
-//                     )}
-//                 </div>
-//             </div>
-
-//             <button
-//                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded mt-4 mx-auto"
-//                 onClick={() => setIsEdit(!isEdit)}
-//             >
-//                 {isEdit ? 'Save' : 'Edit'}
-//             </button>
-//         </div>
-
-//   );
-// };
-
-// export default DoctorProfile;
-
-
-
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../config';
@@ -153,38 +5,48 @@ import { toast } from 'react-toastify';
 
 const DoctorProfile = () => {
     const { user, dispatch } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
+    const [saving, setSaving] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+
+    // Dữ liệu ban đầu của userData lấy từ `user`
     const [userData, setUserData] = useState({
-      ten: user?.ten || '',
-        email: user?.email || '',
-        soDienThoai: user?.soDienThoai || '',
-        diaChi: user?.diaChi || '',
-        gioiTinh: user?.gioiTinh || '',
-        ngaySinh: user?.ngaySinh || '',
+        ten: user.ten || '',
+        email: user.email || '',
+        soDienThoai: user.soDienThoai || '',
+        diaChi: user.diaChi || '',
+        gioiTinh: user.gioiTinh || '',
+        ngaySinh: user.ngaySinh || '',
     });
 
-    // Hàm cập nhật thông tin bác sĩ
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault();
+        setSaving(true);
         try {
-            const res = await fetch(`${BASE_URL}/api/v1/doctors/${user.id}`, {
+            const res = await fetch(`${BASE_URL}/api/v1/doctors/${user._id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`,
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(userData),
             });
 
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message);
+            const result = await res.json();
+            if (result.success) {
+                toast.success("Cập nhật thành công!");
 
-            // Cập nhật AuthContext với dữ liệu mới
-            dispatch({ type: 'UPDATE_USER', payload: data.updatedUser });
+                // Cập nhật dữ liệu user mới vào AuthContext
+                dispatch({ type: 'UPDATE_USER', payload: result.data });
 
-            toast.success('Thông tin đã được cập nhật thành công');
-            setIsEdit(false);
+                setIsEdit(false);
+            } else {
+                throw new Error(result.message || "Cập nhật không thành công");
+            }
         } catch (error) {
             toast.error(`Lỗi: ${error.message}`);
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -196,8 +58,8 @@ const DoctorProfile = () => {
                 <input
                     className="bg-gray-50 text-3xl font-medium max-w-60 text-center"
                     type="text"
-                    value={userData.name}
-                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                    value={userData.ten}
+                    onChange={(e) => setUserData({ ...userData, ten: e.target.value })}
                 />
             ) : (
                 <p className="font-medium text-3xl text-center text-neutral-800">{userData.ten}</p>
@@ -283,10 +145,12 @@ const DoctorProfile = () => {
             <button
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded mt-4 mx-auto"
                 onClick={isEdit ? handleSave : () => setIsEdit(true)}
+                disabled={saving}
             >
-                {isEdit ? 'Save' : 'Edit'}
+                {isEdit ? (saving ? "Saving..." : "Save") : "Edit"}
             </button>
         </div>
+
     );
 };
 

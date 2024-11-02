@@ -1,26 +1,27 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DanhSach.css';
-import { Fab } from '@mui/material';
+import { Fab, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../config';
 import { AuthContext } from '../../../context/AuthContext.jsx'; // Import AuthContext để lấy token
-import { FaPenToSquare,FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
+import { FaPenToSquare, FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
 
 const Appointment = () => {
   const navigate = useNavigate();
-  const handleAddAppoint = () => {
-    navigate('/admin/themlichhen');
-  };
-  const [inventory, setInventory] = useState([]);
+
+  const [appointments, setAppointment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filtered, setFilteredDoctors] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
 
   // Lấy token từ AuthContext
   const { token } = useContext(AuthContext);
-  const fetchInventory = async () => {
+  const fetchAppointment = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/bookings`, {
+      const res = await fetch(`${BASE_URL}/api/v1/booking`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ const Appointment = () => {
   
       // Kiểm tra nếu API trả về thành công và có dữ liệu
       if (result.success && Array.isArray(result.data)) {
-        setInventory(result.data); // Gán mảng người dùng vào state
+        setAppointment(result.data); // Gán mảng người dùng vào state
       } else {
         throw new Error(result.message || 'Lỗi lấy danh sách thuốc và vật tư');
       }
@@ -44,13 +45,22 @@ const Appointment = () => {
     }
   };
 
+  // Xử lý tìm kiếm
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = appointments.filter((appointment) =>
+      appointment.ten.toLowerCase().includes(query) // Lọc theo tên người dùng
+    );
+    setFilteredDoctors(filtered);
+  };
 
 // Xóa người dùng với xác thực và kiểm tra quyền
-const deleteUser = async (id) => {
+const deleteAppointment = async (id) => {
   if (!window.confirm('Bạn có chắc chắn muốn xóa thuốc hoặc vật tư này?')) return;
 
   try {
-    const res = await fetch(`${BASE_URL}/api/v1/bookings/${id}`, {
+    const res = await fetch(`${BASE_URL}/api/v1/booking/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +71,7 @@ const deleteUser = async (id) => {
     const result = await res.json();
     if (result.success) {
       toast.success(result.message); // Hiển thị thông báo thành công
-      setInventory(inventory.filter((inventory) => inventory._id !== id));
+      setAppointment(appointments.filter((appointment) => appointment._id !== id));
     } else {
       toast.error(result.message); // Hiển thị thông báo lỗi từ server
     }
@@ -71,8 +81,12 @@ const deleteUser = async (id) => {
 };
 
   useEffect(() => {
-    fetchInventory();
+    fetchAppointment();
   }, []);
+
+  const handleAddAppoint = () => {
+    navigate('/admin/themlichhen');
+  };
 
   const handleEditUser = (id) => {
     navigate(`/admin/chinhsuathuocvattu/${id}`); // Chuyển hướng tới trang chỉnh sửa kèm ID
@@ -84,10 +98,70 @@ const deleteUser = async (id) => {
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
+
+
   return (
     <div>
+      <div className='title-ad'>
+        <h1>DANH SÁCH NGƯỜI DÙNG</h1>
+      </div>
 
-      <div>
+
+      <TextField
+        label="Tìm kiếm khách hàng"
+        variant="outlined"
+        value={searchQuery}
+        onChange={handleSearch}
+        fullWidth
+        margin="normal"
+      />
+
+{/* Bảng danh sách người dùng */}
+{/* <table className="user-table">
+        <thead>
+          <tr>
+            <th>Hình ảnh</th>
+            <th>Tên người dùng</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Chức năng</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(searchQuery ? filtered : users).length > 0 ? (
+            (searchQuery ? filtered : users).map((user) => (
+              <tr key={user._id}>
+                <td>
+                  <img
+                    src={user.hinhAnh}
+                    alt={`Hình của ${user.ten}`}
+                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                </td>
+                <td>{user.ten}</td>
+                <td>{user.email}</td>
+                <td>{user.soDienThoai}</td>
+                <td>
+                    <button className="icon-function" onClick={() => handleEditUser(user._id)}>
+                      <FaPenToSquare color="#66B5A3" />
+                    </button>
+                    <button className="icon-function" onClick={() => deleteUser(user._id)}>
+                      <FaTrash color="#66B5A3" />
+                    </button>
+                    <button className="icon-function" onClick={() => detailUser(user._id)}>
+                      <FaRegEye color="#66B5A3" />
+                    </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5">Không có người dùng nào</td>
+            </tr>
+          )}
+        </tbody>
+      </table> */}
+
       <Fab
         onClick={handleAddAppoint}
         sx={{
@@ -102,7 +176,7 @@ const deleteUser = async (id) => {
       >
         <FaPlus color='white' size={18} />
       </Fab>
-      </div>
+
     </div>
 
   )

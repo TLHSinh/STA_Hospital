@@ -1,10 +1,10 @@
 import React from 'react';
-import './BannerVCT.css';
+import './BannerAll.css';
 
 const BannerVCT = () => {
   return (
     <div className='banner-vct'>
-        <img src='/Images/vechungtoi_banner.jpg' alt='BannerVCT' className='banner-cuavechungtoi' />
+        <img src='/Images/vechungtoi_banner.jpg' alt='BannerVCT' className='banner-customer' />
     </div>
   );
 }
