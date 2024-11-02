@@ -30,8 +30,11 @@ function Navbar() {
 
     return (
         <header className="header">
-            <Link to="/customer/home" className="logo" aria-label="Logo">
+            {/* <Link to="/customer/home" className="logo" aria-label="Logo">
                 <span className="logo-text">STA HOSPITAL.</span>
+            </Link> */}
+             <Link to="/customer/home" className="logo">
+                <img src="/Images/LogoHome.png" alt="Logo" />
             </Link>
 
             <nav className="navbar" ref={navRef}>
