@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BannerLH from '../../Components/Customer/Banner/BannerLienHe/BannerLH'
+import BannerLH from '../../Components/Customer/Banner/BannerLH'
 import '../../Pages/Customer/LienHe.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Card5LienHe from '../../Components/Customer/Card/Card5LienHe';

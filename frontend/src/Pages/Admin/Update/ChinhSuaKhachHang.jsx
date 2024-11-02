@@ -164,7 +164,7 @@ const ChinhSuaKhachHang = () => {
           </div>
           <div class="input-box">
             <label>Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
+            <input type="email" name="email" value={formData.email} readOnly/>
           </div>
         </div>
 

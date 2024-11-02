@@ -226,7 +226,7 @@ export const deleteBookingById = async (req, res) => {
         const booking = await LichHen.findByIdAndDelete(id);
 
         if (!booking) {
-            console.warn(`Booking not found for deletion with ID: ${id}`);
+            console.warn(`Không tìm thấy id cuộc hẹn: ${id}`);
             return res.status(404).json({ success: false, message: 'Không tìm thấy lịch hẹn' });
         }
 

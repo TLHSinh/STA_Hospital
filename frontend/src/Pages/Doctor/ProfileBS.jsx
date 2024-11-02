@@ -1,45 +1,52 @@
-
-
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../config';
 import { toast } from 'react-toastify';
-import './Doctor.css';
 
 const DoctorProfile = () => {
     const { user, dispatch } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
+    const [saving, setSaving] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+
+    // Dữ liệu ban đầu của userData lấy từ `user`
     const [userData, setUserData] = useState({
-        ten: user?.ten || '',
-        email: user?.email || '',
-        soDienThoai: user?.soDienThoai || '',
-        diaChi: user?.diaChi || '',
-        gioiTinh: user?.gioiTinh || '',
-        ngaySinh: user?.ngaySinh || '',
+        ten: user.ten || '',
+        email: user.email || '',
+        soDienThoai: user.soDienThoai || '',
+        diaChi: user.diaChi || '',
+        gioiTinh: user.gioiTinh || '',
+        ngaySinh: user.ngaySinh || '',
     });
 
-    // Hàm cập nhật thông tin bác sĩ
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault();
+        setSaving(true);
         try {
-            const res = await fetch(`${BASE_URL}/api/v1/doctors/${user.id}`, {
+            const res = await fetch(`${BASE_URL}/api/v1/doctors/${user._id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`,
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(userData),
             });
 
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message);
+            const result = await res.json();
+            if (result.success) {
+                toast.success("Cập nhật thành công!");
 
-            // Cập nhật AuthContext với dữ liệu mới
-            dispatch({ type: 'UPDATE_USER', payload: data.updatedUser });
+                // Cập nhật dữ liệu user mới vào AuthContext
+                dispatch({ type: 'UPDATE_USER', payload: result.data });
 
-            toast.success('Thông tin đã được cập nhật thành công');
-            setIsEdit(false);
+                setIsEdit(false);
+            } else {
+                throw new Error(result.message || "Cập nhật không thành công");
+            }
         } catch (error) {
             toast.error(`Lỗi: ${error.message}`);
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -51,8 +58,8 @@ const DoctorProfile = () => {
                 <input
                     className="bg-gray-50 text-3xl font-medium max-w-60 text-center"
                     type="text"
-                    value={userData.name}
-                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                    value={userData.ten}
+                    onChange={(e) => setUserData({ ...userData, ten: e.target.value })}
                 />
             ) : (
                 <p className="font-medium text-3xl text-center text-neutral-800">{userData.ten}</p>
@@ -138,10 +145,12 @@ const DoctorProfile = () => {
             <button
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded mt-4 mx-auto"
                 onClick={isEdit ? handleSave : () => setIsEdit(true)}
+                disabled={saving}
             >
-                {isEdit ? 'Save' : 'Edit'}
+                {isEdit ? (saving ? "Saving..." : "Save") : "Edit"}
             </button>
         </div>
+
     );
 };
 

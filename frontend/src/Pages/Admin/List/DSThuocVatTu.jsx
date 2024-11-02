@@ -91,7 +91,7 @@ const DSThuocVatTu = () => {
   };
 
   const detailUser = (id) => {
-    navigate(`/admin/chitietthuocvattu/${id}`); 
+    navigate(`/admin/chitietthuocvattu/${id}`);
   };
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
@@ -104,7 +104,7 @@ const DSThuocVatTu = () => {
       </div>
 
       <TextField
-        label="Tìm kiếm vật tư"
+        p="Tìm kiếm vật tư"
         variant="outlined"
         value={searchQuery}
         onChange={handleSearch}
@@ -134,15 +134,15 @@ const DSThuocVatTu = () => {
                 <td>{item.gia}</td>
                 <td>{item.donViTinh}</td>
                 <td>
-                  <button className="icon-function" onClick={() => handleEditUser(item._id)}>
-                    <FaPenToSquare color="#66B5A3" />
-                  </button>
-                  <button className="icon-function" onClick={() => deleteUser(item._id)}>
-                    <FaTrash color="#66B5A3" />
-                  </button>
-                  <button className="icon-function" onClick={() => detailUser(item._id)}>
-                    <FaRegEye color="#66B5A3" />
-                  </button>
+                    <button className="icon-function" onClick={() => handleEditUser(item._id)}>
+                      <FaPenToSquare color="#66B5A3" />
+                    </button>
+                    <button className="icon-function" onClick={() => deleteUser(item._id)}>
+                      <FaTrash color="#66B5A3" />
+                    </button>
+                    <button className="icon-function" onClick={() => detailUser(item._id)}>
+                      <FaRegEye color="#66B5A3" />
+                    </button>
                 </td>
               </tr>
             ))

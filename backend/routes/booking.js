@@ -1,16 +1,6 @@
-/* // nâng cao hơn
 import express from 'express';
 import { authenticate, restrict } from '../auth/veryfyToken.js';
-import {getCheckoutSession} from '../controllers/bookingController.js';
-
-const router = express.Router()
-router.post('checkout-session/:doctorId', authenticate, getCheckoutSession)
-
-export default router; */
-
-import express from 'express';
-import { authenticate, restrict } from '../auth/veryfyToken.js';
-import {booking, updateBookingStatus,getAllBookings, deleteBookingById} from '../controllers/bookingController.js';
+import {booking, updateBookingStatus,getAllBookings,deleteBookingById} from '../controllers/bookingController.js';
 
 const router = express.Router()
 router.post('/booking', booking )

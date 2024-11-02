@@ -207,7 +207,7 @@ const BacSi = () => {
                 <td>{doctors.email}</td>
                 <td>{doctors.soDienThoai}</td>
                 <td >
-                  <button className="icon-function" onClick={() => handleEditUser(doctors._id)}>
+                 <button className="icon-function" onClick={() => handleEditUser(doctors._id)}>
                     <FaPenToSquare color="#66B5A3" />
                   </button>
                   <button className="icon-function" onClick={() => deleteUser(doctors._id)}>

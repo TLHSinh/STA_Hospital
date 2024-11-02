@@ -1,8 +1,6 @@
-//import React from 'react';
-import BannerTrangChu from '../../Components/Customer/Banner/BannerHome/BannerTrangChu';
+import BannerTrangChu from '../../Components/Customer/Banner/BannerTrangChu';
 import Card1TrangChu from '../../Components/Customer/Card/Card1TrangChu'; // Import Card1TrangChu nếu cần
 import '../../Pages/Customer/Home.css';
-import Card2BacSi from '../../Components/Customer/Card/Card2BacSi'; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Card5LienHe from '../../Components/Customer/Card/Card5LienHe';
@@ -12,7 +10,8 @@ import { BASE_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import '../../Components/Customer/Card/Card2.css';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,6 +30,8 @@ const Home = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log('token',token)
       const result = await res.json();
 
       if (result.success && Array.isArray(result.data)) {
@@ -48,6 +49,10 @@ const Home = () => {
   useEffect(() => {
     fetchDoctors();
   }, []);
+
+  const detailDoctor = (id) => {
+    navigate(`/customer/chitietbacsidatlich/${id}`);
+  };
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
@@ -69,26 +74,28 @@ const Home = () => {
           <Card1TrangChu />
         </div>
 
-        <section>
-          <div className="item">
-            <div className="container">
-              <h1 className="article-item text-center">Bác Sĩ</h1>
-              <div className="card-grid">
-                {doctors.map(doctor => (
-                  <Card2BacSi
-                    key={doctor._id}
-                    imgSrc={doctor.hinhAnh}
-                    imgAlt={`Hình của ${doctor.ten}`}
-                    title={doctor.ten}
-                    description={doctor.moTa}
-                    buttonText="Learn More"
-                    link={`${doctor._id}`} // Link dẫn đến chi tiết bác sĩ
-                  />
-                ))}
+        <div className="item">
+        <div className="container">
+          <h1 className="article-item text-center">Bác Sĩ</h1>
+          <div className="card-grid">
+            {doctors.map((doctor) => (
+              <div key={doctor._id}>
+                <div className="card-container">
+                  <img className="card-img" src={doctor.hinhAnh} alt={`Hình của ${doctor.ten}`} />
+                  <h3 className="card-title">{doctor.ten}</h3>
+                  <p className="card-description">{doctor.moTa}</p>
+                  <div>
+                    {/* Thêm nút hoặc liên kết để gọi hàm detailUser */}
+                    <button onClick={() => detailDoctor(doctor._id)} className="card-btn">
+                      Xem chi tiết
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </div>
 
 
         
@@ -114,7 +121,6 @@ const Home = () => {
         </div>
 
         <div className='item'>
-              <h1 className='article-item'></h1>
               <BannerHome2 />
         </div>
       </div>

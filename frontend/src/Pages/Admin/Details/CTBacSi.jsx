@@ -141,6 +141,21 @@ const CTBacSi = () => {
                   <div className="item-detail">{user.diaChi}</div>
                 </div>
               </div>
+              <div className="column">
+                <div className="input-box">
+                  <label>Chuyên khoa</label>
+                  <div className="item-detail">{user.chuyenKhoa}</div>
+                </div>
+                <div className="input-box">
+                  <label>Giá khám</label>
+                  <div className="item-detail">{user.giaKham}</div>
+                </div>
+                
+              </div>
+              <div className="input-box">
+                  <label>Giới thiệu ngắn</label>
+                  <div className="item-detail">{user.gioiThieuNgan}</div>
+                </div>
             </form>
           </div>
         </div>

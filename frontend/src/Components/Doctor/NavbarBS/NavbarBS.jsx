@@ -17,9 +17,9 @@ function Navbar() {
 
     return (
         <header className="header">
-        <Link to="/doctor/home" className="logo" aria-label="Logo">
-            <span className="logo-text">STA HOSPITAL.</span>
-        </Link>
+            <Link to="/doctor/home" className="logo">
+                <img src="/Images/Home.png" alt="Logo" />
+            </Link>
 
         <nav className="navbar">
             <Link to="/doctor/danhsachlichhenBS">Danh sách lịch hẹn</Link>

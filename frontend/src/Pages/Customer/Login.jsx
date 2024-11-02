@@ -115,7 +115,7 @@ const Login = () => {
 
                     <p className="mt-4 text-textColor text-center text-[14px]">
                         Bạn chưa có tài khoản?{" "}
-                        <Link to="/customer/register" className="text-primaryColor font-medium ml-1">
+                        <Link to="/register" className="text-primaryColor font-medium ml-1">
                             Đăng Ký Ngay
                         </Link>
                     </p>
