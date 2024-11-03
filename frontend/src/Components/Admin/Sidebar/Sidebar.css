@@ -55,6 +55,46 @@
 
 
 
+.flex {
+    display: flex;
+    align-items: center;
+  }
+  .nav_image {
+    display: flex;
+    min-width: 55px;
+    justify-content: center;
+  }
+  .nav_image img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+.sidebar_profile {
+    position: fixed;
+    height: 100px;
+    left: 0;
+    bottom: -8px;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    gap: 15px;
+    padding: 10px;
+
+  }
+  .sidebar_profile .name {
+    font-size: 18px;
+    color: #66B5A3;
+    font-weight: 500;
+  }
+  .sidebar_profile .email {
+    font-size: 15px;
+    color: #66B5A3;
+  }
+
+
+
+
+
+
 
 /* sinh them */
 .confirm-dialog-overlay {

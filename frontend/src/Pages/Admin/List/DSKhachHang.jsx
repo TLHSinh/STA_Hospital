@@ -136,7 +136,7 @@ const DSKhachHang = () => {
                   <img
                     src={user.hinhAnh}
                     alt={`Hình của ${user.ten}`}
-                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }}
+                    style={{ width: '6rem', height: '6rem', borderRadius: '50%', objectFit: 'cover' }}
                   />
                 </td>
                 <td>{user.ten}</td>

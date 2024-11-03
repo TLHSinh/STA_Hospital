@@ -4,7 +4,7 @@ import './DanhSach.css';
 import { Fab, Modal, Box, TextField, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import AddIcon from '@mui/icons-material/Add';
-import { FaPenToSquare, FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
+import { FaPenToSquare, FaTrash, FaRegEye } from "react-icons/fa6";
 import { BASE_URL } from '../../../config';
 import { AuthContext } from '../../../context/AuthContext';
 import { RiCalendarScheduleLine } from "react-icons/ri";
@@ -14,7 +14,7 @@ const BacSi = () => {
   const navigate = useNavigate();
 
   const [doctors, setDoctors] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,18 +39,10 @@ const BacSi = () => {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      // console.log("Token:", token);
-      // console.log("Role:", role);
+
       const result = await res.json(); // Chuyển đổi JSON từ API
       console.log(result); // Kiểm tra dữ liệu trả về
-
-      // Kiểm tra nếu API trả về thành công và có dữ liệu
-      // if (result.success && Array.isArray(result.data)) {
-      //   setDoctors(result.data); // Gán mảng người dùng vào state
-      // } else {
-      //   throw new Error(result.message || 'Lỗi lấy danh sách bác sĩ');
-      // }
-            if (result.success) {
+      if (result.success) {
         setDoctors(result.data);
         setFilteredDoctors(result.data); // Gán dữ liệu vào danh sách hiển thị ban đầu
       } else {
@@ -64,15 +56,15 @@ const BacSi = () => {
   };
 
 
-    // Xử lý tìm kiếm
-    const handleSearch = (e) => {
-      const query = e.target.value.toLowerCase();
-      setSearchQuery(query);
-      const filtered = doctors.filter((doctor) =>
-        doctor.ten.toLowerCase().includes(query)
-      );
-      setFilteredDoctors(filtered);
-    };
+  // Xử lý tìm kiếm
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = doctors.filter((doctor) =>
+      doctor.ten.toLowerCase().includes(query)
+    );
+    setFilteredDoctors(filtered);
+  };
 
   // Xóa bác sĩ với xác thực và kiểm tra quyền
   const deleteUser = async (id) => {
@@ -200,14 +192,14 @@ const BacSi = () => {
                   <img
                     src={doctors.hinhAnh}
                     alt={`Hình của ${doctors.ten}`}
-                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }}
+                    style={{ width: '6rem', height: '6rem', borderRadius: '50%', objectFit: 'cover' }}
                   />
                 </td>
                 <td>{doctors.ten}</td>
                 <td>{doctors.email}</td>
                 <td>{doctors.soDienThoai}</td>
                 <td >
-                 <button className="icon-function" onClick={() => handleEditUser(doctors._id)}>
+                  <button className="icon-function" onClick={() => handleEditUser(doctors._id)}>
                     <FaPenToSquare color="#66B5A3" />
                   </button>
                   <button className="icon-function" onClick={() => deleteUser(doctors._id)}>
@@ -234,7 +226,7 @@ const BacSi = () => {
 
       <Modal open={open} onClose={closePopup}>
         <Box className="pop-up-addworking">
-        <h2 style={{ color: '#66B5A3' }}>Thêm Lịch Làm Việc</h2>
+          <h2 style={{ color: '#66B5A3' }}>Thêm Lịch Làm Việc</h2>
 
           <TextField
             label="Ngày"
@@ -264,9 +256,9 @@ const BacSi = () => {
             margin="normal"
           />
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-            <Button 
-              variant="contained" 
-              onClick={saveSchedule} 
+            <Button
+              variant="contained"
+              onClick={saveSchedule}
               sx={{ backgroundColor: '#66B5A3', '&:hover': { backgroundColor: '#55A392' } }}
             >
               Lưu Lịch Làm Việc
