@@ -28,6 +28,8 @@ const Appointment = () => {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
+
+      console.log("Token:", token);
   
       const result = await res.json(); // Chuyển đổi JSON từ API
       console.log(result); // Kiểm tra dữ liệu trả về
@@ -117,50 +119,45 @@ const deleteAppointment = async (id) => {
       />
 
 {/* Bảng danh sách người dùng */}
-{/* <table className="user-table">
+<table className="user-table">
         <thead>
           <tr>
-            <th>Hình ảnh</th>
-            <th>Tên người dùng</th>
-            <th>Email</th>
-            <th>Số điện thoại</th>
-            <th>Chức năng</th>
+            <th>Bệnh nhân</th>
+            <th>Bác sĩ</th>
+            <th>Ngày hẹn</th>
+            <th>Thời gian bắt đầu</th>
+            <th>Trạng thái</th>
           </tr>
         </thead>
         <tbody>
-          {(searchQuery ? filtered : users).length > 0 ? (
-            (searchQuery ? filtered : users).map((user) => (
-              <tr key={user._id}>
-                <td>
-                  <img
-                    src={user.hinhAnh}
-                    alt={`Hình của ${user.ten}`}
-                    style={{ width: '5.5rem', height: '2rem', borderRadius: '50%', objectFit: 'cover' }}
-                  />
-                </td>
-                <td>{user.ten}</td>
-                <td>{user.email}</td>
-                <td>{user.soDienThoai}</td>
-                <td>
-                    <button className="icon-function" onClick={() => handleEditUser(user._id)}>
+          {(searchQuery ? filtered : appointments).length > 0 ? (
+            (searchQuery ? filtered : appointments).map((appointment) => (
+              <tr key={appointment._id}>
+                <td>{appointment.benhNhan}</td>
+                <td>{appointment.bacSi}</td>
+                <td>{appointment.ngayHen}</td>
+                <td>{appointment.thoiGianBatDau}</td>
+                <td>{appointment.trangThai}</td>
+                {/* <td>
+                    <button className="icon-function" onClick={() => handleEditUser(appointment._id)}>
                       <FaPenToSquare color="#66B5A3" />
                     </button>
-                    <button className="icon-function" onClick={() => deleteUser(user._id)}>
+                    <button className="icon-function" onClick={() => deleteUser(appointment._id)}>
                       <FaTrash color="#66B5A3" />
                     </button>
-                    <button className="icon-function" onClick={() => detailUser(user._id)}>
+                    <button className="icon-function" onClick={() => detailUser(appointment._id)}>
                       <FaRegEye color="#66B5A3" />
                     </button>
-                </td>
+                </td> */}
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="5">Không có người dùng nào</td>
+              <td colSpan="5">Không có lịch hẹn nào</td>
             </tr>
           )}
         </tbody>
-      </table> */}
+      </table>
 
       <Fab
         onClick={handleAddAppoint}
