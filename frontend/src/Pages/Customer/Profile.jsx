@@ -1,141 +1,193 @@
-import React, { useContext } from 'react';
-// import './ChiTiet.css'; // Tạo file CSS riêng cho chi tiết người dùng
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { toast } from "react-toastify";
+import { BASE_URL } from '../../config';
+import HashLoader from "react-spinners/HashLoader";
 
 function Profile() {
-  //   const { id } = useParams(); // Lấy ID từ URL
-  //   const navigate = useNavigate();
-  //   const { token } = useContext(AuthContext); // Lấy token từ context
-  //   const [user, setUser] = useState(null);
-  //   const [loading, setLoading] = useState(true);
-  //   const [error, setError] = useState(null);
-  
-  //   // Hàm lấy thông tin chi tiết người dùng
-  //   const fetchUserDetail = async () => {
-  //     try {
-  //       const res = await fetch(`${BASE_URL}/api/v1/doctors/${id}`, {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  
-  //       const result = await res.json();
-  //       if (result.success) {
-  //         setUser(result.data);
-  //       } else {
-  //         throw new Error(result.message || 'Không tìm thấy người dùng');
-  //       }
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  
-  //   useEffect(() => {
-  //     fetchUserDetail();
-  //   }, [id]);
-  
-  //   if (loading) return <p>Đang tải dữ liệu...</p>;
-  //   if (error) return <p>Lỗi: {error}</p>;
-  
-  //   return (
-  //     <div className="detail-container">
-  //       <div className='title-ad'>
-  //         <div className='icon-back'>
-  //           <Link to="/admin/danhsachkhachhang">
-  //             <FaChevronLeft color='#66B5A3' />
-  //           </Link>
-  //         </div>
-  //         <h1>CHI TIẾT KHÁCH HÀNG</h1>
-  //       </div>
-  //       {user && (
-  //         <div className="user-info">
-  //           <div className='avt-name-detail'>
-  //             <img
-  //               src={user.hinhAnh}
-  //               alt={`Hình của ${user.ten}`}
-  //               style={{ width: '150px', height: '150px', borderRadius: '50%' }}
-  //             />
-  
-  //           </div>
-  //           <h2 style={{textAlign:"center", color:"#66B5A3"}}>{user.ten}</h2>
-  //           <form action="#" class="form">
-  //             <div class="column">
-  //               <div class="input-box">
-  //                 <label>CCCD</label>
-  //                 <div className='item-detail'>
-  //                   {user.cccd}
-  //                 </div>
-  //               </div>
-  //               <div class="input-box">
-  //                 <label>Ngày sinh</label>
-  //                 <div className='item-detail'>
-  //                   {user.ngaySinh}
-  //                 </div>
-  //               </div>
-  //               <div class="input-box">
-  //                 <label>Giới tính</label>
-  //                 <div className='item-detail'>
-  //                   {user.gioiTinh}
-  //                 </div>
-  //               </div>
-  //             </div>
-  //             <div class="column">
-  //               <div class="input-box">
-  //                 <label>Email</label>
-  //                 <div className='item-detail'>
-  //                   {user.email}
-  //                 </div>
-  //               </div>
-  //               <div class="input-box">
-  //                 <label>Số điện thoại</label>
-  //                 <div className='item-detail'>
-  //                   {user.soDienThoai}
-  //                 </div>
-  //               </div>
-  //               <div class="input-box">
-  //                 <label>Nhóm máu</label>
-  //                 <div className='item-detail'>
-  //                   {user.nhomMau}
-  //                 </div>
-  //               </div>
-  //             </div>
-  //             <div class="column">
-  //               <div class="input-box">
-  //                 <label>Địa chỉ</label>
-  //                 <div className='item-detail'>
-  //                   {user.diaChi}
-  //                 </div>
-  //               </div>
-  //             </div>
-  //           </form>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // };
+    
+  const { user, token } = useContext(AuthContext); // Lấy user và token từ context
+  const [formData, setFormData] = useState({
+    ten: "",
+    email: "",
+    soDienThoai: "",
+    ngaySinh: "",
+    diaChi: "",
+    gioiTinh: "",
+    nhomMau: "",
+    cccd: "",
+  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-
-  const { user } = useContext(AuthContext);
-
-    if (!user) {
-        return <p>Loading...</p>;  // Hoặc điều hướng nếu chưa có thông tin
+  // Cập nhật formData khi user thay đổi
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        ten: user.ten || "",
+        email: user.email || "",
+        soDienThoai: user.soDienThoai || "",
+        ngaySinh: user.ngaySinh || "",
+        diaChi: user.diaChi || "",
+        gioiTinh: user.gioiTinh || "",
+        nhomMau: user.nhomMau || "",
+        cccd: user.cccd || "",
+      });
     }
+  }, [user]);
 
-    return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Thông Tin Khách Hàng</h2>
-            <div className="bg-white shadow-md rounded-lg p-4">
-                <p><strong>Tên:</strong> {user.ten}</p>
-                <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Số điện thoại:</strong> {user.soDienThoai}</p>
-                {/* Thêm các trường khác mà bạn muốn hiển thị */}
-            </div>
-        </div>
-    );
+  // Xử lý khi thay đổi input
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Xử lý submit form cập nhật thông tin
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+
+    try {
+        const res = await fetch(`${BASE_URL}/api/v1/users/${user._id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const result = await res.json();
+        if (result.success) {
+            toast.success("Cập nhật thành công!");
+            //navigate("/profile"); // Điều hướng về trang hồ sơ của người dùng
+        } else {
+            throw new Error(result.message || "Cập nhật không thành công");
+        }
+    } catch (error) {
+        toast.error(`Lỗi: ${error.message}`);
+    } finally {
+        setSaving(false);
+    }
 };
+
+
+  return (
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Thông Tin Khách Hàng</h2>
+      <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="mb-4">
+          <label><strong>Họ và tên:</strong></label>
+          <input
+            type="text"
+            name="ten"
+            value={formData.ten}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="input-field"
+          />
+        </div>
+        <div className="mb-4">
+          <label><strong>Email:</strong></label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            readOnly
+            className="input-field"
+          />
+        </div>
+        <div className="mb-4">
+          <label><strong>Số điện thoại:</strong></label>
+          <input
+            type="text"
+            name="soDienThoai"
+            value={formData.soDienThoai}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="input-field"
+          />
+        </div>
+        <div className="mb-4">
+          <label><strong>Ngày sinh:</strong></label>
+          <input
+            type="date"
+            name="ngaySinh"
+            value={formData.ngaySinh}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="input-field"
+          />
+        </div>
+        <div className="mb-4">
+          <label><strong>Địa chỉ:</strong></label>
+          <input
+            type="text"
+            name="diaChi"
+            value={formData.diaChi}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="input-field"
+          />
+        </div>
+        <div className="mb-4">
+          <label><strong>Giới tính:</strong></label>
+          <select
+            name="gioiTinh"
+            value={formData.gioiTinh}
+            onChange={handleInputChange}
+            disabled={!isEditing}
+            className="input-field"
+          >
+            <option value="">Chọn giới tính</option>
+            <option value="nam">Nam</option>
+            <option value="nu">Nữ</option>
+            <option value="khac">Khác</option>
+          </select>
+        </div>
+        <div className="mb-4">
+          <label><strong>Nhóm máu:</strong></label>
+          <input
+            type="text"
+            name="nhomMau"
+            value={formData.nhomMau}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="input-field"
+          />
+        </div>
+        <div className="mb-4">
+          <label><strong>CCCD:</strong></label>
+          <input
+            type="text"
+            name="cccd"
+            value={formData.cccd}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="input-field"
+          />
+        </div>
+        
+        {/* Nút chỉnh sửa và lưu */}
+        {!isEditing ? (
+          <button
+            className="btn btn-primary mt-4"
+            onClick={() => setIsEditing(true)}
+          >
+            Chỉnh Sửa Thông Tin
+          </button>
+        ) : (
+          <button
+            className="btn btn-primary mt-4"
+            onClick={handleUpdate}
+            disabled={saving}
+          >
+            {saving ? <HashLoader size={20} color="#fff" /> : "Lưu Thay Đổi"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default Profile;

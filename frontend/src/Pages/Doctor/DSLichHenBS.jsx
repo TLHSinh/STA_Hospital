@@ -1,44 +1,145 @@
-// AppointmentHeader.jsx
 import React from 'react';
+import { Fab, TextField } from '@mui/material';
+import { FaPenToSquare, FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../config';
+import { AuthContext } from '../../../context/AuthContext.jsx'; // Import AuthContext để lấy token
+import { FaPenToSquare, FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
+
 
 const AppointmentHeader = () => {
-  const appointments = [
-    { id: 1, name: 'Nguyễn Văn A', email: 'a.nguyen@gmail.com', phone: '0123456789', dob: '01/01/1990', dateTime: '10:00 25/10/2024', status: 'Hoàn thành' },
-    { id: 2, name: 'Trần Thị B', email: 'b.tran@gmail.com', phone: '0987654321', dob: '15/05/1995', dateTime: '14:30 25/10/2024', status: 'Đang chờ' },
-    { id: 3, name: 'Lê Văn C', email: 'c.le@gmail.com', phone: '0912345678', dob: '20/10/1988', dateTime: '09:00 26/10/2024', status: 'Hủy' },
-    
-    // Thêm các mục khác nếu cần
-  ];
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filtered, setFilteredDoctors] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Lấy danh sách khách hàng
+  const { token } = useContext(AuthContext);
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/users`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log('token',token)
+
+      const result = await res.json(); // Chuyển đổi JSON từ API
+      if (result.success && Array.isArray(result.data)) {
+        setUsers(result.data); // Gán mảng người dùng vào state
+      } else {
+        throw new Error(result.message || 'Lỗi lấy danh sách người dùng');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Xử lý tìm kiếm
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = users.filter((user) =>
+      user.ten.toLowerCase().includes(query) // Lọc theo tên người dùng
+    );
+    setFilteredDoctors(filtered);
+  };
+
+
+  
+  // Xóa khách hàng với xác thực
+  const deleteUser = async (id) => {
+    if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) return;
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/users/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        toast.success(result.message);
+        setUsers(users.filter((user) => user._id !== id));
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      toast.error(`Lỗi: ${err.message}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  // Điều hướng đến trang thêm người dùng
+  const handleAddUser = () => {
+    navigate('/admin/themkhachhang');
+  };
+
+  // Chuyển hướng tới trang chỉnh sửa kèm ID
+  const handleEditUser = (id) => {
+    navigate(`/admin/chinhsuakhachhang/${id}`);
+  };
+
+  // Chuyển hướng tới trang chi tiết người dùng với ID
+  const detailUser = (id) => {
+    navigate(`/admin/chitietkhachhang/${id}`);
+  };
+
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p>Lỗi: {error}</p>;
+
+  
 
   return (
     <div className='w-full max-w-7xl m-5'>
-      <p className='mb-3 text-lg font-medium'>Danh Sách Lịch Hẹn</p>
+      <p className='text-lg font-medium mb-3'>Danh Sách Lịch Hẹn</p>
 
       <div className='bg-white border rounded text-sm max-h-[80vh] min-h-[50vh] overflow-y-auto'>
-        {/* Tiêu đề bảng với màu nền */}
-        <div className="max-sm:hidden grid grid-cols-7 gap-0 py-3 px-6 border-b bg-gray-100">
+        {/* Header */}
+        <div className="grid grid-cols-7 gap-0 py-3 px-6 border-b bg-gray-100">
           <p className="font-bold">STT</p>
-          <p className="font-bold">Họ và Tên</p>
-          <p className="font-bold">Email</p>
-          <p className="font-bold">Số điện thoại</p>
-          <p className="font-bold">Ngày sinh</p>
-          <p className="font-bold">Ngày và Giờ</p>
-          <p className="font-bold">Trạng thái</p>
-        </div>
+          <p className="font-bold">Họ Tên</p>
+          <p className="font-bold">Giới Tính</p>
+          <p className="font-bold">Ngày Hẹn</p>
+          <p className="font-bold">Thời gian bắt đầu</p>
+          <p className="font-bold">Thời gian kết thúc</p>
+          <p className="font-bold">Hành Động</p>
 
-        {/* Hiển thị dữ liệu */}
-        {appointments.map((appointment, index) => (
-          <div key={appointment.id} className="grid grid-cols-7 gap-0 py-3 px-6 border-b">
-            <p>{index + 1}</p>
-            <p>{appointment.name}</p>
-            <p>{appointment.email}</p>
-            <p>{appointment.phone}</p>
-            <p>{appointment.dob}</p>
-            <p>{appointment.dateTime}</p>
-            <p>{appointment.status}</p>
-          </div>
-        ))}
+
+          
+        </div>
       </div>
+
+
+      {/* Nút thêm người dùng */}
+      <Fab
+        onClick={handleAddUser}
+        sx={{
+          backgroundColor: '#66B5A3',
+          '&:hover': { backgroundColor: '#97c9bc' },
+          position: 'fixed',
+          bottom: 50,
+          right: 50,
+          animation: 'animate 2s linear infinite',
+        }}
+        aria-label="add"
+      >
+        <FaPlus color='white' size={18} />
+      </Fab>
     </div>
   );
 };

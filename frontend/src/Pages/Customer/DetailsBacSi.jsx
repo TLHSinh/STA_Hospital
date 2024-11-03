@@ -109,6 +109,7 @@ const DetailsBacSi = () => {
   if (error) return <p>Lỗi: {error}</p>;
 
   return (
+    
     <div className="prescripto">
       <div className="doc-details-container">
         <div className="doc-image-wrapper">

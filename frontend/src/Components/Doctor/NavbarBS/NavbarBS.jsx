@@ -17,13 +17,13 @@ function Navbar() {
 
     return (
         <header className="header">
-            <Link to="/doctor/home" className="logo">
+            <Link className="logo">
                 <img src="/Images/Home.png" alt="Logo" />
             </Link>
 
         <nav className="navbar">
-            <Link to="/doctor/danhsachlichhenBS">Danh sách lịch hẹn</Link>
-            <Link to="/doctor/kedonthuoc">Kê đơn thuốc</Link>       
+            <Link to="/doctor/danhsachlichhenBS">Lịch Hẹn</Link>
+            <Link to="/doctor/kedonthuoc">Lịch Làm Việc</Link>       
                 {/* Chỉ hiển thị biểu tượng người dùng hoặc ảnh nếu người dùng đã đăng nhập */}
                 {user ? (
                     <div className="user-icon-container" onClick={toggleUserMenu}>

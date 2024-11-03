@@ -8,8 +8,8 @@ import { AuthContext } from '../../../context/AuthContext.jsx'; // Import AuthCo
 import { FaPenToSquare, FaTrash, FaPlus, FaRegEye } from "react-icons/fa6";
 
 const DSKhachHang = () => {
+  
   const navigate = useNavigate();
-
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
