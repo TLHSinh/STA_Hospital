@@ -29,7 +29,6 @@ const Appointment = () => {
       });
 
       console.log("Token:", token);
-
       const result = await res.json(); // Chuyển đổi JSON từ API
       console.log(result); // Kiểm tra dữ liệu trả về
 
