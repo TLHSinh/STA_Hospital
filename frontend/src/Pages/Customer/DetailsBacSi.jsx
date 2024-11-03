@@ -8,16 +8,13 @@ import '../../Pages/Customer/FormBooking.css';
 const DetailsBacSi = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { token } = useContext(AuthContext);
-  const [user, setUser] = useState(null);
+  const { token, user } = useContext(AuthContext); // Lấy thông tin token và user từ context
+  const [userDetails, setUserDetails] = useState(null);
   const [workingSchedules, setWorkingSchedules] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isBookingFormVisible, setIsBookingFormVisible] = useState(false);
-  const [bookingFormData, setBookingFormData] = useState({
-    benhNhan: '',
-  });
 
   const fetchUserDetail = async () => {
     try {
@@ -30,7 +27,7 @@ const DetailsBacSi = () => {
       });
       const result = await res.json();
       if (result.success) {
-        setUser(result.data);
+        setUserDetails(result.data);
       } else {
         throw new Error(result.message || 'Không tìm thấy thông tin');
       }
@@ -72,8 +69,8 @@ const DetailsBacSi = () => {
     const schedule = workingSchedules[selectedDate];
     const bookingData = {
       lichLamViecId: schedule._id,
-      benhNhan: bookingFormData.benhNhan,
-      gia: bookingFormData.gia,
+      benhNhan: user?._id, // Lấy ID bệnh nhân từ context
+      gia: userDetails.giaKham,
     };
 
     try {
@@ -112,24 +109,24 @@ const DetailsBacSi = () => {
     <div className="prescripto">
       <div className="doc-details-container">
         <div className="doc-image-wrapper">
-          <img src={user?.hinhAnh} alt="Doctor" className="doc-image" />
+          <img src={userDetails?.hinhAnh} alt="Doctor" className="doc-image" />
         </div>
 
         <div className="doc-info-wrapper">
           <div className="doc-info-content">
-            <h1 className="doc-name">{user?.ten}</h1>
-            <div className="experience-badge">{user?.chuyenKhoa} Chuyên khoa: 
-              <p className="doc-specialty">{user?.chuyenKhoa}</p>
+            <h1 className="doc-name">{userDetails?.ten}</h1>
+            <div className="experience-badge">{userDetails?.chuyenKhoa} Chuyên khoa: 
+              <p className="doc-specialty">{userDetails?.chuyenKhoa}</p>
             </div>
             
-            <div className="experience-badge">{user?.kinhNghiem} Kinh ngiệm: </div>
+            <div className="experience-badge">{userDetails?.kinhNghiem} Kinh nghiệm: </div>
 
             <div className="about-title">Mô tả: 
-              <p className="doc-description">{user?.moTa}</p>
+              <p className="doc-description">{userDetails?.moTa}</p>
             </div>
             
             <p className="appointment-fee">
-              Appointment fee: <span className="fee-amount">${user?.giaKham}</span>
+              Appointment fee: <span className="fee-amount">${userDetails?.giaKham}</span>
             </p>
           </div>
         </div>
@@ -175,25 +172,13 @@ const DetailsBacSi = () => {
 
       {isBookingFormVisible && (
         <div className="booking-form-container">
-        <div className="booking-form">
-          <h3 className="form-title">Thông tin đặt lịch</h3>
-          <form onSubmit={handleBooking}>
-            <div className="form-group">
-              <label htmlFor="benhNhan" className="form-label">Mã bệnh nhân:</label>
-              <input
-                type="text"
-                id="benhNhan"
-                className="form-input"
-                value={bookingFormData.benhNhan}
-                onChange={(e) => setBookingFormData({ ...bookingFormData, benhNhan: e.target.value })}
-                required
-              />
-            </div>
-    
-            <button type="submit" className="confirm-button">Xác nhận đặt lịch</button>
-          </form>
+          <div className="booking-form">
+            <h3 className="form-title">Thông tin đặt lịch</h3>
+            <form onSubmit={handleBooking}>
+              <button type="submit" className="confirm-button">Xác nhận đặt lịch</button>
+            </form>
+          </div>
         </div>
-      </div>
       )}
     </div>
   );

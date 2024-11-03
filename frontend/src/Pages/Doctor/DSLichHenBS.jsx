@@ -1,46 +1,116 @@
-// AppointmentHeader.jsx
-import React from 'react';
 
-const AppointmentHeader = () => {
-  const appointments = [
-    { id: 1, name: 'Nguyễn Văn A', email: 'a.nguyen@gmail.com', phone: '0123456789', dob: '01/01/1990', dateTime: '10:00 25/10/2024', status: 'Hoàn thành' },
-    { id: 2, name: 'Trần Thị B', email: 'b.tran@gmail.com', phone: '0987654321', dob: '15/05/1995', dateTime: '14:30 25/10/2024', status: 'Đang chờ' },
-    { id: 3, name: 'Lê Văn C', email: 'c.le@gmail.com', phone: '0912345678', dob: '20/10/1988', dateTime: '09:00 26/10/2024', status: 'Hủy' },
-    
-    // Thêm các mục khác nếu cần
-  ];
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Fab, TextField } from '@mui/material';
+import { toast } from 'react-toastify';
+import { BASE_URL } from '../../config';
+import { AuthContext } from '../../context/AuthContext.jsx';
+import { FaPenToSquare, FaPlus } from "react-icons/fa6";
+
+
+// Giao diện hiện thị danh sách lịch hẹn cho bác sĩ với nút kê đơn cho từng lịch hẹn
+const DanhSachLichHenBacSi = () => {
+  const navigate = useNavigate();
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { token } = useContext(AuthContext);
+  const { user } = useContext(AuthContext); // Lấy thông tin người dùng từ context
+  const doctorId = user._id; // Lấy ID của bác sĩ từ thông tin người dùng
+
+  const fetchAppointments = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/bookings/getdocAppoint/${doctorId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await res.json();
+      if (result.success && Array.isArray(result.appointments)) {
+        setAppointments(result.appointments);
+      } else {
+        throw new Error(result.message || 'Lỗi lấy danh sách lịch hẹn');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
+
+  const handlePrescription = (appointmentId) => {
+    navigate(`/doctor/KeBenhAn`); // Điều hướng đến trang kê bệnh án với ID lịch hẹn
+  };
+
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p>Lỗi: {error}</p>;
 
   return (
-    <div className='w-full max-w-7xl m-5'>
-      <p className='mb-3 text-lg font-medium'>Danh Sách Lịch Hẹn</p>
-
-      <div className='bg-white border rounded text-sm max-h-[80vh] min-h-[50vh] overflow-y-auto'>
-        {/* Tiêu đề bảng với màu nền */}
-        <div className="max-sm:hidden grid grid-cols-7 gap-0 py-3 px-6 border-b bg-gray-100">
-          <p className="font-bold">STT</p>
-          <p className="font-bold">Họ và Tên</p>
-          <p className="font-bold">Email</p>
-          <p className="font-bold">Số điện thoại</p>
-          <p className="font-bold">Ngày sinh</p>
-          <p className="font-bold">Ngày và Giờ</p>
-          <p className="font-bold">Trạng thái</p>
-        </div>
-
-        {/* Hiển thị dữ liệu */}
-        {appointments.map((appointment, index) => (
-          <div key={appointment.id} className="grid grid-cols-7 gap-0 py-3 px-6 border-b">
-            <p>{index + 1}</p>
-            <p>{appointment.name}</p>
-            <p>{appointment.email}</p>
-            <p>{appointment.phone}</p>
-            <p>{appointment.dob}</p>
-            <p>{appointment.dateTime}</p>
-            <p>{appointment.status}</p>
-          </div>
-        ))}
+    <div style={{ position: 'relative' }}>
+      <div className='title-ad'>
+        <h1>DANH SÁCH LỊCH HẸN CỦA BÁC SĨ</h1>
       </div>
+
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>Tên bệnh nhân</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Ngày hẹn</th>
+            <th>Thời gian bắt đầu</th>
+            <th>Thời gian kết thúc</th>
+            <th>Chức năng</th>
+          </tr>
+        </thead>
+        <tbody>
+          {appointments.length > 0 ? (
+            appointments.map((appointment) => (
+              <tr key={appointment._id}>
+                <td>{appointment.benhNhan.ten}</td>
+                <td>{appointment.benhNhan.email}</td>
+                <td>{appointment.benhNhan.soDienThoai}</td>
+                <td>{new Date(appointment.ngayHen).toLocaleDateString()}</td>
+                <td>{appointment.thoiGianBatDau}</td>
+                <td>{appointment.thoiGianKetThuc}</td>
+                <td>
+                  <button className="icon-function" onClick={() => handlePrescription(appointment._id)}>
+                    <FaPenToSquare color="#66B5A3" /> Kê đơn
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7">Không có lịch hẹn nào</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      <Fab
+        onClick={() => navigate('/doctor/them-lich-hen')}
+        sx={{
+          backgroundColor: '#66B5A3',
+          '&:hover': { backgroundColor: '#97c9bc' },
+          position: 'fixed',
+          bottom: 50,
+          right: 50,
+          animation: 'animate 2s linear infinite',
+        }}
+        aria-label="add"
+      >
+        <FaPlus color='white' size={18} />
+      </Fab>
     </div>
   );
 };
 
-export default AppointmentHeader;
+export default DanhSachLichHenBacSi;
