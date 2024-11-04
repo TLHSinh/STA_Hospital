@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/:id', authenticate, restrict(["admin", "BenhNhan"]), getSingleUser); 
 router.get('/', authenticate, restrict(["admin"]),getAllUser);
-router.put('/:id', authenticate, restrict(["admin"]), updateUser); 
+router.put('/:id', authenticate, restrict(["admin", "BenhNhan"]), updateUser); 
 router.delete('/:id', deleteUser); 
 
 router.post('/addUser', addUser);
