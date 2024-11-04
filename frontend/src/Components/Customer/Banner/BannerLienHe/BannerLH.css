@@ -1,5 +1,5 @@
 
-.banner-bs {
+.banner-lh {
     /* margin-top: 80px;  */
     /* height: calc(90vh - 80px); Điều chỉnh chiều cao của banner nếu cần */
     width: 100%;
@@ -10,4 +10,3 @@
     align-items: center;
     justify-content: center;
   }
-
