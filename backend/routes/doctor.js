@@ -11,8 +11,6 @@ router.get('/:id', getSingleDoctor);
 router.get('/',getAllDoctor);
 router.put('/:id', authenticate, restrict(["BacSi", "admin"]), updateDoctor);
 router.delete('/:id', authenticate, restrict(["BacSi", "admin"]), deleteDoctor);
-// router.put('/:id', authenticate, restrict(["doctor","admin"]), updateDoctor);
-// router.delete('/:id', authenticate, restrict(["admin"]), deleteDoctor);
 router.post('/addDoctor', addDoctor)
 router.post('/addWorkingSchedule/:id', addWorkingSchedule);
 router.get('/getWorkingSchedule/:id', getWorkingSchedule);

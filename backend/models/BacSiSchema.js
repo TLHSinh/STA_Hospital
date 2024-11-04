@@ -24,10 +24,11 @@ const BacSiSchema = new mongoose.Schema({
   gioiThieuNgan: { type: String, maxLength: 100 }, // Giới thiệu ngắn
   gioiThieuChiTiet: { type: String }, // Giới thiệu chi tiết
   lichLamViec: [{ 
-                ngay: Date, 
-                batDau: String, 
-                ketThuc: String, 
-                daDuocDat: { type: Boolean, default: false } }], // Lịch làm việc
+              ngay: Date, 
+              batDau: String, 
+              ketThuc: String, 
+              soLuongDaDat: { type: Number, default: 0 } // Số lượng đã đặt
+  }],// Lịch làm việc
   trangThai: { 
                 type: String, 
                 enum: ["choDuyet", "duocDuyet", "huy"], 

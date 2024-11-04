@@ -10,6 +10,7 @@ import userRoute from "./routes/user.js"
 import doctorRoute from "./routes/doctor.js"
 import inventoryRoute from "./routes/inventory.js"
 import bookingRoute from "./routes/booking.js"
+import medicalRecord from "./routes/medicalRecord.js"
 
 dotenv.config()
 
@@ -47,6 +48,7 @@ app.use('/api/v1/users',userRoute); //domain/api/v1/users/...
 app.use('/api/v1/doctors',doctorRoute); //domain/api/v1/doctors/
 app.use('/api/v1/inventory',inventoryRoute); //domain/api/v1/inventory/
 app.use('/api/v1/bookings',bookingRoute); //domain/api/v1/auth/register
+app.use('/api/v1/medicalRecord',medicalRecord); //domain/api/v1/auth/register
 
 
 

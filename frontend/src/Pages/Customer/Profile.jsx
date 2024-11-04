@@ -2,28 +2,16 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from "react-toastify";
 import { BASE_URL } from '../../config';
-import HashLoader from "react-spinners/HashLoader";
+import { HashLoader } from 'react-spinners'; 
 
 function Profile() {
-    
-  const { user, token } = useContext(AuthContext); // Lấy user và token từ context
-  const [formData, setFormData] = useState({
-    ten: "",
-    email: "",
-    soDienThoai: "",
-    ngaySinh: "",
-    diaChi: "",
-    gioiTinh: "",
-    nhomMau: "",
-    cccd: "",
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
+    const { user, token, dispatch } = useContext(AuthContext);
+    const [saving, setSaving] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [previewImage, setPreviewImage] = useState(user.hinhAnh || "https://via.placeholder.com/150");
 
-  // Cập nhật formData khi user thay đổi
-  useEffect(() => {
-    if (user) {
-      setFormData({
+    // Dữ liệu ban đầu của formData từ localStorage hoặc từ user
+    const initialFormData = JSON.parse(localStorage.getItem('formData')) || {
         ten: user.ten || "",
         email: user.email || "",
         soDienThoai: user.soDienThoai || "",
@@ -32,162 +20,193 @@ function Profile() {
         gioiTinh: user.gioiTinh || "",
         nhomMau: user.nhomMau || "",
         cccd: user.cccd || "",
-      });
-    }
-  }, [user]);
+        hinhAnh: user.hinhAnh || "",
+    };
 
-  // Xử lý khi thay đổi input
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const [formData, setFormData] = useState(initialFormData);
 
-  // Xử lý submit form cập nhật thông tin
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setSaving(true);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-    try {
-        const res = await fetch(`${BASE_URL}/api/v1/users/${user._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(formData),
-        });
-
-        const result = await res.json();
-        if (result.success) {
-            toast.success("Cập nhật thành công!");
-            //navigate("/profile"); // Điều hướng về trang hồ sơ của người dùng
-        } else {
-            throw new Error(result.message || "Cập nhật không thành công");
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+            setFormData({ ...formData, hinhAnh: file });
         }
-    } catch (error) {
-        toast.error(`Lỗi: ${error.message}`);
-    } finally {
-        setSaving(false);
-    }
-};
+    };
 
+    const handleSave = async (e) => {
+        e.preventDefault();
+        setSaving(true);
 
-  return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Thông Tin Khách Hàng</h2>
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <div className="mb-4">
-          <label><strong>Họ và tên:</strong></label>
-          <input
-            type="text"
-            name="ten"
-            value={formData.ten}
-            onChange={handleInputChange}
-            readOnly={!isEditing}
-            className="input-field"
-          />
-        </div>
-        <div className="mb-4">
-          <label><strong>Email:</strong></label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            readOnly
-            className="input-field"
-          />
-        </div>
-        <div className="mb-4">
-          <label><strong>Số điện thoại:</strong></label>
-          <input
-            type="text"
-            name="soDienThoai"
-            value={formData.soDienThoai}
-            onChange={handleInputChange}
-            readOnly={!isEditing}
-            className="input-field"
-          />
-        </div>
-        <div className="mb-4">
-          <label><strong>Ngày sinh:</strong></label>
-          <input
-            type="date"
-            name="ngaySinh"
-            value={formData.ngaySinh}
-            onChange={handleInputChange}
-            readOnly={!isEditing}
-            className="input-field"
-          />
-        </div>
-        <div className="mb-4">
-          <label><strong>Địa chỉ:</strong></label>
-          <input
-            type="text"
-            name="diaChi"
-            value={formData.diaChi}
-            onChange={handleInputChange}
-            readOnly={!isEditing}
-            className="input-field"
-          />
-        </div>
-        <div className="mb-4">
-          <label><strong>Giới tính:</strong></label>
-          <select
-            name="gioiTinh"
-            value={formData.gioiTinh}
-            onChange={handleInputChange}
-            disabled={!isEditing}
-            className="input-field"
-          >
-            <option value="">Chọn giới tính</option>
-            <option value="nam">Nam</option>
-            <option value="nu">Nữ</option>
-            <option value="khac">Khác</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label><strong>Nhóm máu:</strong></label>
-          <input
-            type="text"
-            name="nhomMau"
-            value={formData.nhomMau}
-            onChange={handleInputChange}
-            readOnly={!isEditing}
-            className="input-field"
-          />
-        </div>
-        <div className="mb-4">
-          <label><strong>CCCD:</strong></label>
-          <input
-            type="text"
-            name="cccd"
-            value={formData.cccd}
-            onChange={handleInputChange}
-            readOnly={!isEditing}
-            className="input-field"
-          />
-        </div>
-        
-        {/* Nút chỉnh sửa và lưu */}
-        {!isEditing ? (
-          <button
-            className="btn btn-primary mt-4"
-            onClick={() => setIsEditing(true)}
-          >
-            Chỉnh Sửa Thông Tin
-          </button>
-        ) : (
-          <button
-            className="btn btn-primary mt-4"
-            onClick={handleUpdate}
-            disabled={saving}
-          >
-            {saving ? <HashLoader size={20} color="#fff" /> : "Lưu Thay Đổi"}
-          </button>
-        )}
+        try {
+            const res = await fetch(`${BASE_URL}/api/v1/users/${user._id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await res.json();
+            if (result.success) {
+                toast.success("Cập nhật thành công!");
+                dispatch({ type: 'UPDATE_USER', payload: result.data });
+                
+                // Lưu thông tin người dùng vào localStorage
+                localStorage.setItem('formData', JSON.stringify(formData));
+
+                setIsEditing(false);
+            } else {
+                throw new Error(result.message || "Cập nhật không thành công");
+            }
+        } catch (error) {
+            toast.error(`Lỗi: ${error.message}`);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    useEffect(() => {
+        // Đọc dữ liệu từ localStorage khi component mount
+        const savedData = localStorage.getItem('formData');
+        if (savedData) {
+            setFormData(JSON.parse(savedData));
+        }
+    }, []);
+
+    return (
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+          <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg overflow-hidden p-6">
+              <div className="flex flex-col items-center mb-6">
+                  <div className="relative mb-4">
+                      <img
+                          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-md"
+                          src={previewImage}
+                          alt="Profile"
+                      />
+                      {isEditing && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
+                              <span className="text-white text-3xl font-bold">+</span>
+                              <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="absolute inset-0 opacity-0 cursor-pointer"
+                                  onChange={handleImageChange}
+                              />
+                          </div>
+                      )}
+                  </div>
+                  <h2 className="text-2xl font-semibold text-gray-800">{formData.ten}</h2>
+                  <p className="text-gray-600">{formData.email}</p>
+              </div>
+
+              <form onSubmit={handleSave} className="flex flex-wrap">
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">Họ và tên</label>
+                      <input
+                          type="text"
+                          name="ten"
+                          value={formData.ten}
+                          onChange={handleInputChange}
+                          readOnly={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">Số điện thoại</label>
+                      <input
+                          type="text"
+                          name="soDienThoai"
+                          value={formData.soDienThoai}
+                          onChange={handleInputChange}
+                          readOnly={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">Ngày sinh</label>
+                      <input
+                          type="date"
+                          name="ngaySinh"
+                          value={formData.ngaySinh}
+                          onChange={handleInputChange}
+                          readOnly={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">Địa chỉ</label>
+                      <input
+                          type="text"
+                          name="diaChi"
+                          value={formData.diaChi}
+                          onChange={handleInputChange}
+                          readOnly={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">Giới tính</label>
+                      <select
+                          name="gioiTinh"
+                          value={formData.gioiTinh}
+                          onChange={handleInputChange}
+                          disabled={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                          <option value="">Chọn giới tính</option>
+                          <option value="nam">Nam</option>
+                          <option value="nu">Nữ</option>
+                          <option value="khac">Khác</option>
+                      </select>
+                  </div>
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">Nhóm máu</label>
+                      <input
+                          type="text"
+                          name="nhomMau"
+                          value={formData.nhomMau}
+                          onChange={handleInputChange}
+                          readOnly={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+                  <div className="flex flex-col mb-4 w-1/2 p-2">
+                      <label className="block text-gray-600 font-medium mb-1">CCCD</label>
+                      <input
+                          type="text"
+                          name="cccd"
+                          value={formData.cccd}
+                          onChange={handleInputChange}
+                          readOnly={!isEditing}
+                          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+                  <div className="flex justify-center col-span-2 w-full mt-6">
+                      <button
+                          type="button"
+                          onClick={isEditing ? handleSave : () => setIsEditing(true)}
+                          disabled={saving}
+                          className={`w-full py-2 rounded-lg text-white font-semibold ${
+                              saving ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                          }`}
+                      >
+                          {isEditing ? (saving ? <HashLoader size={20} color="#fff" /> : "Lưu Thay Đổi") : "Chỉnh Sửa Thông Tin"}
+                      </button>
+                  </div>
+              </form>
+          </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default Profile;

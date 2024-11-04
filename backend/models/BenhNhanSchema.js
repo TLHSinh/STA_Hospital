@@ -4,7 +4,7 @@ const BenhNhanSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true }, // Email bệnh nhân
   matKhau: { type: String, required: true }, // Mật khẩu
   ten: { type: String, required: true }, // Tên bệnh nhân
-  soDienThoai: { type: Number }, // Số điện thoại
+  soDienThoai: { type: Number, required: true }, // Số điện thoại
   hinhAnh: { type: String }, // Hình ảnh
   ngaySinh: { type: Date}, // Ngày sinh
   cccd: { type: String }, // Căn cước công dân
