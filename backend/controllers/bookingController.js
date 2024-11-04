@@ -263,6 +263,7 @@ export const getDoctorAppointments = async (req, res) => {
 // Lấy danh sách lịch hẹn của bệnh nhân theo ID bệnh nhân đăng nhập
 export const getPatientAppointments = async (req, res) => {
   const { id } = req.params;
+  const patientId=id;
   try {
     console.log(`Fetching appointments for patient ID: ${patientId}`);
     const patient = await BenhNhan.findById(patientId);
