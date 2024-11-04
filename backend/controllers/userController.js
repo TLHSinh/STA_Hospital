@@ -101,6 +101,30 @@ export const getSingleUser = async (req, res) => {
     }
 }
 
+
+// Hàm tìm kiếm bệnh nhân theo email hoặc số điện thoại
+export const getUserEorP = async (req, res) => {
+    const { emailOrPhone } = req.body; // Nhận email hoặc số điện thoại từ yêu cầu
+  
+    try {
+      // Tìm bệnh nhân dựa vào email hoặc số điện thoại
+      const search = await BenhNhan.findOne({
+        $or: [{ email: emailOrPhone }],
+      });
+  
+      if (!search) {
+        return res.status(404).json({ success: false, message: 'Không tìm thấy bệnh nhân' });
+      }
+  
+      res.status(200).json({ success: true, message: 'Tìm người dùng thành công', data: search });
+    } catch (err) {
+      return res.status(500).json({ success: false, message: 'Lỗi server', error: err.message });
+    }
+  };
+  
+    
+
+
 export const getAllUser = async (req, res) => {
     try {
         const getUser = await BenhNhan.find({}).select("-matKhau");

@@ -23,7 +23,9 @@ function Navbar() {
 
         <nav className="navbar">
             <Link to="/doctor/danhsachlichhenBS">Danh sách lịch hẹn</Link>
+            <Link to="/doctor/timbenhnhan">Tìm kiếm bệnh nhân</Link>
             <Link to="/doctor/kedonthuoc">Kê đơn thuốc</Link> 
+            
                
                 {/* Chỉ hiển thị biểu tượng người dùng hoặc ảnh nếu người dùng đã đăng nhập */}
                 {user ? (
