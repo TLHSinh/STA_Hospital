@@ -62,7 +62,7 @@ function Navbar() {
                 {user ? (
                     <div className="user-section" onClick={toggleUserMenu}>
                         {user.hinhAnh ? (
-                            <img src={user.hinhAnh} alt="User Avatar" className="user-pic" style={{ width: "50px", height: "50px", borderRadius: "50%" }} />
+                            <img src={user.hinhAnh} alt="User Avatar" className="user-pic" style={{ width: "50px", height: "50px", borderRadius: "50%", marginLeft:"35px" }} />
                         ) : (
                             <FaRegCircleUser color="#0b8fac" size="2rem" />
                         )}

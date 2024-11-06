@@ -1,254 +1,235 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { TextField, Button, CircularProgress, Box, Typography } from '@mui/material';
+import {
+  TextField, Button, CircularProgress, Box, Typography, Grid, Paper, Divider, useTheme
+} from '@mui/material';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../config.js';
 import { AuthContext } from '../../../context/AuthContext.jsx';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const KeBenhAn = () => {
-  const { id } = useParams(); // Lấy ID lịch hẹn từ URL
+  const theme = useTheme();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true); // Trạng thái loading khi lấy dữ liệu bệnh nhân
-  const [benhNhan, setBenhNhan] = useState(null); // Thông tin bệnh nhân
-  const [submitting, setSubmitting] = useState(false); // Trạng thái khi đang gửi yêu cầu kê bệnh án
+  const [loading, setLoading] = useState(true);
+  const [benhNhan, setBenhNhan] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const [chanDoan, setChanDoan] = useState('');
   const [trieuChung, setTrieuChung] = useState('');
   const [phuongPhapDieuTri, setPhuongPhapDieuTri] = useState('');
   const [tienSuBenhLy, setTienSuBenhLy] = useState('');
   const [danhGiaDieuTri, setDanhGiaDieuTri] = useState('');
-  const [ketQuaXetNghiem, setKetQuaXetNghiem] = useState([]); // Danh sách kết quả xét nghiệm (ID)
-  const { token, user } = useContext(AuthContext); // Lấy thông tin người dùng và token từ context
-  const bacSiId = user._id; // ID của bác sĩ hiện tại
+  const [ketQuaXetNghiem, setKetQuaXetNghiem] = useState([]);
+  const { token, user } = useContext(AuthContext);
+  const bacSiId = user._id;
 
   useEffect(() => {
-    // Lấy thông tin bệnh nhân theo lịch hẹn
     const fetchBenhNhan = async () => {
       try {
-        // Gửi yêu cầu đến API để lấy thông tin bệnh nhân dựa trên ID lịch hẹn
         const res = await fetch(`${BASE_URL}/api/v1/bookings/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Thêm token để xác thực
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         const result = await res.json();
-  
-        // Kiểm tra response từ API và cập nhật thông tin bệnh nhân
+
         if (result.success && result.booking && result.booking.benhNhan) {
-          setBenhNhan(result.booking.benhNhan); // Lưu thông tin bệnh nhân vào state
+          setBenhNhan(result.booking.benhNhan);
         } else {
-          console.error('Không tìm thấy thuộc tính benhNhan trong response');
           toast.error('Không thể lấy thông tin bệnh nhân');
         }
       } catch (err) {
-        toast.error(`Lỗi: ${err.message}`); // Hiển thị lỗi nếu yêu cầu thất bại
+        toast.error(`Lỗi: ${err.message}`);
       } finally {
-        setLoading(false); // Tắt trạng thái loading sau khi hoàn tất yêu cầu
+        setLoading(false);
       }
     };
     fetchBenhNhan();
-  }, [id, token]); // useEffect phụ thuộc vào id và token
+  }, [id, token]);
 
   const handleKeBenhAn = async (e) => {
-    e.preventDefault(); // Ngăn chặn hành vi mặc định của form
-    const ngayKham = new Date().toISOString(); // Lấy ngày khám hiện tại
-    setSubmitting(true); // Bắt đầu gửi yêu cầu kê bệnh án
+    e.preventDefault();
+    setSubmitting(true);
+    const ngayKham = new Date().toISOString();
     try {
-      // Gửi yêu cầu POST để tạo bệnh án mới
-      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord//mdcRecord-appoint/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/mdcRecord-appoint/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Thêm token để xác thực
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          benhNhanId: benhNhan._id, // ID bệnh nhân lấy từ thông tin lịch hẹn
-          bacSiId, // ID bác sĩ hiện tại
-          chanDoan, // Chẩn đoán từ form
-          trieuChung, // Triệu chứng từ form
-          phuongPhapDieuTri, // Phương pháp điều trị từ form
-          tienSuBenhLy, // Tiền sử bệnh lý từ form
-          danhGiaDieuTri, // Đánh giá điều trị từ form
-          ngayKham, // Ngày khám hiện tại
-          ketQuaXetNghiem, // Danh sách kết quả xét nghiệm (ID)
-          trangThai: 'dangDieuTri', // Trạng thái bệnh án
+          benhNhanId: benhNhan._id,
+          bacSiId,
+          chanDoan,
+          trieuChung,
+          phuongPhapDieuTri,
+          tienSuBenhLy,
+          danhGiaDieuTri,
+          ngayKham,
+          ketQuaXetNghiem,
+          trangThai: 'dangDieuTri',
         }),
       });
 
       const result = await res.json();
       if (result.success) {
-        toast.success('Kê bệnh án thành công'); // Hiển thông báo thành công
-        navigate('/doctor/danhsachlichhenBS'); // Chuyển hướng về trang danh sách lịch hẹn
+        toast.success('Kê bệnh án thành công');
+        navigate(`/doctor/kedonthuoc/${result.benhAn._id}`);
       } else {
-        toast.error(result.message || 'Kê bệnh án thất bại'); // Hiển thông báo lỗi nếu tạo bệnh án thất bại
+        toast.error(result.message || 'Kê bệnh án thất bại');
       }
     } catch (err) {
-      toast.error(`Lỗi: ${err.message}`); // Hiển thị lỗi nếu yêu cầu thất bại
+      toast.error(`Lỗi: ${err.message}`);
     } finally {
-      setSubmitting(false); // Kết thúc trạng thái gửi yêu cầu kê bệnh án
+      setSubmitting(false);
     }
   };
 
-  const handleKeDonThuoc = async (e) => {
-    e.preventDefault(); // Ngăn chặn hành vi mặc định của form
-    const ngayKham = new Date().toISOString(); // Lấy ngày khám hiện tại
-    setSubmitting(true); // Bắt đầu gửi yêu cầu kê bệnh án
-    try {
-      // Gửi yêu cầu POST để tạo bệnh án mới
-      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord//mdcRecord-appoint/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Thêm token để xác thực
-        },
-        body: JSON.stringify({
-          benhNhanId: benhNhan._id, // ID bệnh nhân lấy từ thông tin lịch hẹn
-          bacSiId, // ID bác sĩ hiện tại
-          chanDoan, // Chẩn đoán từ form
-          trieuChung, // Triệu chứng từ form
-          phuongPhapDieuTri, // Phương pháp điều trị từ form
-          tienSuBenhLy, // Tiền sử bệnh lý từ form
-          danhGiaDieuTri, // Đánh giá điều trị từ form
-          ngayKham, // Ngày khám hiện tại
-          ketQuaXetNghiem, // Danh sách kết quả xét nghiệm (ID)
-          trangThai: 'dangDieuTri', // Trạng thái bệnh án
-        }),
-      });
-
-      const result = await res.json();
-      if (result.success) {
-        toast.success('Kê bệnh án thành công'); // Hiển thông báo thành công
-        navigate(`/doctor/kedonthuoc/${result.benhAn._id}`); // Chuyển hướng sang trang thêm đơn thuốc
-      } else {
-        toast.error(result.message || 'Kê bệnh án thất bại'); // Hiển thông báo lỗi nếu tạo bệnh án thất bại
-      }
-    } catch (err) {
-      toast.error(`Lỗi: ${err.message}`); // Hiển thị lỗi nếu yêu cầu thất bại
-    } finally {
-      setSubmitting(false); // Kết thúc trạng thái gửi yêu cầu kê bệnh án
-    }
-  };
-
-  // Nếu đang loading, hiển thị vòng quay chờ
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#eaeff1">
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Kê Bệnh Án</h1>
-      {/* Hiển thị thông tin bệnh nhân nếu đã lấy được */}
+    <Paper
+      elevation={6}
+      sx={{
+        padding: 4,
+        borderRadius: 3,
+        margin: '30px auto',
+        maxWidth: 900,
+        backgroundColor: '#ffffff',
+        boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/doctor/danhsachlichhenBS')}
+          sx={{ color: '#00796B', fontWeight: 'bold' }}
+        >
+          Quay lại
+        </Button>
+      </Box>
+      <Typography variant="h4" textAlign="center" sx={{ fontWeight: 600, color: theme.palette.primary.main }}>
+        Kê Bệnh Án
+      </Typography>
+      <Divider sx={{ marginY: 3, borderColor: theme.palette.primary.main }} />
       {benhNhan && (
-        <div style={{ marginBottom: '20px' }}>
-          <h3>Thông tin bệnh nhân</h3>
+        <Box marginBottom={4}>
+          {/* <Typography variant="h5" sx={{ fontWeight: 'bold', color: theme.palette.secondary.main }}>Thông tin bệnh nhân</Typography> */}
           <Typography><strong>Tên:</strong> {benhNhan.ten}</Typography>
           <Typography><strong>Tuổi:</strong> {benhNhan.tuoi}</Typography>
           <Typography><strong>Giới tính:</strong> {benhNhan.gioiTinh}</Typography>
-        </div>
+        </Box>
       )}
-      {/* Form kê bệnh án */}
-      <form>
-        <div>
-          <TextField
-            label="Chẩn đoán"
-            value={chanDoan}
-            onChange={(e) => setChanDoan(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-        </div>
-        <div>
-          <TextField
-            label="Triệu chứng"
-            value={trieuChung}
-            onChange={(e) => setTrieuChung(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-        </div>
-        <div>
-          <TextField
-            label="Phương pháp điều trị"
-            value={phuongPhapDieuTri}
-            onChange={(e) => setPhuongPhapDieuTri(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-        </div>
-        <div>
-          <TextField
-            label="Tiền sử bệnh lý"
-            value={tienSuBenhLy}
-            onChange={(e) => setTienSuBenhLy(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-        </div>
-        <div>
-          <TextField
-            label="Đánh giá điều trị"
-            value={danhGiaDieuTri}
-            onChange={(e) => setDanhGiaDieuTri(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-        </div>
-        <div>
-          <TextField
-            label="Kết quả xét nghiệm (ID)"
-            value={ketQuaXetNghiem}
-            onChange={(e) => setKetQuaXetNghiem(e.target.value.split(','))} // Chuyển giá trị nhập thành danh sách các ID
-            fullWidth
-            margin="normal"
-          />
-        </div>
+      <form onSubmit={handleKeBenhAn}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              label="Chẩn đoán"
+              variant="outlined"
+              value={chanDoan}
+              onChange={(e) => setChanDoan(e.target.value)}
+              fullWidth
+              required
+              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Triệu chứng"
+              variant="outlined"
+              value={trieuChung}
+              onChange={(e) => setTrieuChung(e.target.value)}
+              fullWidth
+              required
+              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Phương pháp điều trị"
+              variant="outlined"
+              value={phuongPhapDieuTri}
+              onChange={(e) => setPhuongPhapDieuTri(e.target.value)}
+              fullWidth
+              required
+              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Tiền sử bệnh lý"
+              variant="outlined"
+              value={tienSuBenhLy}
+              onChange={(e) => setTienSuBenhLy(e.target.value)}
+              fullWidth
+              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Đánh giá điều trị"
+              variant="outlined"
+              value={danhGiaDieuTri}
+              onChange={(e) => setDanhGiaDieuTri(e.target.value)}
+              fullWidth
+              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Kết quả xét nghiệm (ID)"
+              variant="outlined"
+              value={ketQuaXetNghiem.join(',')}
+              onChange={(e) => setKetQuaXetNghiem(e.target.value.split(','))}
+              fullWidth
+              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12} display="flex" justifyContent="center" mt={4}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={submitting}
+              sx={{
+                paddingX: 4,
+                paddingY: 1.5,
+                fontSize: '16px',
+                backgroundColor: '#3A9AD9',
+                '&:hover': { backgroundColor: '#357ABD' },
+                boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
+              }}
+            >
+              {submitting ? <CircularProgress size={24} color="inherit" /> : 'Kê bệnh án'}
+            </Button>
+            <Button
+              type="button"
+              variant="outlined"
+              color="secondary"
+              onClick={() => navigate('/doctor/danhsachlichhenBS')}
+              sx={{
+                ml: 2,
+                paddingX: 4,
+                paddingY: 1.5,
+                fontSize: '16px',
+                color: '#FF5E57',
+                borderColor: '#FF5E57',
+                '&:hover': { backgroundColor: '#FFF5F5' },
+              }}
+            >
+              Hủy
+            </Button>
 
-        <div style={{ marginTop: '20px' }}>
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            disabled={submitting}
-            onClick={handleKeBenhAn}
-          >
-            {submitting ? <CircularProgress size={24} /> : 'Kê bệnh án'}
-          </Button>
-          <Button
-            type="button"
-            variant="contained"
-            color="secondary"
-            disabled={submitting}
-            onClick={handleKeDonThuoc}
-            style={{ marginLeft: '10px' }}
-          >
-            {submitting ? <CircularProgress size={24} /> : 'Kê đơn thuốc'}
-          </Button>
-          <Button
-            type="button"
-            variant="outlined"
-            color="secondary"
-            style={{ marginLeft: '10px' }}
-            onClick={() => {
-              // Reset các giá trị của form về rỗng
-              setChanDoan('');
-              setTrieuChung('');
-              setPhuongPhapDieuTri('');
-              setTienSuBenhLy('');
-              setDanhGiaDieuTri('');
-              setKetQuaXetNghiem([]);
-            }}
-          >
-            Reset
-          </Button>
-        </div>
+          </Grid>
+        </Grid>
       </form>
-    </div>
+    </Paper>
   );
 };
 

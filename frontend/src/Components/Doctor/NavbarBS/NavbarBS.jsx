@@ -48,9 +48,8 @@ function Navbar() {
                         <FaRegCircleUser color="#0b8fac" size="2rem" />
                     </Link>
                 )}
-        </nav>   
+        </nav>
     </header>
     );
 }
-
 export default Navbar;

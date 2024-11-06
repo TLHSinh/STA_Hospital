@@ -9,6 +9,7 @@ import KeBenhAnTH2 from '../Pages/Doctor/KeBenhAn/KeBenhAnTH2';
 import KeBenhAnTH3 from '../Pages/Doctor/KeBenhAn/KeBenhAnTH3';
 import ProfileBS from '../Pages/Doctor/ProfileBS';
 import SeachPatient from '../Pages/Doctor/SeachPatient';
+import ViewPrescription from '../Pages/Doctor/ViewPrescription';
 
 
 
@@ -23,6 +24,8 @@ const DoctorRouter = () => (
         <Route path="kebenhanTH3" element={<KeBenhAnTH3/>} />
         <Route path="profile-bs" element={<ProfileBS/>} />
         <Route path="timbenhnhan" element={<SeachPatient/>} />
+
+        <Route path="xemlaibenhans/:id" element={<ViewPrescription/>} />
 
       </Route>
     </Routes>
