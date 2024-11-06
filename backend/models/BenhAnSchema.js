@@ -12,7 +12,7 @@ const BenhAnSchema = new mongoose.Schema({
   ngayKham: { type: Date, required: true }, // Ngày khám
   donThuoc: [{ type: mongoose.Types.ObjectId, ref: "DonThuoc" }], // Đơn thuốc
   lichHen: [{ type: mongoose.Types.ObjectId, ref: "LichHen" }], // Lịch hẹn
-  trangThai: { type: String, enum: ["dangDieuTri", "hoanThanh", "daXuatVien"], default: "dangDieuTri" }, // Trạng thái bệnh án
+  trangThai: { type: String, enum: ["dangDieuTri", "hoanThanh", "ycXetNghiem"], default: "dangDieuTri" }, // Trạng thái bệnh án
 }, { timestamps: true });
 
 export default mongoose.model("BenhAn", BenhAnSchema);

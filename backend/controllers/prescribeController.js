@@ -71,3 +71,42 @@ export const prescribeMedication = async (req, res) => {
       res.status(500).json({ success: false, message: 'Lỗi server' });
     }
   };
+
+  export const getPrescibeById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Tìm đơn thuốc theo ID
+        const donThuoc = await DonThuoc.findById(id)
+            .populate('benhNhan', 'ten ngaySinh diaChi')
+            .populate('bacSi', 'ten chucVu')
+
+
+        if (!donThuoc) {
+            return res.status(404).json({ success: false, message: 'Không tìm thấy đơn thuốc' });
+        }
+
+        res.status(200).json({ success: true, donThuoc });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+};
+
+export const getPrescibeAll = async (req, res) => {
+    try {
+        // Lấy tất cả các đơn thuốc
+        const donThuocAll = await DonThuoc.find({})
+            .populate('benhNhan', 'ten ngaySinh diaChi')
+            .populate('bacSi', 'ten chucVu');
+
+        if (!donThuocAll.length) {
+            return res.status(404).json({ success: false, message: 'Không tìm thấy đơn thuốc nào' });
+        }
+
+        res.status(200).json({ success: true, donThuocAll });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+};

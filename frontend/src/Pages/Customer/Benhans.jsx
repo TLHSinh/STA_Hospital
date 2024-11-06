@@ -6,18 +6,19 @@ import { AuthContext } from '../../context/AuthContext';
 
 const DSBenhAn = () => {
     const [benhAnList, setBenhAnList] = useState([]);
-    const { token } = useContext(AuthContext);
+    const { token, user } = useContext(AuthContext);
+    const patientId = user._id;
 
     useEffect(() => {
         const fetchBenhAnData = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/api/v1/medicalRecord/getmdcRecordAll`, {
+                const response = await axios.get(`${BASE_URL}/api/v1/medicalRecord/getpatimdcRecord/${patientId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
                 if (response.data.success) {
-                    setBenhAnList(response.data.benhAnAll);
+                    setBenhAnList(response.data.paRecord);
                 }
             } catch (error) {
                 console.error("Có lỗi khi lấy dữ liệu bệnh án: ", error);

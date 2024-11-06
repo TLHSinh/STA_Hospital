@@ -109,16 +109,17 @@ const DanhSachLichHenBacSi = () => {
                     startIcon={<FaPenToSquare />}
                     onClick={() => handlePrescription(_id)}
                   >
-                    Kê đơn
+                    Khám
                   </Button>
-                  <Button
+
+                  {/* <Button
                     variant="contained"
                     style={{ backgroundColor: '#FFC107', color: 'white' }}
                     startIcon={<FaEye />}
                     onClick={() => handleViewPrescription(_id)}  // Nút "Xem lại đơn"
                   >
                     Xem lại đơn
-                  </Button>
+                  </Button> */}
                 </td>
               </tr>
             ))

@@ -145,7 +145,7 @@ export const getCheckoutSession = async(req, res)=>{
             }
     
             // Kiểm tra xem trạng thái có phải là "huy" và cập nhật lịch làm việc của bác sĩ
-            if (trangThai === "huy") {
+            if (trangThai === "Huy") {
                 // Tìm bác sĩ có chứa lịch làm việc liên quan
                 const doctor = await BacSi.findById(booking.bacSi);
                 if (doctor) {

@@ -6,14 +6,15 @@ import { AuthContext } from '../../context/AuthContext';
 
 const DSBenhAn = () => {
     const [benhAnList, setBenhAnList] = useState([]);
-    const { token } = useContext(AuthContext);
+    const { token, user } = useContext(AuthContext);
+    const doctorId = user._id;
 
     useEffect(() => {
         const fetchBenhAnData = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/api/v1/medicalRecord/getmdcRecordAll`)
+                const response = await axios.get(`${BASE_URL}/api/v1/medicalRecord/getdocmdcRecord/${doctorId}`)
                 if (response.data.success) {
-                    setBenhAnList(response.data.benhAnAll);
+                    setBenhAnList(response.data.docRecord );
                 }
             } catch (error) {
                 console.error("Có lỗi khi lấy dữ liệu bệnh án: ", error);
@@ -78,7 +79,7 @@ const DSBenhAn = () => {
                                         }
                                     >
                                         <option value="hoanThanh">Hoàn thành</option>
-                                        <option value="daXuatVien">Đã xuất viện</option>
+                                        {/* <option value="ycXetNghiem"></option> */}
                                         <option value="dangDieuTri">Đang điều trị</option>
                                     </select>
                                 </td>

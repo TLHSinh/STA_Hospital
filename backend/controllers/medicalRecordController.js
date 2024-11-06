@@ -299,6 +299,46 @@ export const deleteMedicalRecordById = async (req, res) => {
 };
 
 
+// Lấy danh sách bệnh án của bác sĩ theo ID đăng nhập bác sĩ
+export const getDoctorMDCR = async (req, res) => {
+  const { id } = req.params;
+  const doctorId=id;
+  try {
+    console.log(`Fetching appointments for doctor ID: ${doctorId}`);
+    const doctor = await BacSi.findById(doctorId);
+    if (!doctor) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ' });
+    }
+
+    const docRecord = await BenhAn.find({ bacSi: doctorId}).populate('benhNhan', 'ten email soDienThoai');
+
+    res.status(200).json({ success: true, docRecord });
+
+  } catch (err) {
+    console.error('Không tìm thấy bệnh án:', err);
+    res.status(500).json({ success: false, message: 'Mất kết nối server' });
+  }
+};
+
+// Lấy danh sách bệnh án của bệnh nhân theo ID bệnh nhân đăng nhập
+export const getPatientMDCR = async (req, res) => {
+  const { id } = req.params;
+  const patientId=id;
+  try {
+    console.log(`Fetching appointments for patient ID: ${patientId}`);
+    const patient = await BenhNhan.findById(patientId);
+    if (!patient) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bệnh nhân' });
+    }
+
+    const paRecord = await BenhAn.find({ benhNhan: patientId }).populate('bacSi', 'ten email soDienThoai');
+    res.status(200).json({ success: true, paRecord });
+  } catch (err) {
+    console.error('Không tìm thấy bệnh án:', err);
+    res.status(500).json({ success: false, message: 'Mất kết nối server' });
+  }
+};
+
 
 
 

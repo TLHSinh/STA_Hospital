@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { BASE_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -33,6 +35,35 @@ const Appointment = () => {
     }
   };
 
+  const handleCancelAppointment = async (appointmentId) => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/bookings/booking/${appointmentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ trangThai: 'Huy' }),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        toast.success('Hủy lịch hẹn thành công!');
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) =>
+            appointment._id === appointmentId
+              ? { ...appointment, trangThai: 'Huy' }
+              : appointment
+          )
+        );
+      } else {
+        throw new Error(result.message || 'Hủy lịch hẹn thất bại');
+      }
+    } catch (err) {
+      toast.error(`Có lỗi khi hủy lịch hẹn: ${err.message}`);
+    }
+  };
+
   useEffect(() => {
     fetchAppointments();
   }, []);
@@ -54,6 +85,7 @@ const Appointment = () => {
               <th className="px-6 py-3">Ngày hẹn</th>
               <th className="px-6 py-3">Thời gian bắt đầu</th>
               <th className="px-6 py-3">Trạng thái</th>
+              <th className="px-6 py-3">Huỷ lịch hẹn</th>
             </tr>
           </thead>
           <tbody>
@@ -69,16 +101,29 @@ const Appointment = () => {
                     className={`px-6 py-4 font-semibold ${
                       appointment.trangThai.toLowerCase() === 'xacnhan'
                         ? 'text-green-500'
-                        : 'text-red-500'
+                        : appointment.trangThai.toLowerCase() === 'huy'
+                        ? 'text-red-500'
+                        : 'text-gray-500'
                     }`}
                   >
                     {appointment.trangThai}
+                  </td>
+                  <td >
+                    {appointment.trangThai.toLowerCase() !== 'huy' && (
+                      <button
+                        onClick={() => handleCancelAppointment(appointment._id)}
+                        className="px-4 py-2 flex items-center bg-red-500 text-white rounded hover:bg-red-600"
+                      >
+                        <HighlightOffIcon  />
+                        
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center py-4 text-gray-500">
+                <td colSpan="5" className="text-center py-4 text-gray-500">
                   Không có lịch hẹn nào
                 </td>
               </tr>

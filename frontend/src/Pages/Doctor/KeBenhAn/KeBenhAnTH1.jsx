@@ -74,6 +74,45 @@ const KeBenhAn = () => {
       const result = await res.json();
       if (result.success) {
         toast.success('Kê bệnh án thành công');
+        navigate('/doctor/danhsachlichhenBS');
+      } else {
+        toast.error(result.message || 'Kê bệnh án thất bại');
+      }
+    } catch (err) {
+      toast.error(`Lỗi: ${err.message}`);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleKeDonThuoc = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const ngayKham = new Date().toISOString();
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/mdcRecord-appoint/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          benhNhanId: benhNhan._id,
+          bacSiId,
+          chanDoan,
+          trieuChung,
+          phuongPhapDieuTri,
+          tienSuBenhLy,
+          danhGiaDieuTri,
+          ngayKham,
+          ketQuaXetNghiem,
+          trangThai: 'dangDieuTri',
+        }),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        toast.success('Kê bệnh án thành công');
         navigate(`/doctor/kedonthuoc/${result.benhAn._id}`);
       } else {
         toast.error(result.message || 'Kê bệnh án thất bại');
@@ -83,6 +122,15 @@ const KeBenhAn = () => {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    setChanDoan('');
+    setTrieuChung('');
+    setPhuongPhapDieuTri('');
+    setTienSuBenhLy('');
+    setDanhGiaDieuTri('');
+    setKetQuaXetNghiem([]);
   };
 
   if (loading) {
@@ -120,13 +168,12 @@ const KeBenhAn = () => {
       <Divider sx={{ marginY: 3, borderColor: theme.palette.primary.main }} />
       {benhNhan && (
         <Box marginBottom={4}>
-          {/* <Typography variant="h5" sx={{ fontWeight: 'bold', color: theme.palette.secondary.main }}>Thông tin bệnh nhân</Typography> */}
           <Typography><strong>Tên:</strong> {benhNhan.ten}</Typography>
           <Typography><strong>Tuổi:</strong> {benhNhan.tuoi}</Typography>
           <Typography><strong>Giới tính:</strong> {benhNhan.gioiTinh}</Typography>
         </Box>
       )}
-      <form onSubmit={handleKeBenhAn}>
+      <form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
@@ -193,10 +240,10 @@ const KeBenhAn = () => {
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="center" mt={4}>
             <Button
-              type="submit"
               variant="contained"
               color="primary"
               disabled={submitting}
+              onClick={handleKeBenhAn}
               sx={{
                 paddingX: 4,
                 paddingY: 1.5,
@@ -208,6 +255,25 @@ const KeBenhAn = () => {
             >
               {submitting ? <CircularProgress size={24} color="inherit" /> : 'Kê bệnh án'}
             </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={submitting}
+              onClick={handleKeDonThuoc}
+              sx={{ ml: 2, paddingX: 4, paddingY: 1.5, fontSize: '16px' }}
+            >
+              {submitting ? <CircularProgress size={24} /> : 'Kê đơn thuốc'}
+            </Button>
+            <Button
+              type="button"
+              variant="outlined"
+              color="secondary"
+              onClick={resetForm}
+              sx={{ ml: 2, paddingX: 4, paddingY: 1.5, fontSize: '16px', color: '#FF5E57', borderColor: '#FF5E57' }}
+            >
+              Reset
+            </Button>
+
             <Button
               type="button"
               variant="outlined"
@@ -226,6 +292,7 @@ const KeBenhAn = () => {
               Hủy
             </Button>
 
+            
           </Grid>
         </Grid>
       </form>
