@@ -44,7 +44,7 @@ const DSBenhAn = () => {
     };
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', padding: 20 }}>
             <div className='title-ad'>
                 <h1>DANH SÁCH BỆNH ÁN</h1>
             </div>

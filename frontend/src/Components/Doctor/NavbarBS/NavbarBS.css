@@ -1,0 +1,135 @@
+/* Định dạng chung cho header */
+.header-bs {
+    padding: 30px 2rem;
+    background: #F7FAFC; /* Màu nền của header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Định dạng cho navbar */
+.navbar-bs {
+    display: flex; /* Sử dụng flexbox để sắp xếp các liên kết */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 30px; /* Khoảng cách giữa các liên kết */
+}
+
+/* Định dạng cho các liên kết trong navbar */
+.navbar-bs a {
+    position: relative;
+    font-size: 18px;
+    color: #0b8fac; /* Màu chữ cho các liên kết */
+    font-weight: bold; /* Cân chỉnh độ đậm cho chữ */
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* Hiệu ứng hover cho các liên kết */
+.navbar-bs a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px; /* Độ dày của đường gạch chân */
+    background: #0b8fac; /* Màu của đường gạch chân */
+    transition: .3s; /* Hiệu ứng chuyển tiếp */
+}
+
+.navbar-bs a:hover::before {
+    width: 100%; /* Đường gạch chân sẽ mở rộng khi hover */
+}
+
+/* Định dạng cho nút người dùng */
+.user-bs {
+    display: flex; /* Sử dụng flex để căn giữa */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-left: auto; /* Đẩy user ra bên phải */
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* Định dạng cho hình ảnh người dùng */
+.user-bs img {
+    width: 50px; /* Chiều rộng của logo */
+    height: auto; /* Tự động điều chỉnh chiều cao */
+    object-fit: contain; /* Giữ nguyên tỷ lệ hình ảnh */
+}
+
+/* Định dạng cho logo */
+.logo-text {
+    color: #0b8fac; /* Màu cho logo text */
+    font-weight: bold;
+    font-size: 40px; /* Kích thước chữ cho logo */
+}
+
+.logo-bs {
+    text-decoration: none; /* Loại bỏ gạch chân cho logo */
+    color: #0b8fac; /* Màu chữ cho logo */
+    margin-right: 40px; /* Khoảng cách bên trái cho logo */
+    width: 27%;
+}
+
+/* Media queries cho kích thước màn hình nhỏ hơn */
+@media only screen and (max-width: 1024px) {
+    .header .nav-btn {
+        visibility: visible; /* Hiển thị nút trên màn hình nhỏ */
+        opacity: 1; /* Đảm bảo nó được hiển thị */
+    }
+
+    .header .navbar {
+        z-index: 1;
+        position: fixed;
+        top: -100vh; /* Khởi đầu ở vị trí ngoài màn hình */
+        left: 0;
+        height: 100vh;
+        width: 30%;
+        flex-direction: column; /* Đặt các phần tử theo chiều dọc */
+        align-items: center; /* Căn giữa các phần tử */
+        justify-content: center; /* Căn giữa các phần tử */
+        gap: 1.5rem; /* Khoảng cách giữa các phần tử */
+        background-color: white; /* Màu nền cho navbar */
+        transition: 1s; /* Hiệu ứng chuyển tiếp */
+        left: 70%; /* Khởi động ra bên phải */
+    }
+
+    .navbar a {
+        font-size: 1.5rem; /* Kích thước chữ lớn hơn trên màn hình nhỏ */
+    }
+}
+
+@media (max-width: 768px) {
+    .user img {
+        width: 40px; /* Kích thước logo nhỏ hơn trên màn hình nhỏ */
+    }
+}
+
+.user-avatar-2 {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Biến hình ảnh thành hình tròn */
+    object-fit: cover; /* Đảm bảo ảnh phù hợp với khung mà không bị biến dạng */
+}
+
+.user-dropdown-menu-bs {
+    position: absolute;
+    top: 109%;
+    right: 6%;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-dropdown-menu-bs a {
+    padding: 15px 20px;
+    color: #0b8fac;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-left: 0px;
+}
+
+.user-dropdown-menu-bs a:hover {
+    background-color: #f0f0f0;
+}

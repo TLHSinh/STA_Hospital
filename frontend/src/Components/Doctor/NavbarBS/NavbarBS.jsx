@@ -16,12 +16,12 @@ function Navbar() {
     };
 
     return (
-        <header className="header">
-            <Link to="/doctor/home" className="logo">
+        <header className="header-bs">
+            <Link to="/doctor/home" className="logo-bs">
                 <img src="/Images/Home.png" alt="Logo" />
             </Link>
 
-        <nav className="navbar">
+        <nav className="navbar-bs">
             <Link to="/doctor/danhsachlichhenBS">Danh sách lịch hẹn</Link>
             <Link to="/doctor/timbenhnhan">Tìm kiếm bệnh nhân</Link>
             <Link to="/doctor/kedonthuoc">Kê đơn thuốc</Link> 
@@ -37,7 +37,7 @@ function Navbar() {
                             <FaRegCircleUser color="#0b8fac" size="2rem" />
                         )}
                         {isUserMenuOpen && (
-                            <div className="user-dropdown-menu">
+                            <div className="user-dropdown-menu-bs">
                                 <Link to="/doctor/profile-bs">Hồ sơ</Link>
                                 <Link to="/doctor/danhsachlichhenBS">Lịch hẹn của tôi</Link>
                                 <Link to="/login">Đăng xuất</Link>
@@ -45,13 +45,12 @@ function Navbar() {
                         )}
                     </div>
                 ) : (
-                    <Link to="/login" className="user">
+                    <Link to="/login" className="user-bs">
                         <FaRegCircleUser color="#0b8fac" size="2rem" />
                     </Link>
                 )}
-        </nav>   
+        </nav>
     </header>
     );
 }
-
 export default Navbar;
