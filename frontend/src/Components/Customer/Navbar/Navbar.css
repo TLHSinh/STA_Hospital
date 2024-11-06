@@ -142,10 +142,10 @@
     margin-left: 38px;
 }
 
-.user-dropdown-menu {
+.user-dropdown-menu-kh {
     position: absolute;
-    top: 140%;
-    right: 0;
+    top: 93%;
+    left: 85%;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -155,7 +155,7 @@
     flex-direction: column;
 }
 
-.user-dropdown-menu a {
+.user-dropdown-menu-kh a {
     padding: 15px 20px;
     color: #0b8fac;
     text-decoration: none;
@@ -163,16 +163,6 @@
     margin-left: 0px;
 }
 
-.user-dropdown-menu a:hover {
+.user-dropdown-menu-kh a:hover {
     background-color: #f0f0f0;
 }
-
-
-
-
-
-
-
-
-
-

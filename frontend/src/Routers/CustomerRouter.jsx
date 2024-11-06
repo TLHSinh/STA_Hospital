@@ -18,6 +18,7 @@ import ProtectedRoute from './ProtecttedRoute';
 import Profile from '../Pages/Customer/Profile';
 import Appointment from '../Pages/Customer/Appointment';
 import DetailsBacSi from '../Pages/Customer/DetailsBacSi';
+import Benhans from '../Pages/Customer/Benhans';
 
 
 
@@ -35,6 +36,7 @@ const CustomerRoutes = () => (
       <Route path="chitietbacsidatlich/:id" element={<DetailsBacSi />} />
       <Route path="profile" element={<Profile />} />
       <Route path="appointment" element={<Appointment />} />
+      <Route path="benhans" element={<Benhans />} />
 
 
 

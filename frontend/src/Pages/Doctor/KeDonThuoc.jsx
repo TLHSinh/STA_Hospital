@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { TextField, Button, CircularProgress, Box, Typography, Autocomplete } from '@mui/material';
+import {
+  TextField, Button, CircularProgress, Box, Typography, Autocomplete, Card, CardContent, Divider, Paper
+} from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../config';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const KeDonThuoc = () => {
-  const { id } = useParams(); // Lấy ID bệnh án từ URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [benhNhan, setBenhNhan] = useState(null);
-  const [bacSi, setBacSi] = useState(null); // Thông tin bác sĩ
-  const [ketQuaXetNghiem, setKetQuaXetNghiem] = useState([]); // Danh sách kết quả xét nghiệm
-  const [donThuoc, setDonThuoc] = useState([]); // Thông tin đơn thuốc
- 
-  const [benhAn, setBenhAn] = useState(null); // Thông tin bệnh án
+  const [bacSi, setBacSi] = useState(null);
+  const [ketQuaXetNghiem, setKetQuaXetNghiem] = useState([]);
+  const [donThuoc, setDonThuoc] = useState([]);
+  const [benhAn, setBenhAn] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [bacSiId, setBacSiId] = useState('');
   const [thuocList, setThuocList] = useState([{ thuocId: '', lieuDung: '', soLanUong: '', ghiChu: '' }]);
@@ -33,12 +35,11 @@ const KeDonThuoc = () => {
         });
         if (res.data.success && res.data.benhAn) {
           const { benhNhan, bacSi, ketQuaXetNghiem, donThuoc } = res.data.benhAn;
-          setBenhNhan(benhNhan); // Lưu thông tin bệnh nhân
-          setBacSi(bacSi); // Lưu thông tin bác sĩ
-          setKetQuaXetNghiem(ketQuaXetNghiem); // Lưu kết quả xét nghiệm
-          setDonThuoc(donThuoc); // Lưu thông tin đơn thuốc
-         
-          setBenhAn(res.data.benhAn); // Lưu thông tin bệnh án
+          setBenhNhan(benhNhan);
+          setBacSi(bacSi);
+          setKetQuaXetNghiem(ketQuaXetNghiem);
+          setDonThuoc(donThuoc);
+          setBenhAn(res.data.benhAn);
         } else {
           toast.error('Không tìm thấy bệnh án');
         }
@@ -51,7 +52,7 @@ const KeDonThuoc = () => {
 
     const fetchThuocs = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/v1/inventory/`, { // Lấy vật tư từ API
+        const res = await axios.get(`${BASE_URL}/api/v1/inventory/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAvailableThuocs(res.data.data || []);
@@ -80,14 +81,8 @@ const KeDonThuoc = () => {
     try {
       const res = await axios.post(
         `${BASE_URL}/api/v1/prescribe/presmdc/${id}`,
-        {
-          bacSiId,
-          thuocList,
-          loiKhuyen,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { bacSiId, thuocList, loiKhuyen },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data.success) {
         toast.success('Kê đơn thuốc thành công');
@@ -111,54 +106,54 @@ const KeDonThuoc = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Kê Đơn Thuốc</h1>
-      {benhNhan && benhAn && (
-        <div style={{ marginBottom: '20px' }}>
-          <Typography variant="h6">Thông tin bệnh nhân</Typography>
-          <Typography><strong>Tên:</strong> {benhNhan.ten}</Typography>
-          <Typography><strong>Ngày sinh:</strong> {benhNhan.ngaySinh}</Typography>
-          <Typography><strong>Địa chỉ:</strong> {benhNhan.diaChi}</Typography>
+    <Box sx={{ padding: 4,
+      borderRadius: 3,
+      margin: '30px auto',
+      maxWidth: 900,
+      backgroundColor: '#ffffff',
+      boxShadow: '0px 4px 10px rgba(0,0,0,0.1)', }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/doctor/danhsachlichhenBS')}
+          sx={{ color: '#00796B', fontWeight: 'bold' }}
+        >
+          Quay lại
+        </Button>
+      </Box>
 
-          <Typography variant="h6" style={{ marginTop: '20px' }}>Thông tin bệnh án</Typography>
-          <Typography><strong>Chẩn đoán:</strong> {benhAn.chanDoan}</Typography>
-          <Typography><strong>Triệu chứng:</strong> {benhAn.trieuChung}</Typography>
-          <Typography><strong>Phương pháp điều trị:</strong> {benhAn.phuongPhapDieuTri}</Typography>
-          <Typography><strong>Tiền sử bệnh lý:</strong> {benhAn.tienSuBenhLy}</Typography>
+      <Typography variant="h4" align="center" gutterBottom color="primary" sx={{ fontWeight: 'bold', marginBottom: '40px'}} >
+        Kê Đơn Thuốc
+      </Typography>
 
-          {bacSi && (
-            <>
-              <Typography variant="h6" style={{ marginTop: '20px' }}>Thông tin bác sĩ</Typography>
-              <Typography><strong>Tên:</strong> {user.ten}</Typography>
-              <Typography><strong>Chức vụ:</strong> {user.role}</Typography>
-            </>
-          )}
+      <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', borderRadius: '12px', bgcolor: '#ffffff' }}>
+        {benhNhan && benhAn && (
+          <CardContent>
+            <Typography variant="h6" color="#0b8fac" sx={{ fontWeight: 'bold' }}>Thông tin bệnh nhân</Typography>
+            <Divider sx={{ marginBottom: 2 }} />
+            <Typography><strong>Tên:</strong> {benhNhan.ten}</Typography>
+            <Typography><strong>Ngày sinh:</strong> {benhNhan.ngaySinh}</Typography>
+            <Typography><strong>Địa chỉ:</strong> {benhNhan.diaChi}</Typography>
 
-          {ketQuaXetNghiem.length > 0 && (
-            <>
-              <Typography variant="h6" style={{ marginTop: '20px' }}>Kết quả xét nghiệm</Typography>
-              {ketQuaXetNghiem.map((xetNghiem, index) => (
-                <Typography key={index}>
-                  <strong>Ngày xét nghiệm:</strong> {xetNghiem.ngayXetNghiem}, <strong>Kết quả:</strong> {xetNghiem.ketQua}
-                </Typography>
-              ))}
-            </>
-          )}
+            <Typography variant="h6" sx={{ marginTop: 3, fontWeight: 'bold' }} color="#0b8fac">Thông tin bệnh án</Typography>
+            <Divider sx={{ marginBottom: 2 }} />
+            <Typography><strong>Chẩn đoán:</strong> {benhAn.chanDoan}</Typography>
+            <Typography><strong>Triệu chứng:</strong> {benhAn.trieuChung}</Typography>
+            <Typography><strong>Phương pháp điều trị:</strong> {benhAn.phuongPhapDieuTri}</Typography>
+            <Typography><strong>Tiền sử bệnh lý:</strong> {benhAn.tienSuBenhLy}</Typography>
 
-          {donThuoc.length > 0 && (
-            <>
-              <Typography variant="h6" style={{ marginTop: '20px' }}>Thông tin đơn thuốc</Typography>
-              {donThuoc.map((don, index) => (
-                <Typography key={index}>
-                  <strong>Ngày kê đơn:</strong> {don.ngayKeDon}
-                </Typography>
-              ))}
-            </>
-          )}
+            {bacSi && (
+              <>
+                <Typography variant="h6" sx={{ marginTop: 3, fontWeight: 'bold' }} color="#0b8fac">Thông tin bác sĩ</Typography>
+                <Divider sx={{ marginBottom: 2 }} />
+                <Typography><strong>Tên:</strong> {user.ten}</Typography>
+                <Typography><strong>Chức vụ:</strong> {user.role}</Typography>
+              </>
+            )}
+          </CardContent>
+        )}
+      </Paper>
 
-         
-        </div>
-      )}
       <form onSubmit={handleSubmit}>
         <TextField
           label="Lời khuyên"
@@ -166,22 +161,28 @@ const KeDonThuoc = () => {
           onChange={(e) => setLoiKhuyen(e.target.value)}
           fullWidth
           margin="normal"
+          variant="outlined"
+          sx={{ bgcolor: '#e8f0fe', borderRadius: '8px' }}
         />
-        <Typography variant="h6" style={{ marginTop: '20px' }}>Danh sách thuốc</Typography>
+
+        <Typography variant="h6" sx={{ marginTop: 3, fontWeight: 'bold' }} color="textSecondary">Danh sách thuốc</Typography>
+        <Divider sx={{ marginBottom: 2 }} />
         {thuocList.map((thuoc, index) => (
-          <Box key={index} display="flex" gap="10px" marginBottom="20px">
+          <Box key={index} display="flex" gap="10px" alignItems="center" marginBottom="20px">
             <Autocomplete
               options={availableThuocs}
               getOptionLabel={(option) => option.tenVatTu}
               onChange={(e, value) => handleThuocChange(index, 'thuocId', value?._id || '')}
-              renderInput={(params) => <TextField {...params} label="Chọn thuốc" required />}
-              style={{ width: '200px' }}
+              renderInput={(params) => <TextField {...params} label="Chọn thuốc" required variant="outlined" sx={{ bgcolor: '#e8f0fe', borderRadius: '8px' }} />}
+              sx={{ width: '200px' }}
             />
             <TextField
               label="Liều Dùng"
               value={thuoc.lieuDung}
               onChange={(e) => handleThuocChange(index, 'lieuDung', e.target.value)}
               required
+              variant="outlined"
+              sx={{ bgcolor: '#e8f0fe', borderRadius: '8px' }}
             />
             <TextField
               label="Số Lần Uống"
@@ -189,39 +190,44 @@ const KeDonThuoc = () => {
               value={thuoc.soLanUong}
               onChange={(e) => handleThuocChange(index, 'soLanUong', e.target.value)}
               required
+              variant="outlined"
+              sx={{ bgcolor: '#e8f0fe', borderRadius: '8px' }}
             />
             <TextField
               label="Ghi Chú"
               value={thuoc.ghiChu}
               onChange={(e) => handleThuocChange(index, 'ghiChu', e.target.value)}
+              variant="outlined"
+              sx={{ bgcolor: '#e8f0fe', borderRadius: '8px' }}
             />
           </Box>
         ))}
-        <Button variant="outlined" onClick={addThuocField}>Thêm thuốc</Button>
-        <div style={{ marginTop: '20px' }}>
+        <Button variant="outlined" onClick={addThuocField} sx={{ marginBottom: 2, color: '#4a90e2', borderColor: '#4a90e2' }}>
+          Thêm thuốc
+        </Button>
+
+        <Box display="flex" gap={2}>
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             disabled={submitting}
+            sx={{ minWidth: '150px', bgcolor: '#4a90e2', color: 'white' }}
           >
             {submitting ? <CircularProgress size={24} /> : 'Kê Đơn Thuốc'}
           </Button>
           <Button
-            type="button"
             variant="outlined"
-            color="secondary"
-            style={{ marginLeft: '10px' }}
             onClick={() => {
               setThuocList([{ thuocId: '', lieuDung: '', soLanUong: '', ghiChu: '' }]);
               setLoiKhuyen('');
             }}
+            sx={{ color: '#ff7043', borderColor: '#ff7043' }}
           >
             Reset
           </Button>
-        </div>
+        </Box>
       </form>
-    </div>
+    </Box>
   );
 };
 
