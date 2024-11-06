@@ -108,5 +108,68 @@ background: none;
     padding: 5px 10px; /* Thêm một chút padding */
     font-weight: 500; /* Đậm chữ */
   }
+
+
+
+
+  .status-hoanThanh {
+    background-color: #86e49d;
+    color: #006b21;
+    border-radius: 5px; /* Bo tròn */
+    padding: 5px 10px; /* Thêm một chút padding để đẹp hơn */
+    font-weight: 500; /* Đậm chữ */
+  }
+  
+  .status-dangDieuTri {
+    background-color: #d893a3;
+    color: #b30021;
+    border-radius: 5px; /* Bo tròn */
+    padding: 5px 10px; /* Thêm một chút padding */
+    font-weight: 500; /* Đậm chữ */
+  }
+  
+  .status-daXuatVien {
+    background-color: #ebc474;
+    color: white; /* Chữ màu trắng */
+    border-radius: 5px; /* Bo tròn */
+    padding: 5px 10px; /* Thêm một chút padding */
+    font-weight: 500; /* Đậm chữ */
+  }
   
   
+
+
+
+
+
+
+/* phân trang */
+  .pagination {
+    display: flex;
+    justify-content: left;
+    margin: 20px 0;
+  }
+  
+  .pagination button {
+    background-color: #66B5A3;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:hover {
+    background-color: #55A392;
+  }
+  
+  .pagination button.active {
+    background-color: #3d8b75;
+    font-weight: bold;
+  }
+  
+  .pagination button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }

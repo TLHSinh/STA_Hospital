@@ -16,6 +16,10 @@ const DSThuocVatTu = () => {
   const [filtered, setFilteredInventory] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 5;
+
   // Lấy token từ AuthContext
   const { token } = useContext(AuthContext);
   const fetchInventory = async () => {
@@ -50,6 +54,7 @@ const DSThuocVatTu = () => {
       item.tenVatTu.toLowerCase().includes(query) // Lọc theo tên vật tư
     );
     setFilteredInventory(filtered);
+    setCurrentPage(1);
   };
 
   // Xóa vật tư với xác thực
@@ -93,6 +98,15 @@ const DSThuocVatTu = () => {
   const detailUser = (id) => {
     navigate(`/admin/chitietthuocvattu/${id}`);
   };
+
+
+      // Tính toán danh sách bác sĩ cho trang hiện tại
+      const indexOfLastDoctor = currentPage * doctorsPerPage;
+      const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+      const currentDoctors = filtered.slice(indexOfFirstDoctor, indexOfLastDoctor);
+    
+      // Chuyển trang
+      const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
@@ -153,6 +167,22 @@ const DSThuocVatTu = () => {
           )}
         </tbody>
       </table>
+
+
+
+      <div className="pagination">
+        {Array.from({ length: Math.ceil(filtered.length / doctorsPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+
+
 
       {/* Nút thêm vật tư */}
       <Fab

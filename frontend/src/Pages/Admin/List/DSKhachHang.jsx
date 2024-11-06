@@ -16,6 +16,10 @@ const DSKhachHang = () => {
   const [filtered, setFilteredDoctors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 5;
+
   // Lấy danh sách khách hàng
   const { token } = useContext(AuthContext);
   const fetchUsers = async () => {
@@ -33,6 +37,7 @@ const DSKhachHang = () => {
       const result = await res.json(); // Chuyển đổi JSON từ API
       if (result.success && Array.isArray(result.data)) {
         setUsers(result.data); // Gán mảng người dùng vào state
+        setFilteredDoctors(result.data);
       } else {
         throw new Error(result.message || 'Lỗi lấy danh sách người dùng');
       }
@@ -51,6 +56,7 @@ const DSKhachHang = () => {
       user.ten.toLowerCase().includes(query) // Lọc theo tên người dùng
     );
     setFilteredDoctors(filtered);
+    setCurrentPage(1);
   };
 
 
@@ -99,6 +105,17 @@ const DSKhachHang = () => {
     navigate(`/admin/chitietkhachhang/${id}`);
   };
 
+
+
+  // Tính toán danh sách bác sĩ cho trang hiện tại
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = filtered.slice(indexOfFirstDoctor, indexOfLastDoctor);
+
+  // Chuyển trang
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
 
@@ -129,8 +146,8 @@ const DSKhachHang = () => {
           </tr>
         </thead>
         <tbody>
-          {(searchQuery ? filtered : users).length > 0 ? (
-            (searchQuery ? filtered : users).map((user) => (
+          {currentDoctors.length > 0 ? (
+            currentDoctors.map((user) => (
               <tr key={user._id}>
                 <td>
                   <img
@@ -162,6 +179,22 @@ const DSKhachHang = () => {
           )}
         </tbody>
       </table>
+
+
+
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from({ length: Math.ceil(filtered.length / doctorsPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+
 
       {/* Nút thêm người dùng */}
       <Fab

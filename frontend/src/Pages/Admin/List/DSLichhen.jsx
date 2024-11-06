@@ -16,6 +16,9 @@ const Appointment = () => {
   const [filtered, setFilteredDoctors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 5;
+
   // Lấy token từ AuthContext
   const { token } = useContext(AuthContext);
   const fetchAppointment = async () => {
@@ -33,7 +36,8 @@ const Appointment = () => {
       console.log(result); // Kiểm tra dữ liệu trả về
 
       if (result.success && Array.isArray(result.data)) {
-        setAppointment(result.data); 
+        setAppointment(result.data);
+        setFilteredDoctors(result.data);
       } else {
         throw new Error(result.message || 'Lỗi lấy danh sách lịch hẹn');
       }
@@ -49,13 +53,14 @@ const Appointment = () => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
     const filtered = appointments.filter((appointment) =>
-      appointment.bacSi.ten.toLowerCase().includes(query) || 
-      appointment.benhNhan.ten.toLowerCase().includes(query) 
+      appointment.bacSi.ten.toLowerCase().includes(query) ||
+      appointment.benhNhan.ten.toLowerCase().includes(query)
     );
-  
+
     setFilteredDoctors(filtered);
+    setCurrentPage(1);
   };
-  
+
 
 
   // Cập nhật trạng thái cuộc hẹn
@@ -88,6 +93,15 @@ const Appointment = () => {
     fetchAppointment();
   }, []);
 
+
+  // Tính toán danh sách bác sĩ cho trang hiện tại
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = filtered.slice(indexOfFirstDoctor, indexOfLastDoctor);
+
+  // Chuyển trang
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p>Lỗi: {error}</p>;
 
@@ -117,8 +131,8 @@ const Appointment = () => {
           </tr>
         </thead>
         <tbody>
-          {(searchQuery ? filtered : appointments).length > 0 ? (
-            (searchQuery ? filtered : appointments).map((appointment) => (
+          {currentDoctors.length > 0 ? (
+            currentDoctors.map((appointment) => (
               <tr key={appointment._id}>
                 <td>{appointment.benhNhan.ten}</td>
                 <td>{appointment.bacSi.ten}</td>
@@ -150,6 +164,19 @@ const Appointment = () => {
           )}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from({ length: Math.ceil(filtered.length / doctorsPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
