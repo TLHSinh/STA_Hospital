@@ -80,3 +80,33 @@ background: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   }
+
+
+
+
+
+  .status-confirmed {
+    background-color: #86e49d;
+    color: #006b21;
+    border-radius: 5px; /* Bo tròn */
+    padding: 5px 10px; /* Thêm một chút padding để đẹp hơn */
+    font-weight: 500; /* Đậm chữ */
+  }
+  
+  .status-cancelled {
+    background-color: #d893a3;
+    color: #b30021;
+    border-radius: 5px; /* Bo tròn */
+    padding: 5px 10px; /* Thêm một chút padding */
+    font-weight: 500; /* Đậm chữ */
+  }
+  
+  .status-pending {
+    background-color: #ebc474;
+    color: white; /* Chữ màu trắng */
+    border-radius: 5px; /* Bo tròn */
+    padding: 5px 10px; /* Thêm một chút padding */
+    font-weight: 500; /* Đậm chữ */
+  }
+  
+  

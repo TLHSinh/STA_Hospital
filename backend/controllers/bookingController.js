@@ -185,7 +185,9 @@ export const getCheckoutSession = async(req, res)=>{
     
             console.log('Bookings retrieved:', bookings);
             // Trả về danh sách lịch hẹn
-            res.status(200).json({ success: true, bookings });
+            // res.status(200).json({ success: true, bookings });
+            res.status(200).json({ success: true, data: bookings });
+
         } catch (err) {
             console.error('Error getting all bookings:', err);
             res.status(500).json({ success: false, message: 'Mất kết nối server' });
@@ -263,6 +265,7 @@ export const getDoctorAppointments = async (req, res) => {
 // Lấy danh sách lịch hẹn của bệnh nhân theo ID bệnh nhân đăng nhập
 export const getPatientAppointments = async (req, res) => {
   const { id } = req.params;
+  const patientId=id;
   try {
     console.log(`Fetching appointments for patient ID: ${patientId}`);
     const patient = await BenhNhan.findById(patientId);

@@ -1,12 +1,12 @@
 
 import React from 'react'
 
-const KeDonThuoc = () => {
+const KeBenhAnTH3 = () => {
   return (
     <div>
-      dffsfs
+      
     </div>
   )
 }
 
-export default KeDonThuoc
+export default KeBenhAnTH3
