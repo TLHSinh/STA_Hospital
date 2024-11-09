@@ -4,6 +4,8 @@ import { BASE_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 import '../../Pages/Customer/DetailsBacSi.css';
 import '../../Pages/Customer/FormBooking.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const DetailsBacSi = () => {
   const navigate = useNavigate();
@@ -107,29 +109,46 @@ const DetailsBacSi = () => {
 
   return (
     
-    <div className="prescripto">
-      <div className="doc-details-container">
-        <div className="doc-image-wrapper">
-          <img src={userDetails?.hinhAnh} alt="Doctor" className="doc-image" />
+    <div className="max-w-4xl mx-auto p-6 font-sans">
+      {/* <div className="bg-white shadow-lg rounded-lg p-6 flex gap-6 mb-8">
+        <div className="w-1/3">
+          <img src={userDetails?.hinhAnh} alt="Doctor" className="rounded-lg object-cover w-full" />
         </div>
+        <div className="w-2/3 space-y-4">
+          <h1 className="text-3xl font-semibold text-gray-800">{userDetails?.ten}</h1>
+          <p className="text-lg text-gray-600"><span className="font-semibold">Chuyên khoa:</span> {userDetails?.chuyenKhoa}</p>
+          <p className="text-lg text-gray-600"><span className="font-semibold">Kinh nghiệm:</span> {userDetails?.kinhNghiem} năm</p>
+          <p className="text-lg text-gray-600"><span className="font-semibold">Mô tả:</span> {userDetails?.moTa}</p>
+          <p className="text-lg text-gray-600"><span className="font-semibold">Phí khám:</span> ${userDetails?.giaKham}</p>
+        </div>
+      </div> */}
 
-        <div className="doc-info-wrapper">
-          <div className="doc-info-content">
-            <h1 className="doc-name">{userDetails?.ten}</h1>
-            <div className="experience-badge">{userDetails?.chuyenKhoa} Chuyên khoa: 
-              <p className="doc-specialty">{userDetails?.chuyenKhoa}</p>
-            </div>
-            
-            <div className="experience-badge">{userDetails?.kinhNghiem} Kinh nghiệm: </div>
+      <div className="bg-white shadow-2xl rounded-xl p-8 flex gap-10 mb-10">
+        <div className="w-1/3">
+          <img
+            src={userDetails?.hinhAnh}
+            alt="Doctor"
+            className="rounded-xl object-cover w-full h-80 border-4 border-[#37AFE1] shadow-lg"
+          />
+        </div>
+        <div className="w-2/3 space-y-5">
+        <h1 className="text-4xl font-bold text-[#0b8fac] hover:text-[#065a71] transition-colors duration-300 border-b-2 border-gray-300 pb-2 mb-4">
+          {userDetails?.ten}
+        </h1>
 
-            <div className="about-title">Mô tả: 
-              <p className="doc-description">{userDetails?.moTa}</p>
-            </div>
-            
-            <p className="appointment-fee">
-              Appointment fee: <span className="fee-amount">${userDetails?.giaKham}</span>
-            </p>
-          </div>
+          <p className="text-lg text-gray-700">
+            <span className="font-bold text-[]">Chuyên khoa:</span> {userDetails?.chuyenKhoa}
+          </p>
+          <p className="text-lg text-gray-700">
+            <span className="font-bold text-[]">Kinh nghiệm:</span> {userDetails?.kinhNghiem}10 năm
+          </p>
+          <p className="text-lg text-gray-700 text-justify">
+            <span className="font-bold text-[]">Mô tả:</span> {userDetails?.gioiThieuNgan}
+          </p>
+
+          <p className="text-lg text-gray-700">
+            <span className="font-bold text-[]">Phí khám:</span> ${userDetails?.giaKham}
+          </p>
         </div>
       </div>
 
@@ -172,15 +191,30 @@ const DetailsBacSi = () => {
       </div>
 
       {isBookingFormVisible && (
-        <div className="booking-form-container">
-          <div className="booking-form">
-            <h3 className="form-title">Thông tin đặt lịch</h3>
-            <form onSubmit={handleBooking}>
-              <button type="submit" className="confirm-button">Xác nhận đặt lịch</button>
-            </form>
-          </div>
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 z-50">
+        <div className="bg-white p-10 rounded-3xl shadow-lg transform transition duration-300 w-full max-w-lg mx-4 relative">
+          {/* Nút đóng với FontAwesome icon */}
+          <button 
+            onClick={() => setIsBookingFormVisible(false)}
+            className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl bg-transparent"
+            aria-label="Close"
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+
+          <h3 className="text-2xl font-semibold text-center text-gray-700 mb-8">Thông tin đặt lịch</h3>
+          <form onSubmit={handleBooking} className="space-y-4">
+            <button 
+              type="submit" 
+              div className="w-full py-3 px-6 text-lg font-semibold text-white bg-gradient-to-r from-[#0b8fac] to-[#065a71] rounded-full shadow-md hover:from-[#0a7b92] hover:to-[#05485d] transition-all duration-200"
+            >
+              Xác nhận đặt lịch
+            </button>
+          </form>
         </div>
-      )}
+      </div>
+    )}
+
     </div>
   );
 };

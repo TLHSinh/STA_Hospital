@@ -76,24 +76,25 @@ function LienHe() {
               </div>
           </div>
           
-     <div className="map">
-      <h1 className='article-item'>Vị trí</h1>
-        <div className="btnmap">
-          <button style={{padding:'10px'}} onClick={() => setSelectedMap("hospital")}>
-            Bệnh Viện STA TÂN PHÚ
-          </button>
-          <button style={{padding:'10px'}} onClick={() => setSelectedMap("clinic")}>
-            Bệnh Viện STA SALA
-          </button>
-        </div>
+        <div className="map">
+          <h1 className='article-item'>Vị trí</h1>
+          <div className="btnmap">
+            <button style={{padding:'10px'}} onClick={() => setSelectedMap("hospital")}>
+              Bệnh Viện STA TÂN PHÚ
+            </button>
+            <button style={{padding:'10px'}} onClick={() => setSelectedMap("clinic")}>
+              Bệnh Viện STA SALA
+            </button>
+          </div>
 
-        <div className="map-section">
-          <div className="gmap-frame">
-            {maps[selectedMap]}
+          <div className="map-section">
+            <div className="gmap-frame">
+              {maps[selectedMap]}
+            </div>
           </div>
         </div>
+
       </div>
-  </div>
     </div>
   );
 }
