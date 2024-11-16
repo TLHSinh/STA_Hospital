@@ -126,110 +126,142 @@ function Profile() {
         </div>
 
         <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">Họ và tên</label>
-                <input
-                    type="text"
-                    name="ten"
-                    value={formData.ten}
-                    onChange={handleInputChange}
-                    readOnly={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </div>
+        <div className="col-span-1 md:col-span-2">
+            <h3 className="text-xl font-bold text-blue-500 mb-2">Thông tin cá nhân</h3>
+        </div>
 
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">Số điện thoại</label>
-                <input
-                    type="text"
-                    name="soDienThoai"
-                    value={formData.soDienThoai}
-                    onChange={handleInputChange}
-                    readOnly={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </div>
+    {/* Họ và Tên */}
+    <div className="flex flex-col md:col-span-2">
+        <label className="block text-gray-700 font-medium mb-1">Họ và tên</label>
+        <input
+            type="text"
+            name="ten"
+            value={formData.ten}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
 
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">Ngày sinh</label>
-                <input
-                    type="date"
-                    name="ngaySinh"
-                    value={formData.ngaySinh}
-                    onChange={handleInputChange}
-                    readOnly={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </div>
+    {/* Ngày sinh */}
+    <div className="flex flex-col">
+        <label className="block text-gray-700 font-medium mb-1">Ngày sinh</label>
+        <input
+            type="date"
+            name="ngaySinh"
+            value={formData.ngaySinh}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
 
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">Địa chỉ</label>
-                <input
-                    type="text"
-                    name="diaChi"
-                    value={formData.diaChi}
-                    onChange={handleInputChange}
-                    readOnly={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </div>
+    {/* Giới tính */}
+    <div className="flex flex-col">
+        <label className="block text-gray-700 font-medium mb-1">Giới tính</label>
+        <select
+            name="gioiTinh"
+            value={formData.gioiTinh}
+            onChange={handleInputChange}
+            disabled={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        >
+            <option value="">Chọn giới tính</option>
+            <option value="nam">Nam</option>
+            <option value="nu">Nữ</option>
+            <option value="khac">Khác</option>
+        </select>
+    </div>
 
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">Giới tính</label>
-                <select
-                    name="gioiTinh"
-                    value={formData.gioiTinh}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                    <option value="">Chọn giới tính</option>
-                    <option value="nam">Nam</option>
-                    <option value="nu">Nữ</option>
-                    <option value="khac">Khác</option>
-                </select>
-            </div>
+    <div className="col-span-1 md:col-span-2">
+        <h3 className="text-xl font-bold text-blue-500 mb-2">Thông tin liên hệ</h3>
+    </div>
+    {/* Email */}
+    <div className="flex flex-col">
+        <label className="block text-gray-700 font-medium mb-1">Email</label>
+        <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
 
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">Nhóm máu</label>
-                <input
-                    type="text"
-                    name="nhomMau"
-                    value={formData.nhomMau}
-                    onChange={handleInputChange}
-                    readOnly={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </div>
+    {/* Số điện thoại */}
+    <div className="flex flex-col">
+        <label className="block text-gray-700 font-medium mb-1">Số điện thoại</label>
+        <input
+            type="text"
+            name="soDienThoai"
+            value={formData.soDienThoai}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
 
-            <div className="flex flex-col mb-4">
-                <label className="block text-gray-700 font-medium mb-1">CCCD</label>
-                <input
-                    type="text"
-                    name="cccd"
-                    value={formData.cccd}
-                    onChange={handleInputChange}
-                    readOnly={!isEditing}
-                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </div>
+    {/* Địa chỉ */}
+    <div className="flex flex-col md:col-span-2">
+        <label className="block text-gray-700 font-medium mb-1">Địa chỉ</label>
+        <input
+            type="text"
+            name="diaChi"
+            value={formData.diaChi}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
 
-            <div className="flex justify-center col-span-2 w-full mt-6">
-                <button
-                    type="button"
-                    onClick={isEditing ? handleSave : () => setIsEditing(true)}
-                    disabled={saving}
-                    className={`w-full py-4 rounded-lg text-white font-semibold transition duration-300 ease-in-out ${
-                        saving ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-                    } shadow-md`}
-                >
-                    {isEditing ? (saving ? <HashLoader size={20} color="#fff" /> : "Lưu Thay Đổi") : "Chỉnh Sửa Thông Tin"}
-                </button>
-            </div>
-        </form>
+    <div className="col-span-1 md:col-span-2">
+            <h3 className="text-xl font-bold text-blue-500 mb-2">Thông tin bổ sung</h3>
+        </div>
+    
+
+    {/* Nhóm máu */}
+    <div className="flex flex-col">
+        <label className="block text-gray-700 font-medium mb-1">Nhóm máu</label>
+        <input
+            type="text"
+            name="nhomMau"
+            value={formData.nhomMau}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
+
+    {/* CCCD */}
+    <div className="flex flex-col">
+        <label className="block text-gray-700 font-medium mb-1">CCCD</label>
+        <input
+            type="text"
+            name="cccd"
+            value={formData.cccd}
+            onChange={handleInputChange}
+            readOnly={!isEditing}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+    </div>
+
+    <div className="flex justify-center col-span-1 md:col-span-2 mt-6">
+        <button
+            type="button"
+            onClick={isEditing ? handleSave : () => setIsEditing(true)}
+            disabled={saving}
+            className={`w-full py-4 rounded-lg text-white font-semibold transition duration-300 ease-in-out ${
+                saving ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
+            } shadow-md`}
+        >
+            {isEditing ? (saving ? <HashLoader size={20} color="#fff" /> : "Lưu Thay Đổi") : "Chỉnh Sửa Thông Tin"}
+        </button>
+    </div>
+</form>
+
     </div>
 </div>
-
     );
 }
 
