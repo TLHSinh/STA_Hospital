@@ -124,6 +124,45 @@ const KeBenhAn = () => {
     }
   };
 
+  const handleNewXetNghiem = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const ngayKham = new Date().toISOString();
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/mdcRecord-appoint/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          benhNhanId: benhNhan._id,
+          bacSiId,
+          chanDoan,
+          trieuChung,
+          phuongPhapDieuTri,
+          tienSuBenhLy,
+          danhGiaDieuTri,
+          ngayKham,
+          ketQuaXetNghiem,
+          trangThai: 'dangDieuTri',
+        }),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        toast.success('Kê bệnh án thành công');
+        navigate(`/doctor/newTest/${result.benhAn._id}`);
+      } else {
+        toast.error(result.message || 'Kê bệnh án thất bại');
+      }
+    } catch (err) {
+      toast.error(`Lỗi: ${err.message}`);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const resetForm = () => {
     setChanDoan('');
     setTrieuChung('');
@@ -264,6 +303,19 @@ const KeBenhAn = () => {
             >
               {submitting ? <CircularProgress size={24} /> : 'Kê đơn thuốc'}
             </Button>
+
+
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={submitting}
+              onClick={handleNewXetNghiem}
+              sx={{ ml: 2, paddingX: 4, paddingY: 1.5, fontSize: '16px' }}
+            >
+              {submitting ? <CircularProgress size={24} /> : 'yêu cầu xét nghiệm'}
+            </Button>
+
+
             <Button
               type="button"
               variant="outlined"

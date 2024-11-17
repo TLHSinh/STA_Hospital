@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const KetQuaXetNghiemSchema = new mongoose.Schema({
-  ngayXetNghiem: { type: Date, required: true }, // Ngày xét nghiệm
+  ngayXetNghiem: { type: Date}, // Ngày xét nghiệm
   ketQua: { type: String, required: true }, // Kết quả
   ngayLayMau: { type: Date, required: true }, // Ngày lấy mẫu
   ngayTraKetQua: { type: Date, required: true }, // Ngày trả kết quả
