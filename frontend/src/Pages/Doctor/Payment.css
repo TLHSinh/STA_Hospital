@@ -1,0 +1,41 @@
+.invoice-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: center;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.section h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #3E7770;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f7f7f7;
+}
+
+table tr:hover {
+  background-color: #f9f9f9;
+}

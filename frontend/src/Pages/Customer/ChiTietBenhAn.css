@@ -1,0 +1,153 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.record-container {
+    max-width: 80%;
+    margin: 30px auto;
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.record-header {
+    text-align: center;
+    color: #007bff;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.record-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.left-column, .right-column {
+    flex: 1;
+    min-width: 300px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    font-size: 20px;
+    color: #007bff;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.section-content div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+
+.donthuoc-content div {
+    
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.xetnghiem-content div {
+    
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+
+.section-content div:last-child {
+    border-bottom: none;
+}
+
+.labelba {
+    font-weight: bold;
+    color: #555;
+    padding: 8px 0;
+}
+
+.value {
+    color: #333;
+    font-style: italic;
+}
+
+.medications-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    table-layout: fixed; /* Cố định độ rộng cột */
+}
+
+.medications-table th,
+.medications-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word; /* Cho phép ngắt dòng trong ô */
+}
+
+.medications-table th {
+    background-color: #f1f9f1;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.medications-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.medications-table .wide-column {
+    width: 40%; /* Đặt độ rộng lớn hơn cho cột Tên Thuốc */
+}
+
+.medications-table .small-column {
+    width: 15%; /* Đặt độ rộng nhỏ cho các cột Liều Dùng và Số Lần Uống */
+}
+
+.medications-table .note-column {
+    width: 30%; /* Đặt độ rộng vừa cho Ghi Chú */
+}
+
+
+buttonba.back-button {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 28px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button.back-button:hover {
+    background-color: #47d890;
+}
+
+@media (max-width: 768px) {
+    .record-content {
+        flex-direction: column;
+    }
+}
