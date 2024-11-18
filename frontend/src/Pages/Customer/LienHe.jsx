@@ -79,10 +79,10 @@ function LienHe() {
         <div className="map">
           <h1 className='article-item'>Vị trí</h1>
           <div className="btnmap">
-            <button style={{padding:'10px'}} onClick={() => setSelectedMap("hospital")}>
+            <button className="lienhe" style={{padding:'10px'}} onClick={() => setSelectedMap("hospital")}>
               Bệnh Viện STA TÂN PHÚ
             </button>
-            <button style={{padding:'10px'}} onClick={() => setSelectedMap("clinic")}>
+            <button className="lienhe" style={{padding:'10px'}} onClick={() => setSelectedMap("clinic")}>
               Bệnh Viện STA SALA
             </button>
           </div>

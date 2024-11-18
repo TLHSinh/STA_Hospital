@@ -222,8 +222,8 @@ export const getMedicalRecordById = async (req, res) => {
     const benhAn = await BenhAn.findById(id)
       .populate('benhNhan', 'ten ngaySinh diaChi')
       .populate('bacSi', 'ten chucVu')
-      .populate('ketQuaXetNghiem', 'ngayXetNghiem ketQua')
-      .populate('donThuoc', 'ngayKeDon')
+      .populate('ketQuaXetNghiem', 'ngayXetNghiem ketQua ngayLayMau ngayTraKetQua ghiChu ')
+      .populate('donThuoc', 'ngayDonThuoc thuoc loiKhuyen')
       .populate('lichHen', 'ngayHen thoiGianBatDau');
 
     if (!benhAn) {
@@ -242,11 +242,11 @@ export const getMedicalRecordAll = async (req, res) => {
   try {
     // Tìm bệnh án theo ID
     const benhAnAll = await BenhAn.find({})
-      .populate('benhNhan', 'ten ngaySinh diaChi')
-      .populate('bacSi', 'ten chucVu')
-      .populate('ketQuaXetNghiem', 'ngayXetNghiem ketQua')
-      .populate('donThuoc', 'ngayKeDon')
-      .populate('lichHen', 'ngayHen thoiGianBatDau');
+    .populate('benhNhan', 'ten ngaySinh diaChi')
+    .populate('bacSi', 'ten chucVu')
+    .populate('ketQuaXetNghiem', 'ngayXetNghiem ketQua ngayLayMau ngayTraKetQua ghiChu ')
+    .populate('donThuoc', 'ngayDonThuoc thuoc loiKhuyen')
+    .populate('lichHen', 'ngayHen thoiGianBatDau');
 
     if (!benhAnAll) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy bệnh án' });
@@ -322,22 +322,31 @@ export const getDoctorMDCR = async (req, res) => {
 
 // Lấy danh sách bệnh án của bệnh nhân theo ID bệnh nhân đăng nhập
 export const getPatientMDCR = async (req, res) => {
-  const { id } = req.params;
-  const patientId=id;
+  const { id } = req.params; // Get patient ID from the request
+  const patientId = id;
+
   try {
-    console.log(`Fetching appointments for patient ID: ${patientId}`);
-    const patient = await BenhNhan.findById(patientId);
+    console.log(`Fetching medical records for patient ID: ${patientId}`);
+
+    // Find the patient by ID
+    const patient = await BenhNhan.findById(patientId).select('ten');
     if (!patient) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy bệnh nhân' });
     }
 
-    const paRecord = await BenhAn.find({ benhNhan: patientId }).populate('bacSi', 'ten email soDienThoai');
+    // Find medical records for the patient and populate related fields
+    const paRecord = await BenhAn.find({ benhNhan: patientId })
+      .populate('benhNhan', 'ten') // Populate patient's name
+      .populate('bacSi', 'ten email') // Populate doctor's name and email
+      .select('chanDoan ngayKham trangThai benhNhan bacSi'); // Select specific fields for medical records
+
     res.status(200).json({ success: true, paRecord });
   } catch (err) {
     console.error('Không tìm thấy bệnh án:', err);
     res.status(500).json({ success: false, message: 'Mất kết nối server' });
   }
 };
+
 
 
 
