@@ -8,14 +8,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEye,
   faPrint,
-  faPrescription,
   faEdit,
-  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 const DSBenhAn = () => {
   const [benhAnList, setBenhAnList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filterStatus, setFilterStatus] = useState(""); // Trạng thái lọc
+  const [sortOrder, setSortOrder] = useState("asc"); // Thứ tự sắp xếp A-Z
+  const [sortDate, setSortDate] = useState("asc"); // Thứ tự sắp xếp ngày khám
   const { token, user } = useContext(AuthContext);
   const doctorId = user._id;
   const navigate = useNavigate();
@@ -45,6 +46,32 @@ const DSBenhAn = () => {
     fetchBenhAnData();
   }, [doctorId, token]);
 
+  // Lọc theo trạng thái
+  const filteredBenhAnList = benhAnList.filter((benhAn) => {
+    if (!filterStatus) return true; // Nếu không có bộ lọc, hiển thị tất cả
+    return benhAn.trangThai === filterStatus; // Lọc theo trạng thái
+  });
+
+  // Sắp xếp theo số thứ tự (ID) A-Z hoặc Z-A
+  const sortedByID = [...filteredBenhAnList].sort((a, b) => {
+    if (sortOrder === "asc") {
+      return a._id.localeCompare(b._id); // So sánh theo ID
+    } else {
+      return b._id.localeCompare(a._id);
+    }
+  });
+
+  // Sắp xếp theo ngày khám
+  const sortedByDate = [...sortedByID].sort((a, b) => {
+    const dateA = new Date(a.ngayKham);
+    const dateB = new Date(b.ngayKham);
+    if (sortDate === "asc") {
+      return dateA - dateB; // Tăng dần theo ngày khám
+    } else {
+      return dateB - dateA; // Giảm dần theo ngày khám
+    }
+  });
+
   const handleStatusChange = async (e, id) => {
     const newStatus = e.target.value;
     setBenhAnList((prevList) =>
@@ -70,22 +97,19 @@ const DSBenhAn = () => {
   };
 
   const handleViewDetails = (id) => {
-    // Navigate to the detailed view page with the medical record ID
     navigate(`/customer/chitietbenhans/${id}`);
   };
 
   const handNewPayment = async (id) => {
     try {
-      // Gọi API lập hóa đơn mới
       const response = await axios.post(`${BASE_URL}/api/v1/payment/${id}`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (response.data.success) {
         toast.success('Lập hóa đơn thành công! Chuyển hướng...');
-        // Chuyển hướng đến trang NewPayment cùng với ID hóa đơn vừa tạo
         const newInvoiceId = response.data.hoaDon._id;
         navigate(`/doctor/NewPayment/${newInvoiceId}`);
       } else {
@@ -96,11 +120,45 @@ const DSBenhAn = () => {
       toast.error('Có lỗi xảy ra khi lập hóa đơn!');
     }
   };
-  
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-7xl mx-auto">
       <h1 className="text-2xl font-bold text-center mb-6">DANH SÁCH BỆNH ÁN</h1>
+
+      {/* Bộ lọc */}
+      <div className="mb-4 flex justify-end space-x-4">
+        {/* Lọc trạng thái */}
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md shadow focus:outline-none"
+        >
+          <option value="">Tất cả trạng thái</option>
+          <option value="hoanThanh">Hoàn thành</option>
+          <option value="dangDieuTri">Đang điều trị</option>
+        </select>
+
+        {/* Lọc theo số thứ tự A-Z/Z-A */}
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md shadow focus:outline-none"
+        >
+          <option value="asc">Số thứ tự (A-Z)</option>
+          <option value="desc">Số thứ tự (Z-A)</option>
+        </select>
+
+        {/* Lọc theo ngày khám */}
+        <select
+          value={sortDate}
+          onChange={(e) => setSortDate(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md shadow focus:outline-none"
+        >
+          <option value="asc">Ngày khám (Mới nhất)</option>
+          <option value="desc">Ngày khám (Cũ nhất)</option>
+        </select>
+      </div>
+
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table className="min-w-full border-collapse table-auto">
           <thead className="bg-blue-100">
@@ -118,18 +176,13 @@ const DSBenhAn = () => {
               <tr>
                 <td colSpan="6" className="p-3 text-center">Đang tải dữ liệu...</td>
               </tr>
-            ) : benhAnList.length > 0 ? (
-              benhAnList.map((benhAn) => (
+            ) : sortedByDate.length > 0 ? (
+              sortedByDate.map((benhAn) => (
                 <tr key={benhAn._id} className="hover:bg-blue-50">
-                  {/* Mã số (Last 4 characters of _id) */}
                   <td className="p-3 border">{benhAn._id.slice(-4)}</td>
-                  {/* Họ tên bệnh nhân */}
                   <td className="p-3 border">{benhAn.benhNhan.ten}</td>
-                  {/* Chẩn đoán */}
                   <td className="p-3 border">{benhAn.chanDoan}</td>
-                  {/* Ngày khám */}
                   <td className="p-3 border">{new Date(benhAn.ngayKham).toLocaleDateString()}</td>
-                  {/* Trạng thái */}
                   <td className="p-3 border">
                     <select
                       value={benhAn.trangThai}
@@ -140,28 +193,24 @@ const DSBenhAn = () => {
                       <option value="dangDieuTri">Đang điều trị</option>
                     </select>
                   </td>
-                  {/* Hành động */}
                   <td className="p-3 border text-center">
-                  <button
+                    <buttonn
                       className="text-blue-500 mx-1"
-                      style={{ color: 'blue', background: 'none' }}
                       onClick={() => handleViewDetails(benhAn._id)}
                     >
                       <FontAwesomeIcon icon={faEye} /> {/* View */}
-                    </button>
+                    </buttonn>
 
-                    <button
+                    <buttonn
                       className="text-blue-500 mx-1"
-                      style={{ color: 'blue', background: 'none' }}
                       onClick={() => handNewPayment(benhAn._id)}
                     >
                       <FontAwesomeIcon icon={faPrint} /> {/* Print */}
-                    </button>
-                 
-                    <button className="text-purple-500 mx-1" style={{ background:'none'}}>
+                    </buttonn>
+
+                    <buttonn className="text-purple-500 mx-1">
                       <FontAwesomeIcon icon={faEdit} /> {/* Edit */}
-                    </button>
-                    
+                    </buttonn>
                   </td>
                 </tr>
               ))

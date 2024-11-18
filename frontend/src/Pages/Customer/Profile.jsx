@@ -100,7 +100,7 @@ function Profile() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br bg-gray-100 to-blue-100 p-4">
     <div className="max-w-3xl w-full bg-white shadow-xl rounded-lg overflow-hidden p-8">
         <div className="flex flex-col items-center mb-6">
             <div className="relative mb-4">

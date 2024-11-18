@@ -222,121 +222,103 @@ const DetailsBacSi = () => {
               <FontAwesomeIcon icon={faTimes} />
             </button>
 
-            <h3 className="text-2xl font-semibold text-center text-gray-700 mb-8">Thông tin đặt lịch</h3>
+            <div className="form-container" style={{ maxHeight: '500px', overflowY: 'auto', paddingRight: '10px' }}>
+            <h3 className="text-4xl font-bold text-center text-[#0b8fac] mb-8">Thông tin đặt lịch</h3>
+            
+
             <form onSubmit={handleBooking} className="grid grid-cols-1 gap-6">
-            <div className="personal-info improved">
-      <h4 className="font-bold mb-4">Thông tin cá nhân:</h4>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="input-wrapper">
-          <label className="label">Họ và tên</label>
-          <div className="input-field">
-            <input type="text" value={user?.ten || ''} readOnly className="input" />
-            <FontAwesomeIcon icon={faUser} className="input-icon" />
-          </div>
-        </div>
-        
-        <div className="input-wrapper">
-          <label className="label">Email</label>
-          <div className="input-field">
-            <input type="email" value={user?.email || ''} readOnly className="input" />
-            <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
-          </div>
-        </div>
-        
-        <div className="input-wrapper">
-          <label className="label">Số điện thoại</label>
-          <div className="input-field">
-            <input type="text" value={user?.soDienThoai || ''} readOnly className="input" />
-            <FontAwesomeIcon icon={faPhone} className="input-icon" />
-          </div>
-        </div>
-        
-        <div className="input-wrapper">
-          <label className="label">Địa chỉ</label>
-          <div className="input-field">
-            <input type="text" value={user?.diaChi || ''} readOnly className="input" />
-            <FontAwesomeIcon icon={faBuilding} className="input-icon" />
-          </div>
-        </div>
-      </div>
-    </div>
+              <div className="personal-info improved">
+                <h4 className="font-bold mb-4">Thông tin cá nhân:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="input-wrapper">
+                    <label className="label">Họ và tên</label>
+                    <div className="input-field">
+                      <input type="text" value={user?.ten || ''} readOnly className="input" />
+                      <FontAwesomeIcon icon={faUser} className="input-icon" />
+                    </div>
+                  </div>
 
-    <div className="appointment-info improved">
-  <h4 className="font-bold mb-4">Thông tin lịch hẹn:</h4>
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    
-    <div className="input-wrapper">
-      <label className="label">Ngày</label>
-      <div className="input-field">
-        <input 
-          type="text" 
-          value={selectedDate || ''} 
-          readOnly 
-          className="input" 
-        />
-        <FontAwesomeIcon icon={faCalendarDays} className="input-icon" />
-      </div>
-    </div>
+                  <div className="input-wrapper">
+                    <label className="label">Email</label>
+                    <div className="input-field">
+                      <input type="email" value={user?.email || ''} readOnly className="input" />
+                      <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
+                    </div>
+                  </div>
 
-    <div className="input-wrapper">
-      <label className="label">Thời gian</label>
-      <div className="input-field">
-        <input 
-          type="text" 
-          value={`${workingSchedules[selectedDate]?.find(slot => slot._id === selectedTimeSlot)?.batDau || ''} - ${workingSchedules[selectedDate]?.find(slot => slot._id === selectedTimeSlot)?.ketThuc || ''}`} 
-          readOnly 
-          className="input" 
-        />
-        <FontAwesomeIcon icon={faClock} className="input-icon" />
-        
-      </div>
-    </div>
+                  <div className="input-wrapper">
+                    <label className="label">Số điện thoại</label>
+                    <div className="input-field">
+                      <input type="text" value={user?.soDienThoai || ''} readOnly className="input" />
+                      <FontAwesomeIcon icon={faPhone} className="input-icon" />
+                    </div>
+                  </div>
 
-    <div className="input-wrapper">
-      <label className="label">Bác sĩ</label>
-      <div className="input-field">
-        <input 
-          type="text" 
-          value={userDetails?.ten || ''} 
-          readOnly 
-          className="input" 
-        />
-        <FontAwesomeIcon icon={faUserDoctor} className="input-icon" />
-      </div>
-    </div>
+                  <div className="input-wrapper">
+                    <label className="label">Địa chỉ</label>
+                    <div className="input-field">
+                      <input type="text" value={user?.diaChi || ''} readOnly className="input" />
+                      <FontAwesomeIcon icon={faBuilding} className="input-icon" />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-    <div className="input-wrapper">
-      <label className="label">Giá</label>
-      <div className="input-field">
-        <input 
-          type="text" 
-          value={`${userDetails?.giaKham || ''}`} 
-          readOnly 
-          className="input" 
-        />
-        <FontAwesomeIcon icon={faMoneyBill} className="input-icon" />
+              <div className="appointment-info improved">
+                <h4 className="font-bold mb-4">Thông tin lịch hẹn:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="input-wrapper">
+                    <label className="label">Ngày</label>
+                    <div className="input-field">
+                      <input type="text" value={selectedDate || ''} readOnly className="input" />
+                      <FontAwesomeIcon icon={faCalendarDays} className="input-icon" />
+                    </div>
+                  </div>
 
-      </div>
-    </div>
+                  <div className="input-wrapper">
+                    <label className="label">Thời gian</label>
+                    <div className="input-field">
+                      <input
+                        type="text"
+                        value={`${workingSchedules[selectedDate]?.find(
+                          (slot) => slot._id === selectedTimeSlot
+                        )?.batDau || ''} - ${
+                          workingSchedules[selectedDate]?.find(
+                            (slot) => slot._id === selectedTimeSlot
+                          )?.ketThuc || ''
+                        }`}
+                        readOnly
+                        className="input"
+                      />
+                      <FontAwesomeIcon icon={faClock} className="input-icon" />
+                    </div>
+                  </div>
 
-    <div className="input-wrapper full-width">
-      <label className="label">Lý do khám</label>
-      <div className="input-field">
-        <textarea 
-          className="input" 
-          placeholder="Vui lòng nhập lý do khám..." 
-          required
-        ></textarea>
-      <FontAwesomeIcon icon={faUserPen} className="input-icon" />
+                  <div className="input-wrapper">
+                    <label className="label">Bác sĩ</label>
+                    <div className="input-field">
+                      <input type="text" value={userDetails?.ten || ''} readOnly className="input" />
+                      <FontAwesomeIcon icon={faUserDoctor} className="input-icon" />
+                    </div>
+                  </div>
 
-      </div>
-    </div>
+                  <div className="input-wrapper">
+                    <label className="label">Giá</label>
+                    <div className="input-field">
+                      <input type="text" value={`${userDetails?.giaKham || ''}`} readOnly className="input" />
+                      <FontAwesomeIcon icon={faMoneyBill} className="input-icon" />
+                    </div>
+                  </div>
 
-  </div>
-
-  
-</div>
-
+                  <div className="input-wrapper full-width">
+                    <label className="label">Lý do khám</label>
+                    <div className="input-field">
+                      <textarea className="input" placeholder="Vui lòng nhập lý do khám..." required></textarea>
+                      <FontAwesomeIcon icon={faUserPen} className="input-icon" />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div className="confirmation mt-4">
                 <label className="block">
@@ -345,14 +327,16 @@ const DetailsBacSi = () => {
               </div>
 
               <div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="w-full py-3 px-6 text-lg font-semibold text-white bg-gradient-to-r from-[#0b8fac] to-[#065a71] rounded-full shadow-md hover:from-[#0a7b92] hover:to-[#05485d] transition-all duration-200"
                 >
                   Xác nhận đặt lịch
                 </button>
               </div>
             </form>
+          </div>
+
           </div>
         </div>
       )}
