@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ThuocVatTuSchema = new mongoose.Schema({
   tenVatTu: { type: String, required: true }, // Tên vật tư
-  loaiVatTu: { type: String, enum: ["Thuoc", "VatTu"],  }, // Loại vật tư
+  loaiVatTu: { type: String, enum: ["Thuốc", "Vật Tư"],  }, // Loại vật tư
   soLuong: { type: Number, }, // Số lượng
   ngayNhap: { type: Date,  }, // Ngày nhập
   khoHang: { type: mongoose.Types.ObjectId, ref: "KhoHang"}, // Kho hàng chứa

@@ -8,7 +8,7 @@ const BacSiSchema = new mongoose.Schema({
   hinhAnh: { type: String }, // Hình ảnh
   gioiTinh: { 
                 type: String, 
-                enum: ["nam", "nu", "khac"], 
+                enum: ["Nam", "Nữ", "Khác"], 
                 required: true }, // Giới tính
   ngaySinh: { type: Date }, // Ngày sinh
   cccd: { type: String }, // Căn cước công dân
