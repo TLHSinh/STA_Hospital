@@ -6,6 +6,7 @@ import { BASE_URL } from "../../../config.js";
 import { AuthContext } from "../../../context/AuthContext.jsx";
 import HashLoader from "react-spinners/HashLoader";
 import uploadImageToCloudinary from "../../../utils/uploadCloudinary.js";
+import Breadcrumb from "../../../Components/Breadcrumb.jsx";
 
 const ChinhSuaKhachHang = () => {
   const { id } = useParams(); // Lấy ID từ URL
@@ -105,103 +106,124 @@ const ChinhSuaKhachHang = () => {
     }
   };
 
+  const handlerCancel = () => {
+    navigate(`/admin/danhsachkhachhang`);
+  };
+
   if (loading) return <p>Đang tải dữ liệu...</p>;
 
   return (
     <div>
-      <div className="title-ad">
-        <div className="icon-back">
-          <Link to="/admin/danhsachkhachhang">
-            <FaChevronLeft color="#66B5A3" />
-          </Link>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <Breadcrumb />
         </div>
-        <h1>CHỈNH SỬA THÔNG TIN KHÁCH HÀNG</h1>
       </div>
-
-      <form className="form" onSubmit={handleUpdate}>
-        <div className="mb-4 flex items-center gap-2">
-          {/* Hiển thị ảnh hiện tại hoặc ảnh mới được chọn */}
-          <figure className="w-[100px] h-[100px] mt-3 rounded-full border-2 border-solid border-primaryColor flex items-center justify-center overflow-hidden">
-            <img
-              src={previewURL || "/Images/addAvatar.png"} // Ảnh hiện có hoặc ảnh mặc định
-              alt="Hình ảnh người dùng"
-              className="w-full h-full object-cover"
-            />
-          </figure>
-          <div className="relative w-[110px] h-[40px]">
-            <input
-              type="file"
-              name="hinhAnh"
-              id="customFile"
-              onChange={handleFileInputChange}
-              accept=".jpg, .png"
-              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-            />
-            <label
-              htmlFor="customFile"
-              className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[13px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
-            >
-              Hình ảnh
-            </label>
-          </div>
-        </div>
-
-
-        <div class="column">
-          <div class="input-box">
-            <label>Họ và tên</label>
-            <input type="text" name="ten" value={formData.ten} onChange={handleInputChange} />
-          </div>
-          <div class="input-box">
-            <label>Ngày sinh</label>
-            <input type="date" name="ngaySinh" value={formData.ngaySinh} onChange={handleInputChange} />
-          </div>
-        </div>
-        <div class="column">
-          <div class="input-box">
-            <label>Số điện thoại</label>
-            <input type="text" name="soDienThoai" value={formData.soDienThoai} onChange={handleInputChange} />
-          </div>
-          <div class="input-box">
-            <label>Email</label>
-            <input type="email" name="email" value={formData.email} readOnly/>
-          </div>
-        </div>
-
-        <div class="input-box address">
-          <div class="column">
-            <div class="select-box">
-              <select name="gioiTinh" value={formData.gioiTinh} onChange={handleInputChange}>
-                <option value="">Giới tính</option>
-                <option value="nam">Nam</option>
-                <option value="nu">Nữ</option>
-                <option value="khac">Khác</option>
-              </select>
+      <div className="row">
+        <div className='col-sm-12'>
+          <div className='card-list-ad'>
+            <div className=' header-list-card' >
+              <div style={{ float: "left" }}>
+                <h1 className="title-ad">CHỈNH SỬA THÔNG TIN KHÁCH HÀNG</h1>
+              </div>
             </div>
-            <input type="text" name="nhomMau" value={formData.nhomMau} onChange={handleInputChange} placeholder="Nhóm máu" />
+
+            <form className="form" onSubmit={handleUpdate}>
+            <div style={{ display: "flex", justifyContent: "center",  alignItems: "center" }}>
+                <div className="mb-4 flex items-center gap-2">
+                  {/* Hiển thị ảnh hiện tại hoặc ảnh mới được chọn */}
+                  <figure className="w-[100px] h-[100px] mt-3 rounded-full border-primaryColor flex items-center justify-center overflow-hidden">
+                    <img
+                      src={previewURL || "/Images/add-user-icon.avif"} // Ảnh hiện có hoặc ảnh mặc định
+                      alt="Hình ảnh người dùng"
+                      className="w-full h-full object-cover"
+                    />
+                  </figure>
+                  <div className="relative w-[110px] h-[40px]">
+                    <input
+                      type="file"
+                      name="hinhAnh"
+                      id="customFile"
+                      onChange={handleFileInputChange}
+                      accept=".jpg, .png"
+                      className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <label
+                      htmlFor="customFile"
+                      className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[13px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
+                    >
+                      Hình ảnh
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="column">
+                <div class="input-box">
+                  <label>Họ và tên</label>
+                  <input type="text" name="ten" value={formData.ten} onChange={handleInputChange} />
+                </div>
+                <div class="input-box">
+                  <label>Ngày sinh</label>
+                  <input type="date" name="ngaySinh" value={formData.ngaySinh} onChange={handleInputChange} />
+                </div>
+              </div>
+              <div class="column">
+                <div class="input-box">
+                  <label>Số điện thoại</label>
+                  <input type="text" name="soDienThoai" value={formData.soDienThoai} onChange={handleInputChange} />
+                </div>
+                <div class="input-box">
+                  <label>Email</label>
+                  <input type="email" name="email" value={formData.email} readOnly />
+                </div>
+              </div>
+
+              <div class="input-box address">
+                <div class="column">
+                  <div class="select-box">
+                    <select name="gioiTinh" value={formData.gioiTinh} onChange={handleInputChange}>
+                      <option value="">Giới tính</option>
+                      <option value="Nam">Nam</option>
+                      <option value="Nữ">Nữ</option>
+                      <option value="Khác">Khác</option>
+                    </select>
+                  </div>
+                  <input type="text" name="nhomMau" value={formData.nhomMau} onChange={handleInputChange} placeholder="Nhóm máu" />
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="input-box">
+                  <label>CCCD</label>
+                  <input type="text" name="cccd" value={formData.cccd} onChange={handleInputChange} />
+                </div>
+                <div class="input-box">
+                  <label>Mật khẩu</label>
+                  <input type="password" name="matKhau" value={formData.matKhau} onChange={handleInputChange} />
+                </div>
+              </div>
+
+              <div class="input-box">
+                <label>Địa chỉ</label>
+                <input type="text" name="diaChi" value={formData.diaChi} onChange={handleInputChange} />
+              </div>
+
+              <div className='col-12'>
+                <div style={{ textAlign: "right" }}>
+                  <button className='submitform-ad' type="submit" disabled={loading}>
+                    {loading ? <HashLoader size={35} color="#ffffff" /> : 'Tạo'}
+                  </button>
+                  <button className='cancelform-ad' onClick={() => handlerCancel()} >
+                    Huỷ
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-
-        <div class="column">
-          <div class="input-box">
-            <label>CCCD</label>
-            <input type="text" name="cccd" value={formData.cccd} onChange={handleInputChange} />
-          </div>
-          <div class="input-box">
-            <label>Mật khẩu</label>
-            <input type="password" name="matKhau" value={formData.matKhau} onChange={handleInputChange} />
-          </div>
-        </div>
-
-        <div class="input-box">
-          <label>Địa chỉ</label>
-          <input type="text" name="diaChi" value={formData.diaChi} onChange={handleInputChange} />
-        </div>
-
-        <button type="submit" className="btn btn-primary" disabled={saving}>
-          {saving ? <HashLoader size={20} color="#fff" /> : "Cập Nhật"}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

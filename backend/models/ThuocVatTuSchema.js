@@ -1,5 +1,6 @@
   import mongoose from "mongoose";
 
+
   const ThuocVatTuSchema = new mongoose.Schema({
     tenVatTu: { type: String, required: true }, // Tên vật tư
     loaiVatTu: { type: String, enum: ["Thuoc", "VatTu"],  }, // Loại vật tư
@@ -12,5 +13,6 @@
     ngaySanXuat: { type: Date }, // Ngày sản xuất
     hanSuDung: { type: Date }, // Hạn sử dụng
   }, { timestamps: true });
+
 
   export default mongoose.model("ThuocVatTu", ThuocVatTuSchema);

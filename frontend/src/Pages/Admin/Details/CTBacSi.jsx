@@ -4,6 +4,7 @@ import { BASE_URL } from '../../../config';
 import { AuthContext } from '../../../context/AuthContext';
 import { FaChevronLeft } from 'react-icons/fa6';
 import './ChiTiet.css'; // File CSS cho hiệu ứng và giao diện
+import Breadcrumb from '../../../Components/Breadcrumb';
 
 const CTBacSi = () => {
   const { id } = useParams();
@@ -72,15 +73,23 @@ const CTBacSi = () => {
   if (error) return <p>Lỗi: {error}</p>;
 
   return (
-    <div className="detail-container">
-      <div className="title-ad">
-        <div className="icon-back">
-          <Link to="/admin/danhsachbacsi">
-            <FaChevronLeft color="#66B5A3" />
-          </Link>
+    <div>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <Breadcrumb />
         </div>
-        <h1>CHI TIẾT BÁC SĨ</h1>
       </div>
+      <div className="row">
+        <div className='col-sm-12'>
+          <div className='card-list-ad'>
+            <div className=' header-list-card' >
+              <div style={{ float: "left" }}>
+                <h1 className="title-ad">THÊM BÁC SĨ</h1>
+              </div>
+            </div>
+
+
+
       <div className="avt-name-detail">
         <img
           src={user.hinhAnh}
@@ -187,6 +196,9 @@ const CTBacSi = () => {
         </tbody>
       </table>
       )}
+    </div>
+    </div>
+    </div>
     </div>
   );
 };
