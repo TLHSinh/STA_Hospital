@@ -36,6 +36,7 @@ export const createMedicalRecordWithAppointment = async (req, res) => {
     ketQuaXetNghiemIds,
     tienSuBenhLy,
     danhGiaDieuTri,
+    ngayTaiKham,
     donThuocIds,
   } = req.body;
   const { id } = req.params;
@@ -69,6 +70,7 @@ export const createMedicalRecordWithAppointment = async (req, res) => {
       ngayKham: lichHen.ngayHen,
       donThuoc: donThuocIds,
       lichHen: [lichHenId],
+      ngayTaiKham,
       trangThai: 'dangDieuTri',
     });
 
@@ -99,6 +101,7 @@ export const createMedicalRecordForNewPatient = async (req, res) => {
     tienSuBenhLy,
     danhGiaDieuTri,
     ngayKham,
+    ngayTaiKham,
     donThuocIds,
   } = req.body;
 
@@ -144,6 +147,7 @@ export const createMedicalRecordForNewPatient = async (req, res) => {
       tienSuBenhLy,
       danhGiaDieuTri,
       ngayKham,
+      ngayTaiKham,
       donThuoc: donThuocIds,
       trangThai: 'dangDieuTri',
     });
@@ -169,6 +173,7 @@ export const createMedicalRecordWithoutAppointment = async (req, res) => {
     tienSuBenhLy,
     danhGiaDieuTri,
     ngayKham,
+    ngayTaiKham,
     donThuocIds,
   } = req.body;
 
@@ -199,6 +204,7 @@ export const createMedicalRecordWithoutAppointment = async (req, res) => {
       danhGiaDieuTri,
       ngayKham,
       donThuoc: donThuocIds,
+      ngayTaiKham,
       trangThai: 'dangDieuTri',
     });
 

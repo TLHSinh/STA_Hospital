@@ -103,6 +103,16 @@ const ChiTietBenhAn = () => {
                   {benhAn.trangThai === 'dangDieuTri' ? 'Đang điều trị' : 'Hoàn thành'}
                 </span>
               </div>
+              
+              <div>
+                <span className="labelba">Ngày tái khám:</span>{" "}
+                <span className="value">
+                  {benhAn.ngayTaiKham
+                    ? new Date(benhAn.ngayTaiKham).toLocaleDateString()
+                    : 'Không xác định'}
+                </span>
+              </div>
+
             </div>
           </div>
         </div>

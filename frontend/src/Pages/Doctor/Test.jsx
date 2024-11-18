@@ -46,7 +46,7 @@ const KeXetNghiem = () => {
 
     const fetchXetNghiems = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/v1/xetnghiem/`, {
+        const res = await axios.get(`${BASE_URL}/api/v1/test/getListtest/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAvailableXetNghiems(res.data.data || []);
@@ -74,7 +74,7 @@ const KeXetNghiem = () => {
     setSubmitting(true);
     try {
       const res = await axios.post(
-        `${BASE_URL}/api/v1/prescribe/prescribeTest/${id}`,
+        `${BASE_URL}/api/v1/test/newtest/${id}`,
         { bacSiId, xetNghiemList },
         { headers: { Authorization: `Bearer ${token}` } }
       );

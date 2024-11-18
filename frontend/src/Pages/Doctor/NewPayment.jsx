@@ -1,40 +1,92 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { BASE_URL } from '../../config';
-import { AuthContext } from '../../context/AuthContext';
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../../config";
+import { AuthContext } from "../../context/AuthContext";
+import { Modal, Button, Spinner } from "react-bootstrap";
 
 const NewPaymentPage = () => {
   const { id } = useParams();
   const [invoice, setInvoice] = useState(null);
   const { token } = useContext(AuthContext);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/v1/payment/getpayment/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (response.data.success) {
           setInvoice(response.data.hoaDon);
         } else {
-          toast.error('Không tìm thấy hóa đơn!');
+          toast.error("Không tìm thấy hóa đơn!");
         }
       } catch (error) {
-        console.error('Error fetching invoice:', error);
-        toast.error('Có lỗi xảy ra khi tải hóa đơn!');
+        console.error("Error fetching invoice:", error);
+        toast.error("Có lỗi xảy ra khi tải hóa đơn!");
       }
     };
 
     fetchInvoice();
   }, [id, token]);
 
+  const handleMoMoPayment = async () => {
+    setIsProcessing(true);
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/payment/momo/${invoice._id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.data.success && response.data.payUrl) {
+        window.location.href = response.data.payUrl; // Chuyển hướng đến URL thanh toán của MoMo
+      } else {
+        toast.error("Không thể tạo thanh toán qua MoMo.");
+      }
+    } catch (error) {
+      console.error("Error creating MoMo payment:", error);
+      toast.error("Có lỗi xảy ra khi tạo thanh toán qua MoMo.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleConfirmPayment = async () => {
+    setIsProcessing(true);
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/api/v1/payment/confirmPayment/${invoice._id}`,
+        { paymentMethod: invoice.loaiHoaDon },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.data.success) {
+        toast.success("Thanh toán thành công!");
+        setInvoice({ ...invoice, trangThaiThanhToan: "daThanhToan" });
+        setShowConfirmModal(false);
+      } else {
+        toast.error("Thanh toán thất bại!");
+      }
+    } catch (error) {
+      console.error("Error confirming payment:", error);
+      toast.error("Có lỗi xảy ra khi xác nhận thanh toán!");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   if (!invoice) {
-    return <div className="loading">Đang tải hóa đơn...</div>;
+    return (
+      <div className="text-center py-10">
+        <Spinner animation="border" />
+        <p className="mt-4">Đang tải hóa đơn...</p>
+      </div>
+    );
   }
 
   const {
@@ -44,57 +96,65 @@ const NewPaymentPage = () => {
     benhAn,
     trangThaiThanhToan,
     loaiHoaDon,
-    danhSachThuoc,
+    danhSachThuoc = [],
     ketQuaXetNghiem = benhAn?.ketQuaXetNghiem,
   } = invoice;
 
+  const totalXetNghiem = ketQuaXetNghiem.reduce(
+    (sum, xetNghiem) => sum + (xetNghiem.xetNghiem?.giaXetNghiem || 0),
+    0
+  );
+
+  const totalThuoc = danhSachThuoc.reduce((sum, thuoc) => sum + (thuoc.gia || 0), 0);
+
   return (
-    <div className="bg-gray-100 py-10">
-      <div className="max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg">
+    <div className="bg-gray-100 py-10 px-4">
+      <div className="max-w-5xl mx-auto bg-white p-8 shadow-lg rounded-lg">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-teal-600">Chi tiết hóa đơn</h1>
-          <p className="text-gray-600">Mã hóa đơn: <span className="font-semibold">{invoice._id}</span></p>
+          <h1 className="text-4xl font-bold text-teal-600 mb-2">Chi tiết hóa đơn</h1>
+          <p className="text-gray-500">Mã hóa đơn: <span className="font-semibold">{invoice._id}</span></p>
         </div>
 
         {/* Thông tin hóa đơn */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Thông tin hóa đơn</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <p><strong>Bác sĩ:</strong> {bacSi?.ten || 'Không rõ'}</p>
-            <p><strong>Chuyên khoa:</strong> {bacSi?.chuyenKhoa || 'Không rõ'}</p>
-            <p><strong>Giá khám:</strong> {bacSi?.giaKham} VND</p>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Thông tin hóa đơn</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <p><strong>Bác sĩ:</strong> {bacSi?.ten || "Không rõ"}</p>
+            <p><strong>Chuyên khoa:</strong> {bacSi?.chuyenKhoa || "Không rõ"}</p>
             <p><strong>Ngày lập:</strong> {new Date(ngayLap).toLocaleDateString()}</p>
-            <p><strong>Trạng thái thanh toán:</strong> {trangThaiThanhToan}</p>
+            <p><strong>Trạng thái:</strong> 
+              <span className={`font-bold ${trangThaiThanhToan === "chuaThanhToan" ? "text-red-500" : "text-green-500"}`}>
+                {trangThaiThanhToan === "chuaThanhToan" ? "Chưa thanh toán" : "Đã thanh toán"}
+              </span>
+            </p>
             <p><strong>Loại hóa đơn:</strong> {loaiHoaDon}</p>
             <p><strong>Tổng tiền:</strong> <span className="text-red-500 font-bold">{tongTien} VND</span></p>
           </div>
-        </div>
+        </section>
 
         {/* Thông tin bệnh nhân */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Thông tin bệnh nhân</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <p><strong>Họ tên:</strong> {benhAn?.benhNhan?.ten || 'Không rõ'}</p>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Thông tin bệnh nhân</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <p><strong>Họ tên:</strong> {benhAn?.benhNhan?.ten || "Không rõ"}</p>
             <p><strong>Ngày sinh:</strong> {new Date(benhAn?.benhNhan?.ngaySinh).toLocaleDateString()}</p>
-            <p><strong>Giới tính:</strong> {benhAn?.benhNhan?.gioiTinh === 'nu' ? 'Nữ' : 'Nam'}</p>
-            <p><strong>Chẩn đoán:</strong> {benhAn?.chanDoan || 'Không rõ'}</p>
-            <p><strong>Triệu chứng:</strong> {benhAn?.trieuChung || 'Không rõ'}</p>
-            <p><strong>Phương pháp điều trị:</strong> {benhAn?.phuongPhapDieuTri || 'Không rõ'}</p>
-            <p><strong>Trạng thái bệnh án:</strong> {benhAn?.trangThai || 'Không rõ'}</p>
+            <p><strong>Giới tính:</strong> {benhAn?.benhNhan?.gioiTinh === "nu" ? "Nữ" : "Nam"}</p>
+            <p><strong>Chẩn đoán:</strong> {benhAn?.chanDoan || "Không rõ"}</p>
+            <p><strong>Triệu chứng:</strong> {benhAn?.trieuChung || "Không rõ"}</p>
           </div>
-        </div>
+        </section>
 
         {/* Thông tin xét nghiệm */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Thông tin xét nghiệm</h2>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Thông tin xét nghiệm</h2>
           {ketQuaXetNghiem?.length > 0 ? (
             <table className="w-full border-collapse border border-gray-300">
               <thead>
                 <tr className="bg-gray-100 text-left">
                   <th className="p-2 border">Loại xét nghiệm</th>
                   <th className="p-2 border">Kết quả</th>
-                  <th className="p-2 border">Giá xét nghiệm</th>
+                  <th className="p-2 border">Giá</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,16 +165,20 @@ const NewPaymentPage = () => {
                     <td className="p-2 border">{xetNghiem.xetNghiem?.giaXetNghiem} VND</td>
                   </tr>
                 ))}
+                <tr className="font-bold bg-gray-50">
+                  <td className="p-2 border" colSpan="2">Tổng phí xét nghiệm</td>
+                  <td className="p-2 border">{totalXetNghiem} VND</td>
+                </tr>
               </tbody>
             </table>
           ) : (
-            <p className="text-gray-500">Không có xét nghiệm nào trong hóa đơn.</p>
+            <p>Không có xét nghiệm nào trong hóa đơn.</p>
           )}
-        </div>
+        </section>
 
         {/* Danh sách thuốc */}
-        <div>
-          <h2 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Danh sách thuốc</h2>
+        <section>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Danh sách thuốc</h2>
           {danhSachThuoc?.length > 0 ? (
             <table className="w-full border-collapse border border-gray-300">
               <thead>
@@ -136,12 +200,54 @@ const NewPaymentPage = () => {
                     <td className="p-3 border">{thuoc.ghiChu}</td>
                   </tr>
                 ))}
+                <tr className="font-bold bg-teal-50">
+                  <td className="p-3 border" colSpan="3">Tổng phí thuốc</td>
+                  <td className="p-3 border">{totalThuoc} VND</td>
+                  <td className="p-3 border"></td>
+                </tr>
               </tbody>
             </table>
           ) : (
-            <p className="text-gray-500">Không có thuốc trong hóa đơn.</p>
+            <p>Không có thuốc trong hóa đơn.</p>
           )}
-        </div>
+        </section>
+
+        {/* Nút thanh toán qua MoMo */}
+        {trangThaiThanhToan === "chuaThanhToan" && (
+          <div className="text-center mt-8 space-x-4">
+            <button
+              className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-lg shadow-md"
+              onClick={() => setShowConfirmModal(true)}
+            >
+              Xác nhận thanh toán
+            </button>
+            <button
+              className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-6 rounded-lg shadow-md"
+              onClick={handleMoMoPayment}
+              disabled={isProcessing}
+            >
+              {isProcessing ? <Spinner animation="border" size="sm" /> : "Thanh toán bằng MoMo"}
+            </button>
+          </div>
+        )}
+
+        <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Xác nhận thanh toán</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Bạn có chắc chắn muốn thanh toán hóa đơn này với tổng số tiền là{" "}
+            <strong>{tongTien} VND</strong>?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>
+              Hủy
+            </Button>
+            <Button variant="primary" onClick={handleConfirmPayment} disabled={isProcessing}>
+              {isProcessing ? <Spinner animation="border" size="sm" /> : "Xác nhận"}
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

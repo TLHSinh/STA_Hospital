@@ -1,28 +1,66 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import {
-  TextField, Button, CircularProgress, Box, Typography, Grid, Paper, Divider, useTheme
+  TextField,
+  Button,
+  CircularProgress,
+  Box,
+  Typography,
+  Grid,
+  Paper,
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  Tooltip,
+  useTheme,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+
+
+  
 } from '@mui/material';
+
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import CloseIcon from '@mui/icons-material/Close';
 import { BASE_URL } from '../../../config.js';
 import { AuthContext } from '../../../context/AuthContext.jsx';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const KeBenhAn = () => {
   const theme = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [benhNhan, setBenhNhan] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [chanDoan, setChanDoan] = useState('');
-  const [trieuChung, setTrieuChung] = useState('');
-  const [phuongPhapDieuTri, setPhuongPhapDieuTri] = useState('');
-  const [tienSuBenhLy, setTienSuBenhLy] = useState('');
-  const [danhGiaDieuTri, setDanhGiaDieuTri] = useState('');
-  const [ketQuaXetNghiem, setKetQuaXetNghiem] = useState([]);
+  const [benhNhan, setBenhNhan] = useState(null);
+  const [formData, setFormData] = useState({
+    chanDoan: '',
+    trieuChung: '',
+    phuongPhapDieuTri: '',
+    tienSuBenhLy: '',
+    danhGiaDieuTri: '',
+    ketQuaXetNghiem: [],
+    ngayTaiKham: '',
+  });
   const { token, user } = useContext(AuthContext);
   const bacSiId = user._id;
+
+  // State cho lịch sử bệnh án
+  const [openHistoryDialog, setOpenHistoryDialog] = useState(false);
+  const [medicalRecords, setMedicalRecords] = useState([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
 
   useEffect(() => {
     const fetchBenhNhan = async () => {
@@ -46,10 +84,20 @@ const KeBenhAn = () => {
     fetchBenhNhan();
   }, [id, token]);
 
-  const handleKeBenhAn = async (e) => {
-    e.preventDefault();
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (type) => {
     setSubmitting(true);
-    const ngayKham = new Date().toISOString();
+    const payload = {
+      ...formData,
+      benhNhanId: benhNhan._id,
+      bacSiId,
+      ngayKham: new Date().toISOString(),
+      trangThai: 'dangDieuTri',
+    };
+
     try {
       const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/mdcRecord-appoint/${id}`, {
         method: 'POST',
@@ -57,24 +105,19 @@ const KeBenhAn = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          benhNhanId: benhNhan._id,
-          bacSiId,
-          chanDoan,
-          trieuChung,
-          phuongPhapDieuTri,
-          tienSuBenhLy,
-          danhGiaDieuTri,
-          ngayKham,
-          ketQuaXetNghiem,
-          trangThai: 'dangDieuTri',
-        }),
+        body: JSON.stringify(payload),
       });
 
       const result = await res.json();
       if (result.success) {
         toast.success('Kê bệnh án thành công');
-        navigate('/doctor/danhsachlichhenBS');
+        if (type === 'donThuoc') {
+          navigate(`/doctor/kedonthuoc/${result.benhAn._id}`);
+        } else if (type === 'xetNghiem') {
+          navigate(`/doctor/newTest/${result.benhAn._id}`);
+        } else {
+          navigate('/doctor/danhsachlichhenBS');
+        }
       } else {
         toast.error(result.message || 'Kê bệnh án thất bại');
       }
@@ -85,118 +128,62 @@ const KeBenhAn = () => {
     }
   };
 
-  const handleKeDonThuoc = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    const ngayKham = new Date().toISOString();
+  const handleOpenHistory = async () => {
+    setOpenHistoryDialog(true);
+    setLoadingHistory(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/mdcRecord-appoint/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          benhNhanId: benhNhan._id,
-          bacSiId,
-          chanDoan,
-          trieuChung,
-          phuongPhapDieuTri,
-          tienSuBenhLy,
-          danhGiaDieuTri,
-          ngayKham,
-          ketQuaXetNghiem,
-          trangThai: 'dangDieuTri',
-        }),
+      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/getpatimdcRecord/${benhNhan._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       const result = await res.json();
       if (result.success) {
-        toast.success('Kê bệnh án thành công');
-        navigate(`/doctor/kedonthuoc/${result.benhAn._id}`);
+        setMedicalRecords(result.paRecord || []);
       } else {
-        toast.error(result.message || 'Kê bệnh án thất bại');
+        toast.warn('Không tìm thấy bệnh án nào.');
       }
     } catch (err) {
-      toast.error(`Lỗi: ${err.message}`);
+      toast.error('Lỗi khi tải lịch sử bệnh án.');
     } finally {
-      setSubmitting(false);
+      setLoadingHistory(false);
     }
   };
 
-  const handleNewXetNghiem = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    const ngayKham = new Date().toISOString();
-    try {
-      const res = await fetch(`${BASE_URL}/api/v1/medicalRecord/mdcRecord-appoint/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          benhNhanId: benhNhan._id,
-          bacSiId,
-          chanDoan,
-          trieuChung,
-          phuongPhapDieuTri,
-          tienSuBenhLy,
-          danhGiaDieuTri,
-          ngayKham,
-          ketQuaXetNghiem,
-          trangThai: 'dangDieuTri',
-        }),
-      });
-
-      const result = await res.json();
-      if (result.success) {
-        toast.success('Kê bệnh án thành công');
-        navigate(`/doctor/newTest/${result.benhAn._id}`);
-      } else {
-        toast.error(result.message || 'Kê bệnh án thất bại');
-      }
-    } catch (err) {
-      toast.error(`Lỗi: ${err.message}`);
-    } finally {
-      setSubmitting(false);
-    }
+  const handleCloseHistory = () => {
+    setOpenHistoryDialog(false);
+    setSelectedRecord(null);
   };
 
   const resetForm = () => {
-    setChanDoan('');
-    setTrieuChung('');
-    setPhuongPhapDieuTri('');
-    setTienSuBenhLy('');
-    setDanhGiaDieuTri('');
-    setKetQuaXetNghiem([]);
+    setFormData({
+      chanDoan: '',
+      trieuChung: '',
+      phuongPhapDieuTri: '',
+      tienSuBenhLy: '',
+      danhGiaDieuTri: '',
+      ketQuaXetNghiem: [],
+      ngayTaiKham: '', // Reset ngày tái khám
+    });
   };
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#eaeff1">
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#f4f6f8">
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Paper
-      elevation={6}
-      sx={{
-        padding: 4,
-        borderRadius: 3,
-        margin: '30px auto',
-        maxWidth: 900,
-        backgroundColor: '#ffffff',
-        boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
-      }}
-    >
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+    <Paper elevation={6} sx={{ padding: 5, borderRadius: 3, margin: '30px auto', maxWidth: 1000 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/doctor/danhsachlichhenBS')}
-          sx={{ color: '#00796B', fontWeight: 'bold' }}
+          sx={{
+            color: theme.palette.primary.main,
+            fontWeight: 'bold',
+            textTransform: 'none',
+          }}
         >
           Quay lại
         </Button>
@@ -204,150 +191,301 @@ const KeBenhAn = () => {
       <Typography variant="h4" textAlign="center" sx={{ fontWeight: 600, color: theme.palette.primary.main }}>
         Kê Bệnh Án
       </Typography>
-      <Divider sx={{ marginY: 3, borderColor: theme.palette.primary.main }} />
+      <Divider sx={{ marginY: 3 }} />
+      <Button
+        variant="outlined"
+        onClick={handleOpenHistory}
+        sx={{ marginBottom: 3, color: theme.palette.info.main, borderColor: theme.palette.info.main }}
+      >
+        Xem lịch sử bệnh án
+      </Button>
       {benhNhan && (
-        <Box marginBottom={4}>
-          <Typography><strong>Tên:</strong> {benhNhan.ten}</Typography>
-          <Typography><strong>Tuổi:</strong> {benhNhan.tuoi}</Typography>
-          <Typography><strong>Giới tính:</strong> {benhNhan.gioiTinh}</Typography>
+        <Box
+          sx={{
+            marginBottom: 4,
+            padding: 2,
+            border: `1px solid ${theme.palette.primary.light}`,
+            borderRadius: 2,
+            backgroundColor: '#f0f4fa',
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: 1 }}>
+            Thông Tin Bệnh Nhân
+          </Typography>
+          <Typography>
+            <strong>Tên:</strong> {benhNhan.ten}
+          </Typography>
+          <Typography>
+            <strong>Tuổi:</strong> {benhNhan.ngaySinh}
+          </Typography>
+          <Typography>
+            <strong>Giới tính:</strong> {benhNhan.gioiTinh}
+          </Typography>
         </Box>
       )}
       <form>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Chẩn đoán"
+              placeholder="Nhập chẩn đoán bệnh"
               variant="outlined"
-              value={chanDoan}
-              onChange={(e) => setChanDoan(e.target.value)}
+              value={formData.chanDoan}
+              onChange={(e) => handleInputChange('chanDoan', e.target.value)}
               fullWidth
               required
-              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+              sx={{ backgroundColor: '#e8f0fe', borderRadius: 1 }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Triệu chứng"
+              placeholder="Nhập triệu chứng"
               variant="outlined"
-              value={trieuChung}
-              onChange={(e) => setTrieuChung(e.target.value)}
+              value={formData.trieuChung}
+              onChange={(e) => handleInputChange('trieuChung', e.target.value)}
               fullWidth
               required
-              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+              sx={{ backgroundColor: '#e8f0fe', borderRadius: 1 }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Phương pháp điều trị"
+              placeholder="Nhập phương pháp điều trị"
               variant="outlined"
-              value={phuongPhapDieuTri}
-              onChange={(e) => setPhuongPhapDieuTri(e.target.value)}
+              value={formData.phuongPhapDieuTri}
+              onChange={(e) => handleInputChange('phuongPhapDieuTri', e.target.value)}
               fullWidth
               required
-              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+              sx={{ backgroundColor: '#e8f0fe', borderRadius: 1 }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Tiền sử bệnh lý"
+              placeholder="Nhập tiền sử bệnh lý"
               variant="outlined"
-              value={tienSuBenhLy}
-              onChange={(e) => setTienSuBenhLy(e.target.value)}
+              value={formData.tienSuBenhLy}
+              onChange={(e) => handleInputChange('tienSuBenhLy', e.target.value)}
               fullWidth
-              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+              sx={{ backgroundColor: '#e8f0fe', borderRadius: 1 }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Đánh giá điều trị"
+              placeholder="Nhập đánh giá điều trị"
               variant="outlined"
-              value={danhGiaDieuTri}
-              onChange={(e) => setDanhGiaDieuTri(e.target.value)}
+              value={formData.danhGiaDieuTri}
+              onChange={(e) => handleInputChange('danhGiaDieuTri', e.target.value)}
               fullWidth
-              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+              sx={{ backgroundColor: '#e8f0fe', borderRadius: 1 }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              label="Kết quả xét nghiệm (ID)"
+              label="Ngày tái khám"
+              type="date"
               variant="outlined"
-              value={ketQuaXetNghiem.join(',')}
-              onChange={(e) => setKetQuaXetNghiem(e.target.value.split(','))}
+              value={formData.ngayTaiKham}
+              onChange={(e) => handleInputChange('ngayTaiKham', e.target.value)}
               fullWidth
-              sx={{ backgroundColor: '#E0F7FA', borderRadius: 1 }}
+              required
+              InputLabelProps={{ shrink: true }}
+              sx={{ backgroundColor: '#e8f0fe', borderRadius: 1 }}
             />
           </Grid>
-          <Grid item xs={12} display="flex" justifyContent="center" mt={4}>
+        </Grid>
+        <Box mt={4} display="flex" justifyContent="space-between" flexWrap="wrap">
+          <Tooltip title="Reset toàn bộ biểu mẫu">
             <Button
-              variant="contained"
-              color="primary"
-              disabled={submitting}
-              onClick={handleKeBenhAn}
-              sx={{
-                paddingX: 4,
-                paddingY: 1.5,
-                fontSize: '16px',
-                backgroundColor: '#3A9AD9',
-                '&:hover': { backgroundColor: '#357ABD' },
-                boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
-              }}
-            >
-              {submitting ? <CircularProgress size={24} color="inherit" /> : 'Kê bệnh án'}
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={submitting}
-              onClick={handleKeDonThuoc}
-              sx={{ ml: 2, paddingX: 4, paddingY: 1.5, fontSize: '16px' }}
-            >
-              {submitting ? <CircularProgress size={24} /> : 'Kê đơn thuốc'}
-            </Button>
-
-
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={submitting}
-              onClick={handleNewXetNghiem}
-              sx={{ ml: 2, paddingX: 4, paddingY: 1.5, fontSize: '16px' }}
-            >
-              {submitting ? <CircularProgress size={24} /> : 'yêu cầu xét nghiệm'}
-            </Button>
-
-
-            <Button
-              type="button"
               variant="outlined"
-              color="secondary"
+              startIcon={<RefreshIcon />}
               onClick={resetForm}
-              sx={{ ml: 2, paddingX: 4, paddingY: 1.5, fontSize: '16px', color: '#FF5E57', borderColor: '#FF5E57' }}
+              sx={{
+                borderColor: theme.palette.error.main,
+                color: theme.palette.error.main,
+                marginY: 1,
+              }}
             >
               Reset
             </Button>
-
-            <Button
-              type="button"
-              variant="outlined"
-              color="secondary"
-              onClick={() => navigate('/doctor/danhsachlichhenBS')}
-              sx={{
-                ml: 2,
-                paddingX: 4,
-                paddingY: 1.5,
-                fontSize: '16px',
-                color: '#FF5E57',
-                borderColor: '#FF5E57',
-                '&:hover': { backgroundColor: '#FFF5F5' },
-              }}
-            >
-              Hủy
-            </Button>
-
-            
-          </Grid>
-        </Grid>
+          </Tooltip>
+          <Button
+            variant="outlined"
+            onClick={() => handleSubmit('donThuoc')}
+            sx={{
+              paddingX: 4,
+              borderColor: theme.palette.success.main,
+              color: theme.palette.success.main,
+              marginY: 1,
+            }}
+          >
+            Kê đơn thuốc
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => handleSubmit('xetNghiem')}
+            sx={{
+              paddingX: 4,
+              borderColor: theme.palette.warning.main,
+              color: theme.palette.warning.main,
+              marginY: 1,
+            }}
+          >
+            Yêu cầu xét nghiệm
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit()}
+            disabled={submitting}
+            sx={{
+              paddingX: 4,
+              marginY: 1,
+            }}
+          >
+            {submitting ? <CircularProgress size={24} color="inherit" /> : 'Hoàn tất'}
+          </Button>
+        </Box>
       </form>
+
+      {/* Dialog Lịch sử bệnh án */}
+      <Dialog open={openHistoryDialog} onClose={handleCloseHistory} maxWidth="lg" fullWidth>
+  <DialogTitle>
+    Lịch sử bệnh án
+    <IconButton
+      aria-label="close"
+      onClick={handleCloseHistory}
+      sx={{ position: 'absolute', right: 8, top: 8, color: theme.palette.grey[500] }}
+    >
+      <CloseIcon />
+    </IconButton>
+  </DialogTitle>
+  <DialogContent dividers>
+    {loadingHistory ? (
+      <Box display="flex" justifyContent="center" alignItems="center" height={200}>
+        <CircularProgress />
+      </Box>
+    ) : selectedRecord ? (
+      <Box sx={{ padding: 2 }}>
+        <Typography variant="h5" gutterBottom>
+          Chi tiết bệnh án
+        </Typography>
+        <Divider sx={{ marginBottom: 2 }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ padding: 2, backgroundColor: '#f9f9f9', borderRadius: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+              Thông tin bệnh nhân
+            </Typography>
+            <Typography variant="body2">
+              <strong>Họ tên:</strong> {benhNhan.ten}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Ngày sinh:</strong>{' '}
+              {benhNhan.ngaySinh ? new Date(benhNhan.ngaySinh).toLocaleDateString() : 'Không xác định'}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Giới tính:</strong> {benhNhan.gioiTinh}
+            </Typography>
+          </Box>
+          <Box sx={{ padding: 2, backgroundColor: '#f9f9f9', borderRadius: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+              Thông tin bác sĩ
+            </Typography>
+            <Typography variant="body2">
+              <strong>Tên bác sĩ:</strong> {selectedRecord.bacSi?.ten || 'Không xác định'}
+            </Typography>
+          </Box>
+          <Box sx={{ padding: 2, backgroundColor: '#f9f9f9', borderRadius: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+              Chi tiết bệnh án
+            </Typography>
+            <Typography variant="body2">
+              <strong>Chẩn đoán:</strong> {selectedRecord.chanDoan}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Triệu chứng:</strong> {selectedRecord.trieuChung}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Phương pháp điều trị:</strong> {selectedRecord.phuongPhapDieuTri}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Trạng thái:</strong>{' '}
+              {selectedRecord.trangThai === 'dangDieuTri' ? 'Đang điều trị' : 'Hoàn thành'}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Ngày tái khám:</strong>{' '}
+              {selectedRecord.ngayTaiKham
+                ? new Date(selectedRecord.ngayTaiKham).toLocaleDateString()
+                : 'Không xác định'}
+            </Typography>
+          </Box>
+        </Box>
+        <Button
+          onClick={() => setSelectedRecord(null)}
+          sx={{ marginTop: 3 }}
+          variant="outlined"
+        >
+          Quay lại danh sách
+        </Button>
+      </Box>
+    ) : (
+      <Box>
+        <Typography variant="h6" gutterBottom>
+          Danh sách bệnh án
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead sx={{ backgroundColor: theme.palette.primary.light }}>
+              <TableRow>
+                <TableCell><strong>Ngày khám</strong></TableCell>
+                <TableCell><strong>Chẩn đoán</strong></TableCell>
+                <TableCell><strong>Trạng thái</strong></TableCell>
+                <TableCell><strong>Hành động</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {medicalRecords.length > 0 ? (
+                medicalRecords.map((record) => (
+                  <TableRow key={record._id} hover>
+                    <TableCell>{new Date(record.ngayKham).toLocaleDateString()}</TableCell>
+                    <TableCell>{record.chanDoan}</TableCell>
+                    <TableCell>
+                      {record.trangThai === 'dangDieuTri' ? 'Đang điều trị' : 'Hoàn thành'}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        onClick={() => setSelectedRecord(record)}
+                        size="small"
+                      >
+                        Xem chi tiết
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    Không có lịch sử bệnh án.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleCloseHistory} color="primary" variant="contained">
+      Đóng
+    </Button>
+  </DialogActions>
+</Dialog>
+
     </Paper>
   );
 };

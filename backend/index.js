@@ -22,6 +22,12 @@ import { scheduleBillCancellation } from './auth/cronJobs.js';
 
 
 dotenv.config()
+console.log("MOMO_ENDPOINT:", process.env.MOMO_ENDPOINT);
+console.log("MOMO_PARTNER_CODE:", process.env.MOMO_PARTNER_CODE);
+console.log("MOMO_ACCESS_KEY:", process.env.MOMO_ACCESS_KEY);
+console.log("MOMO_SECRET_KEY:", process.env.MOMO_SECRET_KEY);
+console.log("MOMO_REDIRECT_URL:", process.env.MOMO_REDIRECT_URL);
+console.log("MOMO_IPN_URL:", process.env.MOMO_IPN_URL);
 
 
 const app=express()

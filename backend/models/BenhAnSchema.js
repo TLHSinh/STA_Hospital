@@ -9,9 +9,10 @@ const BenhAnSchema = new mongoose.Schema({
   ketQuaXetNghiem: [{ type: mongoose.Types.ObjectId, ref: "KetQuaXetNghiem" }], // Kết quả xét nghiệm
   tienSuBenhLy: { type: String }, // Tiền sử bệnh lý
   danhGiaDieuTri: { type: String }, // Đánh giá quá trình điều trị
-  ngayKham: { type: Date, required: true }, // Ngày khám
+  ngayKham: { type: Date, required: true, default: Date.now }, // Ngày khám
   donThuoc: [{ type: mongoose.Types.ObjectId, ref: "DonThuoc" }], // Đơn thuốc
   lichHen: [{ type: mongoose.Types.ObjectId, ref: "LichHen" }], // Lịch hẹn
+  ngayTaiKham:{ type: Date }, // Ngày khám
   trangThai: { type: String, enum: ["dangDieuTri", "hoanThanh", "ycXetNghiem"], default: "dangDieuTri" }, // Trạng thái bệnh án
 }, { timestamps: true });
 

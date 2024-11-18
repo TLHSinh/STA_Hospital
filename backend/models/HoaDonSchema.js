@@ -11,7 +11,8 @@ const HoaDonSchema = new mongoose.Schema({
     enum: ["daThanhToan", "chuaThanhToan", "daHuy"], 
     default: "chuaThanhToan"
   },  
-  loaiHoaDon: { type: String, default: "momo" }
+  loaiHoaDon: { type: String, default: "momo" },
+  orderId: { type: String },
 }, { timestamps: true });
 
 export default mongoose.model("HoaDon", HoaDonSchema);
