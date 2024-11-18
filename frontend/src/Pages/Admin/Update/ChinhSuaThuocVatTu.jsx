@@ -5,6 +5,7 @@ import { FaChevronLeft } from "react-icons/fa6";
 import { BASE_URL } from "../../../config.js";
 import { AuthContext } from "../../../context/AuthContext.jsx";
 import HashLoader from "react-spinners/HashLoader";
+import Breadcrumb from "../../../Components/Breadcrumb.jsx";
 
 const ChinhSuaThuocVatTu = () => {
   const { id } = useParams(); // Lấy ID từ URL
@@ -89,80 +90,100 @@ const ChinhSuaThuocVatTu = () => {
     }
   };
 
+  const handlerCancel = () => {
+    navigate(`/admin/danhsachthuocvattu`);
+  };
+
+
   if (loading) return <p>Đang tải dữ liệu...</p>;
   return (
     <div>
-      <div className="title-ad">
-        <div className="icon-back">
-          <Link to="/admin/danhsachthuocvattu">
-            <FaChevronLeft color="#66B5A3" />
-          </Link>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <Breadcrumb />
         </div>
-        <h1>CHỈNH SỬA THÔNG TIN THUỐC - VẬT TƯ</h1>
       </div>
-      <form className="form" onSubmit={handleUpdate}>
-      <div className="column">
-          <div className="input-box">
-            <label>Tên vật tư</label>
-            <input type="text" name="tenVatTu" value={formData.tenVatTu} 
-              onChange={handleInputChange} required />
-          </div>
-          <div className="input-box">
-            <label>Loại thuốc</label>
-            <div className="select-box">
-              <select name="loaiVatTu" value={formData.loaiVatTu} 
-                onChange={handleInputChange} required>
-                <option value="">Chọn</option>
-                <option value="Thuoc">Thuốc</option>
-                <option value="VatTu">Vật tư</option>
-              </select>
+      <div className="row">
+        <div className='col-sm-12'>
+          <div className='card-list-ad'>
+            <div className=' header-list-card' >
+              <div style={{ float: "left" }}>
+                <h1 className="title-ad">CHỈNH SỬA THÔNG TIN THUỐC - VẬT TƯ</h1>
+              </div>
             </div>
-          </div>
-        </div>
+            <form className="form" onSubmit={handleUpdate}>
+              <div className="column">
+                <div className="input-box">
+                  <label>Tên vật tư</label>
+                  <input type="text" name="tenVatTu" value={formData.tenVatTu}
+                    onChange={handleInputChange} required />
+                </div>
+                <div className="input-box">
+                  <label>Loại thuốc</label>
+                  <div className="select-box">
+                    <select name="loaiVatTu" value={formData.loaiVatTu}
+                      onChange={handleInputChange} required>
+                      <option value="">Chọn</option>
+                      <option value="Thuoc">Thuốc</option>
+                      <option value="VatTu">Vật tư</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
-        <div className="column">
-          <div className="input-box">
-            <label>Số lượng</label>
-            <input type="number" name="soLuong" value={formData.soLuong} 
-              onChange={handleInputChange} required />
-          </div>
-          <div className="input-box">
-            <label>Đơn vị tính</label>
-            <input type="text" name="donViTinh" value={formData.donViTinh} 
-              onChange={handleInputChange} required />
+              <div className="column">
+                <div className="input-box">
+                  <label>Số lượng</label>
+                  <input type="number" name="soLuong" value={formData.soLuong}
+                    onChange={handleInputChange} required />
+                </div>
+                <div className="input-box">
+                  <label>Đơn vị tính</label>
+                  <input type="text" name="donViTinh" value={formData.donViTinh}
+                    onChange={handleInputChange} required />
+                </div>
+              </div>
+              <div className="column">
+                <div className="input-box">
+                  <label>Ngày nhập</label>
+                  <input type="date" name="ngayNhap" value={formData.ngayNhap}
+                    onChange={handleInputChange} required />
+                </div>
+                <div className="input-box">
+                  <label>Ngày sản xuất</label>
+                  <input type="date" name="ngaySanXuat" value={formData.ngaySanXuat}
+                    onChange={handleInputChange} required />
+                </div>
+                <div className="input-box">
+                  <label>Hạn sử dụng</label>
+                  <input type="date" name="hanSuDung" value={formData.hanSuDung}
+                    onChange={handleInputChange} required />
+                </div>
+              </div>
+              <div className="input-box">
+                <label>Giá</label>
+                <input type="number" name="gia" value={formData.gia}
+                  onChange={handleInputChange} required />
+              </div>
+              <div className="input-box">
+                <label>Mô tả</label>
+                <input type="text" name="moTa" value={formData.moTa}
+                  onChange={handleInputChange} required />
+              </div>
+              <div className='col-12'>
+                <div style={{ textAlign: "right" }}>
+                  <button className='submitform-ad' type="submit" disabled={loading}>
+                    {loading ? <HashLoader size={35} color="#ffffff" /> : 'Tạo'}
+                  </button>
+                  <button className='cancelform-ad' onClick={() => handlerCancel()} >
+                    Huỷ
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-        <div className="column">
-          <div className="input-box">
-            <label>Ngày nhập</label>
-            <input type="date" name="ngayNhap" value={formData.ngayNhap} 
-              onChange={handleInputChange} required />
-          </div>
-          <div className="input-box">
-            <label>Ngày sản xuất</label>
-            <input type="date" name="ngaySanXuat" value={formData.ngaySanXuat} 
-              onChange={handleInputChange} required />
-          </div>
-          <div className="input-box">
-            <label>Hạn sử dụng</label>
-            <input type="date" name="hanSuDung" value={formData.hanSuDung} 
-              onChange={handleInputChange} required />
-          </div>
-        </div>
-        <div className="input-box">
-          <label>Giá</label>
-          <input type="number" name="gia" value={formData.gia} 
-            onChange={handleInputChange} required />
-        </div>
-        <div className="input-box">
-          <label>Mô tả</label>
-          <input type="text" name="moTa" value={formData.moTa} 
-            onChange={handleInputChange} required />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={saving}>
-          {saving ? <HashLoader size={20} color="#fff" /> : "Cập Nhật"}
-        </button>
-      </form>
+      </div>
     </div>
   )
 }

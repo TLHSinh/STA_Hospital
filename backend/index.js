@@ -13,8 +13,13 @@ import bookingRoute from "./routes/booking.js"
 import medicalRecord from "./routes/medicalRecord.js"
 import prescribe from "./routes/prescribe.js"
 import test from "./routes/test.js"
+
+import statistics from './routes/statistics.js';
+
+
 import payment from "./routes/payment.js"
 import { scheduleBillCancellation } from './auth/cronJobs.js';
+
 
 dotenv.config()
 
@@ -58,7 +63,12 @@ app.use('/api/v1/bookings',bookingRoute); //domain/api/v1/auth/register
 app.use('/api/v1/medicalRecord',medicalRecord); //domain/api/v1/auth/register
 app.use('/api/v1/prescribe',prescribe); //domain/api/v1/prescribe
 app.use('/api/v1/test',test); //domain/api/v1/test
+
+app.use('/api/v1/dashboard', statistics);
+
+
 app.use('/api/v1/payment',payment); //domain/api/v1/payment
+
 
 
 app.listen(port,()=>{

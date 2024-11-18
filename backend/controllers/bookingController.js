@@ -280,3 +280,23 @@ export const getPatientAppointments = async (req, res) => {
     res.status(500).json({ success: false, message: 'Mất kết nối server' });
   }
 };
+
+
+
+
+
+// Lấy tất cả lịch hẹn sắp tới
+export const getUpcomingAppointments = async (req, res) => {
+    try {
+      // Lấy lịch hẹn có thời gian trong tương lai
+      const upcomingAppointments = await LichHen.find({
+        ngayHen: { $gte: new Date() }, // Chỉ lấy những lịch hẹn có thời gian lớn hơn hoặc bằng hiện tại
+      }).sort({ ngayHen: 1 }); // Sắp xếp theo thời gian từ trước đến sau
+  
+      res.status(200).json(upcomingAppointments);
+    } catch (err) {
+      console.error("Lỗi khi lấy lịch hẹn:", err.message);
+      res.status(500).json({ message: "Lỗi server khi lấy lịch hẹn." });
+    }
+  };
+  
