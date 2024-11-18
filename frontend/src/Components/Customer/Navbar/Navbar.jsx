@@ -175,7 +175,7 @@ function Navbar() {
                                 <Link to="/customer/profile">Hồ sơ</Link>
                                 <Link to="/customer/benhans">Hồ sơ bệnh án</Link>
                                 <Link to="/customer/appointment">Lịch hẹn của tôi</Link>
-                                <button onClick={handleLogout}>Đăng xuất</button>
+                                <Link onClick={handleLogout}>Đăng xuất</Link>
                             </div>
                         )}
                     </div>
