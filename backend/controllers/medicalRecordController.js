@@ -265,6 +265,24 @@ export const getMedicalRecordAll = async (req, res) => {
   }
 };
 
+
+
+export const updateMDC = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const updateMDC = await BenhAn.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+    if (!updateMDC) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bệnh án' });
+    }
+    res.status(200).json({ success: true, message: 'Cập nhật thành công', data: updateMDC });
+  } catch (err) {
+    console.error('Error updating medical record:', err); // Log lỗi tại đây
+    res.status(500).json({ success: false, message: 'Cập nhật không thành công', error: err.message });
+  }
+};
+
+
 export const updateMedicalRecordStatus = async (req, res) => {
   const { id } = req.params;
   const { trangThai } = req.body;

@@ -147,7 +147,7 @@ const DetailsBacSi = () => {
               <span className="font-bold">Mô tả:</span> {userDetails?.gioiThieuNgan}
             </p>
             <p className="appointment-fee">
-              Phí khám: <span className="fee-amount">${userDetails?.giaKham}</span>
+              Phí khám: <span className="fee-amount">{userDetails?.giaKham} VNĐ</span>
             </p>
           </div>
         </div>
@@ -205,7 +205,7 @@ const DetailsBacSi = () => {
         <div className="popup-dtbs">
 
 
-          <div className="popup-content-dtbs" style={{ width: '60%', maxHeight: '90vh', overflowY: 'auto', borderRadius: '34px', boxShadow: '0px 5px 16px rgba(8.24, 15.25, 52.06, 0.06)', padding: '40px' }}>
+          <div className="popup-content-dtbs" style={{ width: '60%', maxHeight: '90vh', borderRadius: '34px', boxShadow: '0px 5px 16px rgba(8.24, 15.25, 52.06, 0.06)', padding: '40px' }}>
             <button 
               onClick={() => setIsBookingFormVisible(false)}
               className="close-button-dtbs"
@@ -303,9 +303,9 @@ const DetailsBacSi = () => {
                   </div>
 
                   <div className="input-wrapper">
-                    <label className="label">Giá</label>
+                    <label className="label">Phí Khám</label>
                     <div className="input-field">
-                      <input type="text" value={`${userDetails?.giaKham || ''}`} readOnly className="input" />
+                      <input type="text" value={`${userDetails?.giaKham  || ''} VNĐ`} readOnly className="input" />
                       <FontAwesomeIcon icon={faMoneyBill} className="input-icon" />
                     </div>
                   </div>

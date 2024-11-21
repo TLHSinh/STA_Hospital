@@ -7,7 +7,8 @@ import { createMedicalRecordWithAppointment,
          deleteMedicalRecordById,
          getMedicalRecordAll,
          getDoctorMDCR,
-         getPatientMDCR
+         getPatientMDCR,
+         updateMDC
           } from '../controllers/medicalRecordController.js';
 
 import { authenticate, restrict } from '../auth/veryfyToken.js';
@@ -24,8 +25,9 @@ router.get('/getmdcRecord/:id', getMedicalRecordById )
 router.get('/getdocmdcRecord/:id', getDoctorMDCR )
 router.get('/getpatimdcRecord/:id', getPatientMDCR )
 
-router.post('/updatemdcRecord/:id', updateMedicalRecordStatus )
-router.post('/delmdcRecord/:id', deleteMedicalRecordById )
+router.put('/updatemdcRecord/:id', updateMedicalRecordStatus )
+router.put('/updateMDC/:id', updateMDC )
+router.delete('/delmdcRecord/:id', deleteMedicalRecordById )
 
 
 

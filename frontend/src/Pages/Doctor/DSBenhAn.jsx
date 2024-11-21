@@ -1,15 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { BASE_URL } from '../../config';
-import { AuthContext } from '../../context/AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEye,
-  faPrint,
-  faEdit,
-} from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../../config";
+import { AuthContext } from "../../context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPrint, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const DSBenhAn = () => {
   const [benhAnList, setBenhAnList] = useState([]);
@@ -25,19 +21,22 @@ const DSBenhAn = () => {
     const fetchBenhAnData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${BASE_URL}/api/v1/medicalRecord/getdocmdcRecord/${doctorId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${BASE_URL}/api/v1/medicalRecord/getdocmdcRecord/${doctorId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (response.data.success) {
           setBenhAnList(response.data.docRecord);
         } else {
-          toast.warn('Không có dữ liệu bệnh án.');
+          toast.warn("Không có dữ liệu bệnh án.");
         }
       } catch (error) {
-        console.error('Có lỗi khi lấy dữ liệu bệnh án:', error);
-        toast.error('Không thể tải danh sách bệnh án.');
+        console.error("Có lỗi khi lấy dữ liệu bệnh án:", error);
+        toast.error("Không thể tải danh sách bệnh án.");
       } finally {
         setLoading(false);
       }
@@ -80,45 +79,57 @@ const DSBenhAn = () => {
       )
     );
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/medicalRecord/updatemdcRecord/${id}`, { trangThai: newStatus }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/medicalRecord/updatemdcRecord/${id}`,
+        { trangThai: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.data.success) {
-        toast.success('Cập nhật trạng thái thành công!');
+        toast.success("Cập nhật trạng thái thành công!");
       } else {
-        toast.error('Cập nhật trạng thái thất bại!');
+        toast.error("Cập nhật trạng thái thất bại!");
       }
     } catch (error) {
-      console.error('Error updating status:', error);
-      toast.error('Có lỗi khi cập nhật trạng thái!');
+      console.error("Error updating status:", error);
+      toast.error("Có lỗi khi cập nhật trạng thái!");
     }
   };
 
   const handleViewDetails = (id) => {
-    navigate(`/customer/chitietbenhans/${id}`);
+    navigate(`/doctor/chitietbenhans/${id}`);
   };
 
   const handNewPayment = async (id) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/payment/${id}`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/payment/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data.success) {
-        toast.success('Lập hóa đơn thành công! Chuyển hướng...');
+        toast.success("Lập hóa đơn thành công! Chuyển hướng...");
         const newInvoiceId = response.data.hoaDon._id;
         navigate(`/doctor/NewPayment/${newInvoiceId}`);
       } else {
-        toast.error('Không thể lập hóa đơn!');
+        toast.error("Không thể lập hóa đơn!");
       }
     } catch (error) {
-      console.error('Error creating new payment:', error);
-      toast.error('Có lỗi xảy ra khi lập hóa đơn!');
+      console.error("Error creating new payment:", error);
+      toast.error("Có lỗi xảy ra khi lập hóa đơn!");
     }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/doctor/EditBenhAn/${id}`);
   };
 
   return (
@@ -174,7 +185,9 @@ const DSBenhAn = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="6" className="p-3 text-center">Đang tải dữ liệu...</td>
+                <td colSpan="6" className="p-3 text-center">
+                  Đang tải dữ liệu...
+                </td>
               </tr>
             ) : sortedByDate.length > 0 ? (
               sortedByDate.map((benhAn) => (
@@ -182,12 +195,18 @@ const DSBenhAn = () => {
                   <td className="p-3 border">{benhAn._id.slice(-4)}</td>
                   <td className="p-3 border">{benhAn.benhNhan.ten}</td>
                   <td className="p-3 border">{benhAn.chanDoan}</td>
-                  <td className="p-3 border">{new Date(benhAn.ngayKham).toLocaleDateString()}</td>
+                  <td className="p-3 border">
+                    {new Date(benhAn.ngayKham).toLocaleDateString()}
+                  </td>
                   <td className="p-3 border">
                     <select
                       value={benhAn.trangThai}
                       onChange={(e) => handleStatusChange(e, benhAn._id)}
-                      className="border rounded p-1"
+                      className={`border rounded p-1 text-center font-medium ${
+                        benhAn.trangThai === "hoanThanh"
+                          ? "text-green-600 border-green-600 bg-green-50"
+                          : "text-yellow-600 border-yellow-600 bg-yellow-50"
+                      }`}
                     >
                       <option value="hoanThanh">Hoàn thành</option>
                       <option value="dangDieuTri">Đang điều trị</option>
@@ -208,7 +227,10 @@ const DSBenhAn = () => {
                       <FontAwesomeIcon icon={faPrint} /> {/* Print */}
                     </buttonn>
 
-                    <buttonn className="text-purple-500 mx-1">
+                    <buttonn
+                      className="text-blue-500 mx-1"
+                      onClick={() => handleEdit(benhAn._id)}
+                    >
                       <FontAwesomeIcon icon={faEdit} /> {/* Edit */}
                     </buttonn>
                   </td>
@@ -216,7 +238,9 @@ const DSBenhAn = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-3 text-center">Không có dữ liệu bệnh án.</td>
+                <td colSpan="6" className="p-3 text-center">
+                  Không có dữ liệu bệnh án.
+                </td>
               </tr>
             )}
           </tbody>
