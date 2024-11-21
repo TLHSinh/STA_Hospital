@@ -1,9 +1,7 @@
 import React from 'react'
-// import '../Pages/Customer/ChuyenKhoa.css';
-import BannerCK from '../../Components/Customer/Banner/BannerChuyenKhoa/BannerCK';
+import BannerCK from '../../Components/Customer/Banner/BannerCK';
 import Card1TrangChu from '../../Components/Customer/Card/Card1TrangChu';
-// import BannerCK from '../Components/Customer/Banner/BannerChuyenKhoa/BannerCK';
-// import Card1TrangChu from '../Components/Customer/Card/Card1TrangChu';
+
 
 function ChuyenKhoa() {
   return (

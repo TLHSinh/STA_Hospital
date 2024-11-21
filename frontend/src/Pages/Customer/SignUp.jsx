@@ -18,7 +18,7 @@ const SignUp = () => {
     rePassword: "",      // Xác nhận mật khẩu
     hinhAnh: selectedFile, // Hình ảnh (URL)
     gioiTinh: "",        // Giới tính
-    role: "benhnhan",    // Vai trò: mặc định là bệnh nhân
+    role: "BenhNhan",    // Vai trò: mặc định là bệnh nhân
   });
 
   const navigate = useNavigate();
@@ -187,7 +187,7 @@ const SignUp = () => {
 
               <p className="mt-4 text-textColor text-center text-[13px]">
                 Bạn đã có tài khoản?{" "}
-                <Link to="/customer/login" className="text-primaryColor font-medium ml-1">
+                <Link to="/login" className="text-primaryColor font-medium ml-1">
                   Đăng nhập
                 </Link>
               </p>

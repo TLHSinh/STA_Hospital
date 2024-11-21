@@ -2,7 +2,7 @@
   color: rgb(253, 253, 253);
   background-color: #08758d;
   padding: 40px 20px;
-  position: relative; /* Xem xét thay đổi nếu cần */
+  position:static; /* Xem xét thay đổi nếu cần */
   bottom: 0;
   width: 100%;
   min-height: 200px;

@@ -6,7 +6,7 @@ const LichHenSchema = new mongoose.Schema({
   ngayHen: { type: Date, required: true }, // Ngày hẹn
   thoiGianBatDau: { type: String, required: true }, // Thời gian bắt đầu của khung giờ
   thoiGianKetThuc: { type: String, required: true }, // Thời gian kết thúc của khung giờ
-  trangThai: { type: String, enum: ["choDuyet", "duocDuyet", "huy"], default: "choDuyet" }, // Trạng thái
+  trangThai: { type: String, enum: ["ChoDuyet", "XacNhan", "Huy"], default: "ChoDuyet" }, // Trạng thái
   daThanhToan: { type: Boolean, default: false }, // Đã thanh toán
   gia: { type: Number, required: true }, // Giá
 }, { timestamps: true });

@@ -1,9 +1,12 @@
-import React from 'react'
+// DoctorHome.jsx
+import React from 'react';
 
-const HomeBacSi = () => {
+const DoctorHome = () => {
   return (
-    <div>HomeBacSi</div>
-  )
-}
+    <div>
+      
+    </div>
+  );
+};
 
-export default HomeBacSi
+export default DoctorHome;

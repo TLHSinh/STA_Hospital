@@ -15,7 +15,7 @@ const BenhNhanSchema = new mongoose.Schema({
           default: "BenhNhan" },                // Vai trò
   gioiTinh: { 
           type: String, 
-          enum: ["nam", "nu", "khac"], 
+          enum: ["Nam", "Nữ", "Khác"], 
           required: true }, // Giới tính
   nhomMau: { type: String }, // Nhóm máu
   
