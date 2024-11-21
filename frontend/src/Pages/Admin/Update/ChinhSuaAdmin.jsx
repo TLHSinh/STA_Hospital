@@ -217,12 +217,10 @@ const ChinhSuaAdmin = () => {
                     <div className='col-md-12'>
                         <div className='profile-update-ad'>
                             <div className='row'>
-
                                     <div className="input-box">
                                         <label>Mật khẩu</label>
                                         <input type="password"  name="matKhau" value={formData.matKhau} onChange={handleInputChange} />
                                     </div>
-      
                             </div>
                         </div>
                     </div>
