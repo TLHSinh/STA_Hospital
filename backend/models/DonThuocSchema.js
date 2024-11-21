@@ -6,6 +6,7 @@ const DonThuocSchema = new mongoose.Schema({
   ngayDonThuoc: { type: Date, required: true }, // Ngày kê đơn
   thuoc: [{
     tenThuoc: { type: mongoose.Types.ObjectId, ref: "VatTu", required: true }, // Thuốc
+    tenVatTu: { type: String, required: true },
     lieuDung: { type: String, required: true }, // Liều dùng
     soLanUong: { type: String, required: true }, // Số lần uống
     ghiChu: { type: String }, // Ghi chú

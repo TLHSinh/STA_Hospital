@@ -12,6 +12,7 @@ import SeachPatient from '../Pages/Doctor/SeachPatient';
 import DSBenhAn from '../Pages/Doctor/DSBenhAn';
 import ViewPrescription from '../Pages/Doctor/ViewPrescription';
 import KeXetNghiem from '../Pages/Doctor/Test';
+import NewPayment from '../Pages/Doctor/NewPayment';
 
 
 
@@ -30,7 +31,7 @@ const DoctorRouter = () => (
 
         <Route path="xemlaibenhans/:id" element={<ViewPrescription/>} />
         <Route path="newTest/:id" element={<KeXetNghiem  />} />
-
+        <Route path="NewPayment/:id" element={<NewPayment  />} />
 
       </Route>
     </Routes>
