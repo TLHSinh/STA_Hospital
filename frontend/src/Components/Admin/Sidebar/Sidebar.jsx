@@ -2,7 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 import { Link } from "react-router-dom";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { FaCapsules, FaHospitalUser, FaUserDoctor } from "react-icons/fa6";
+import { FaCapsules, FaHospitalUser, FaUserDoctor, FaCalendarDays } from "react-icons/fa6";
 
 const Sidebar = ({ isActive }) => {
     return (
@@ -21,7 +21,7 @@ const Sidebar = ({ isActive }) => {
                     {!isActive && <span className="menu-text">Bác Sĩ</span>}
                 </Link>
                 <Link to="/admin/danhsachlichhen" className="item-ad">
-                    <MdOutlineSpaceDashboard className="icon" size={"1.25em"} />
+                    <FaCalendarDays className="icon" size={"1.25em"} />
                     {!isActive && <span className="menu-text">Lịch Hẹn</span>}
                 </Link>
                 <Link to="/admin/danhsachthuocvattu" className="item-ad">

@@ -236,7 +236,7 @@ const DSBacSi = () => {
                         <img
                           src={doctor.hinhAnh}
                           alt={`Hình của ${doctor.ten}`}
-                          style={{ width: '6rem', height: '6rem', borderRadius: '50%', objectFit: 'cover' }}
+                          style={{ width: '3rem', height: '3rem', borderRadius: '50%', objectFit: 'cover' }}
                         />
                       </td>
                       <td>{doctor.ten}</td>
