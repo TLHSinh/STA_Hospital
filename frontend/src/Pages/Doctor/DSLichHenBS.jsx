@@ -66,14 +66,14 @@ const DanhSachLichHenBacSi = () => {
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: 'auto', marginTop: '80px', backgroundColor: '#f5f8fb', borderRadius: '8px' }}>
-      <div className="title-ad" style={{ marginBottom: '20px', textAlign: 'center', color: '#333' }}>
+      <div className="title-ad" style={{ marginBottom: '20px', textAlign: 'center', color: '#333', gap:'50' }}>
         <h1 style={{ fontSize: '1.5rem', color: '#66B5A3' }}>Danh Sách Lịch Hẹn của Bác Sĩ</h1>
         <TextField
           placeholder="Tìm kiếm bệnh nhân..."
           value={searchQuery}
           onChange={handleSearch}
           variant="outlined"
-          style={{ margin: '10px 0', width: '100%' }}
+          style={{ margin: '10px 0', width: '50%' }}
           InputProps={{
             startAdornment: <FaMagnifyingGlass color="#66B5A3" style={{ marginRight: '8px' }} />,
           }}
